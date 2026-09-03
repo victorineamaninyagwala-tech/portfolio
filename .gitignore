@@ -1,0 +1,14 @@
+node_modules/
+dist/
+.output/
+.nitro/
+.tanstack/
+.vinxi/
+src/routeTree.gen.ts
+*.local
+.env
+.env.*
+!.env.example
+.DS_Store
+*.log
+.vercel
