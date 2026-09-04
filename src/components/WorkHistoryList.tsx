@@ -55,7 +55,7 @@ export function WorkHistoryList({ roles }: { roles: Role[] }) {
               className="flex w-full items-start justify-between gap-6 py-7 text-left sm:gap-10 sm:py-8"
             >
               <span className="min-w-0">
-                <span className="block type-title font-semibold">
+                <span className="block type-title">
                   {role.company}
                 </span>
                 <span className="mt-1.5 block type-body text-ink/60">

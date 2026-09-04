@@ -96,7 +96,7 @@ function Index() {
       <section>
         <Gutter className="pt-16 pb-14 sm:pt-24 sm:pb-20">
           <Label className="block text-olive">Product Designer — Nairobi</Label>
-          <h1 className="mt-7 type-display font-semibold">
+          <h1 className="mt-7 type-display">
             Designing the boundary between human responsibility and technological assistance
           </h1>
           <div className="mt-9 flex flex-col gap-8 sm:flex-row sm:items-end sm:justify-between sm:gap-12">
@@ -119,7 +119,7 @@ function Index() {
               text="Selected Work"
               data-cursor="view"
               data-cursor-label=""
-              className="letter-swap type-display font-semibold"
+              className="letter-swap type-display"
             />
             <Label className="text-ink/60 sm:shrink-0">01 — 06</Label>
           </div>
@@ -165,7 +165,7 @@ function Index() {
                 <Label dot className="text-ink/60">
                   {f.n}
                 </Label>
-                <dt className="mt-8 type-title font-semibold md:min-h-[4.5em]">
+                <dt className="mt-8 type-title md:min-h-[4.5em]">
                   {f.label}
                 </dt>
                 <dd className="mt-4 space-y-1.5 type-body text-ink">

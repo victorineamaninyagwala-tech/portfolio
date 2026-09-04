@@ -44,10 +44,10 @@ export function SiteFooter() {
     <footer id="contact" className="bg-paper text-ink">
       <Gutter>
         <div className="pt-16 pb-20 sm:pt-24 sm:pb-28">
-          <h2 className="type-headline font-semibold">Let&apos;s talk about your next product.</h2>
+          <h2 className="type-headline">Let&apos;s talk about your next product.</h2>
           <a
             href="mailto:victorinenyagwala@gmail.com"
-            className="mt-6 inline-block type-headline font-semibold text-ink underline decoration-ink/20 underline-offset-[6px] transition-colors hover:decoration-olive"
+            className="mt-6 inline-block type-headline text-ink underline decoration-ink/20 underline-offset-[6px] transition-colors hover:decoration-olive"
           >
             victorinenyagwala@gmail.com
           </a>

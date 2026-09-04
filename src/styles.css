@@ -74,6 +74,8 @@
   --cream: oklch(0.965 0.006 84.6);
   --olive: oklch(0.475 0.031 106.5);
   /* Hairline used by the work-history file tabs and their panels. */
+  /* Headings only. Antic ships one weight, so the heading steps set 400. */
+  --font-display: "Antic", var(--font-sans);
   --file-line: color-mix(in oklab, var(--ink) 24%, transparent);
   --background: var(--paper);
   --foreground: var(--ink);
@@ -191,8 +193,10 @@
  * Type scale. Seven steps, and nothing outside them — the page had grown
  * thirteen sizes and six near-identical label styles before this.
  *
- * Each step fixes size, line height and tracking only. Weight stays an
- * explicit font-* class at the call site, so it reads in the markup.
+ * The three heading steps also carry the family and weight: headings are set
+ * in Antic, which ships a single 400 weight, so there is nothing to choose.
+ * The four text steps fix size, line height and tracking only, and their
+ * weight stays an explicit font-* class at the call site.
  *
  * There are exactly two weights. font-semibold names things — headings, page
  * titles, employers, every uppercase label. Everything else is regular. Arial
@@ -205,6 +209,8 @@
 
 /* Page and section titles. */
 @utility type-display {
+  font-family: var(--font-display);
+  font-weight: 400;
   font-size: clamp(2.125rem, 3.4vw + 1.6rem, 4.5rem);
   line-height: 1.05;
   letter-spacing: -0.03em;
@@ -212,6 +218,8 @@
 
 /* One rank down: the footer address block. */
 @utility type-headline {
+  font-family: var(--font-display);
+  font-weight: 400;
   font-size: clamp(1.75rem, 2.6vw + 0.9rem, 2.75rem);
   line-height: 1.1;
   letter-spacing: -0.02em;
@@ -219,6 +227,8 @@
 
 /* Named things inside a section: employers, capability groups. */
 @utility type-title {
+  font-family: var(--font-display);
+  font-weight: 400;
   font-size: clamp(1.25rem, 0.8vw + 0.9rem, 1.625rem);
   line-height: 1.25;
   letter-spacing: -0.02em;
@@ -325,7 +335,7 @@
 
 /* Applied by LetterSwapHeading to every letter the cursor disc overlaps. */
 .letter-swap > span.is-swapped {
-  font-family: "Caacupe One", var(--font-sans), cursive;
+  font-family: "Caacupe One", var(--font-display), cursive;
 }
 
 /* Set while widths are being measured, so the swap cannot skew the result. */

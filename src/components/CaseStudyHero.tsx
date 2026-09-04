@@ -29,7 +29,7 @@ export function CaseStudyHero({
       <Gutter>
         <header className="grid grid-cols-12 gap-y-12 pt-16 pb-20 sm:pt-24 sm:pb-28">
           <div className="col-span-12 md:col-span-4">
-            <h1 className="type-display font-semibold">{title}</h1>
+            <h1 className="type-display">{title}</h1>
           </div>
 
           {/* Starts at col 6, leaving col 5 empty as the gutter to the title. */}

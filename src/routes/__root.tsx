@@ -19,8 +19,8 @@ function NotFoundComponent() {
   return (
     <div className="flex min-h-[70vh] items-center justify-center bg-paper px-4 text-ink">
       <div className="max-w-md text-center">
-        <h1 className="type-display font-semibold">404</h1>
-        <h2 className="mt-4 type-title font-semibold">Page not found</h2>
+        <h1 className="type-display">404</h1>
+        <h2 className="mt-4 type-title">Page not found</h2>
         <p className="mt-4 type-body text-ink/70">
           The page you're looking for doesn't exist or has been moved.
         </p>
@@ -47,7 +47,7 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
   return (
     <div className="flex min-h-[70vh] items-center justify-center bg-paper px-4 text-ink">
       <div className="max-w-md text-center">
-        <h1 className="type-title font-semibold">
+        <h1 className="type-title">
           This page didn't load
         </h1>
         <p className="mt-4 type-body text-ink/70">
@@ -93,7 +93,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       {
         rel: "stylesheet",
-        href: "https://fonts.googleapis.com/css2?family=Caacupe+One&display=swap",
+        href: "https://fonts.googleapis.com/css2?family=Antic&family=Caacupe+One&display=swap",
       },
       { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
     ],
