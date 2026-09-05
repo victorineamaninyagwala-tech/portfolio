@@ -1,6 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-import synnefaMark from "@/assets/synnefa-mark.svg";
 import { Enclosure, EnclosureCell, Gutter, Label } from "@/components/primitives";
 import { LetterSwapHeading } from "@/components/LetterSwapHeading";
 import { ProjectMedia } from "@/components/ProjectMedia";
@@ -133,8 +132,9 @@ function Index() {
                 className="group block focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-olive"
                 data-cursor="view"
               >
-                {/* Projects without artwork yet fall back to an empty well. */}
-                <ProjectMedia images={p.images ?? []} maskSrc={p.images ? synnefaMark : undefined}>
+                {/* One still per project for now; only FarmCloud carries a
+                    sequence, so only it names a mask to open through. */}
+                <ProjectMedia images={p.images ?? []} maskSrc={p.mask}>
                   {p.status ? (
                     <Label className="absolute top-3 left-3 bg-paper/80 px-2.5 py-1 text-olive">
                       {p.status}
