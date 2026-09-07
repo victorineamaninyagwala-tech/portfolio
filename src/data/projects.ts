@@ -1,11 +1,11 @@
-import aiDesignSystemCard from "@/assets/card-ai-design-system.jpg";
-import bazaarCard from "@/assets/card-bazaar.png";
-import mochisCard from "@/assets/card-mochis.png";
-import soulshapeCard from "@/assets/card-soulshape.png";
-import springCard from "@/assets/card-spring.png";
-import farmcloudField from "@/assets/farmcloud-research-field.jpg";
-import farmcloudHero from "@/assets/farmcloud-hero.png";
-import farmcloudPeppers from "@/assets/farmcloud-research-peppers.jpg";
+import aiDesignSystemCard from "@/assets/card-ai-design-system.webp";
+import bazaarCard from "@/assets/card-bazaar.webp";
+import mochisCard from "@/assets/card-mochis.webp";
+import soulshapeCard from "@/assets/card-soulshape.webp";
+import springCard from "@/assets/card-spring.webp";
+import farmcloudField from "@/assets/farmcloud-research-field.webp";
+import farmcloudHero from "@/assets/farmcloud-hero.webp";
+import farmcloudPeppers from "@/assets/farmcloud-research-peppers.webp";
 import synnefaMark from "@/assets/synnefa-mark.svg";
 
 /*
@@ -13,7 +13,6 @@ import synnefaMark from "@/assets/synnefa-mark.svg";
  * here, so a title or slug is only ever written once.
  */
 export type Project = {
-  n: string;
   slug: string;
   title: string;
   discipline: string;
@@ -25,7 +24,6 @@ export type Project = {
 
 export const projects: Project[] = [
   {
-    n: "01",
     slug: "farmcloud",
     title: "FarmCloud",
     discipline: "UX · UI Design · Product Management",
@@ -51,28 +49,12 @@ export const projects: Project[] = [
     ],
   },
   {
-    n: "02",
-    slug: "bazaar",
-    title: "Bazaar",
-    discipline: "Product Strategy · Marketplace · Systems Design",
-    images: [{ src: bazaarCard, alt: "The Bazaar storefront homepage concept, a verified independent shop" }],
-  },
-  {
-    n: "03",
     slug: "soulshape",
     title: "SoulShape",
     discipline: "UX · Healthcare · Systems Design",
     images: [{ src: soulshapeCard, alt: "The SoulShape sign-up screen on a desktop in a clinic waiting room" }],
   },
   {
-    n: "04",
-    slug: "spring",
-    title: "Spring On The Go",
-    discipline: "UX · Ecommerce · Audit & Redesign",
-    images: [{ src: springCard, alt: "The redesigned Spring On The Go grocery homepage on a tablet" }],
-  },
-  {
-    n: "05",
     slug: "mochis",
     title: "Mochi's Brew",
     discipline: "UX · Service Design · F&B",
@@ -80,11 +62,22 @@ export const projects: Project[] = [
     status: "In progress",
   },
   {
-    n: "06",
+    slug: "bazaar",
+    title: "Bazaar",
+    discipline: "Product Strategy · Marketplace · Systems Design",
+    images: [{ src: bazaarCard, alt: "The Bazaar wordmark debossed into cream paper stock" }],
+  },
+  {
     slug: "ai-design-system",
     title: "A design system an AI agent can operate",
     discipline: "Design Systems · Tokens · AI",
     images: [{ src: aiDesignSystemCard, alt: "A design token chain, one base colour branching into tonal ramps" }],
     status: "Test project",
+  },
+  {
+    slug: "spring",
+    title: "Spring On The Go",
+    discipline: "UX · Ecommerce · Audit & Redesign",
+    images: [{ src: springCard, alt: "The redesigned Spring On The Go grocery homepage on a tablet" }],
   },
 ];

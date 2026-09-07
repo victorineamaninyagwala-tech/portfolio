@@ -5,6 +5,11 @@ import { nitro } from "nitro/vite";
 import { defineConfig } from "vite";
 
 export default defineConfig({
+  server: {
+    // The harness assigns a free port when 3000 is taken by another session.
+    port: Number(process.env.PORT) || 3000,
+    host: true,
+  },
   // Resolves the "@/*" alias declared in tsconfig.json (native since Vite 8).
   resolve: {
     tsconfigPaths: true,

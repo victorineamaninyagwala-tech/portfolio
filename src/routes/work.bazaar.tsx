@@ -5,10 +5,10 @@ import { CaseStudyHero, type MetaRow } from "@/components/CaseStudyHero";
 export const Route = createFileRoute("/work/bazaar")({
   head: () => ({
     meta: [
-      { title: "Bazaar — A Product Strategy Case Study by Victorine Amani" },
+      { title: "Bazaar · A Product Strategy Case Study by Victorine Amani" },
       { name: "description", content: "A trust and discovery layer for independent shops in Kenya: each shop gets its own branded, verified storefront on shared infrastructure." },
-      { property: "og:title", content: "Bazaar — A Product Strategy Case Study by Victorine Amani" },
-      { property: "og:description", content: "Self-directed product design, end to end — strategy, system, IA and onboarding." },
+      { property: "og:title", content: "Bazaar · A Product Strategy Case Study by Victorine Amani" },
+      { property: "og:description", content: "Self-directed product design, end to end: strategy, system, IA and onboarding." },
     ],
   }),
   component: Bazaar,

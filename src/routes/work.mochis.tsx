@@ -5,9 +5,9 @@ import { CaseStudyHero, type MetaRow } from "@/components/CaseStudyHero";
 export const Route = createFileRoute("/work/mochis")({
   head: () => ({
     meta: [
-      { title: "Mochi's Brew — A Service Design Case Study by Victorine Amani" },
+      { title: "Mochi's Brew · A Service Design Case Study by Victorine Amani" },
       { name: "description", content: "A pickup ordering flow for Kenyan coffee shops, bridging the gap between walking in and paying for delivery." },
-      { property: "og:title", content: "Mochi's Brew — A Service Design Case Study by Victorine Amani" },
+      { property: "og:title", content: "Mochi's Brew · A Service Design Case Study by Victorine Amani" },
       { property: "og:description", content: "UX case study on a pickup ordering service flow. In progress." },
     ],
   }),

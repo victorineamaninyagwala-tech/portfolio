@@ -10,13 +10,13 @@ import { projects } from "@/data/projects";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Victorine Amani — Product Designer, Nairobi" },
+      { title: "Victorine Amani · Product Designer, Nairobi" },
       {
         name: "description",
         content:
           "Victorine Amani is a product designer in Nairobi working on product systems, mobile interfaces and research for fintech, health and mobility teams.",
       },
-      { property: "og:title", content: "Victorine Amani — Product Designer, Nairobi" },
+      { property: "og:title", content: "Victorine Amani · Product Designer, Nairobi" },
       {
         property: "og:description",
         content:
@@ -94,7 +94,7 @@ function Index() {
 
       <section>
         <Gutter className="pt-16 pb-14 sm:pt-24 sm:pb-20">
-          <Label className="block text-olive">Product Designer — Nairobi</Label>
+          <Label className="block text-olive">Product Designer · Nairobi</Label>
           <h1 className="mt-7 type-display">
             Designing the boundary between human responsibility and technological assistance
           </h1>
@@ -103,9 +103,9 @@ function Index() {
               My work explores when systems should automate complexity and when they should expose it to support human judgment, accountability, and agency.
             </p>
             <ul className="space-y-1.5 type-label font-semibold text-ink/60 sm:shrink-0">
-              <li>Practice — 2023 / Present</li>
-              <li>Focus — Systems &amp; mobile</li>
-              <li>Base — Nairobi, KE</li>
+              <li>Practice · 2023 / Present</li>
+              <li>Focus · Systems &amp; mobile</li>
+              <li>Base · Nairobi, KE</li>
             </ul>
           </div>
         </Gutter>
@@ -120,7 +120,7 @@ function Index() {
               data-cursor-label=""
               className="letter-swap type-display"
             />
-            <Label className="text-ink/60 sm:shrink-0">01 — 06</Label>
+            <Label className="text-ink/60 sm:shrink-0">01 / 06</Label>
           </div>
 
           <div className="grid grid-cols-1 gap-x-2 gap-y-10 sm:grid-cols-3">
@@ -128,23 +128,21 @@ function Index() {
               <a
                 key={p.slug}
                 href={`/work/${p.slug}`}
-                aria-label={`${p.title} — ${p.discipline}`}
+                aria-label={`${p.title}, ${p.discipline}`}
                 className="group block focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-olive"
                 data-cursor="view"
               >
                 {/* One still per project for now; only FarmCloud carries a
                     sequence, so only it names a mask to open through. */}
-                <ProjectMedia images={p.images ?? []} maskSrc={p.mask}>
-                  {p.status ? (
-                    <Label className="absolute top-3 left-3 bg-paper/80 px-2.5 py-1 text-olive">
-                      {p.status}
-                    </Label>
-                  ) : null}
-                </ProjectMedia>
+                <ProjectMedia images={p.images ?? []} maskSrc={p.mask} />
                 <div className="mt-4">
-                  <h3 className="type-body font-semibold transition-colors group-hover:text-olive">
-                    {p.title}
-                  </h3>
+                  {/* Wraps rather than truncating: one title runs to nine words. */}
+                  <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
+                    <h3 className="type-body font-semibold transition-colors group-hover:text-olive">
+                      {p.title}
+                    </h3>
+                    {p.status ? <Label className="text-olive">{p.status}</Label> : null}
+                  </div>
                   <p className="mt-1 type-caption text-ink/70">{p.discipline}</p>
                 </div>
               </a>

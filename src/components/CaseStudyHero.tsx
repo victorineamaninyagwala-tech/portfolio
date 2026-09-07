@@ -1,3 +1,5 @@
+import type { ReactNode } from "react";
+
 import { Gutter } from "@/components/primitives";
 
 /*
@@ -16,6 +18,7 @@ export function CaseStudyHero({
   deck,
   note,
   image,
+  children,
 }: {
   title: string;
   meta: MetaRow[];
@@ -23,6 +26,8 @@ export function CaseStudyHero({
   /** Carried on work that was not commissioned. */
   note?: string;
   image?: { src: string; alt: string; width: number; height: number };
+  /** The sections below the lead image. */
+  children?: ReactNode;
 }) {
   return (
     <main className="bg-paper text-ink">
@@ -61,6 +66,8 @@ export function CaseStudyHero({
           />
         ) : null}
       </Gutter>
+
+      {children}
     </main>
   );
 }

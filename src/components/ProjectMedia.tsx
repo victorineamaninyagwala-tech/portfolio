@@ -68,11 +68,9 @@ const easeInOut = (t: number) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t 
 export function ProjectMedia({
   images,
   maskSrc,
-  children,
 }: {
   images: MediaImage[];
   maskSrc?: string;
-  children?: React.ReactNode;
 }) {
   const [index, setIndex] = useState(0);
   const [phase, setPhase] = useState<"idle" | "masking" | "playing">("idle");
@@ -357,7 +355,6 @@ export function ProjectMedia({
           ))}
         </div>
       </div>
-      {children}
     </div>
   );
 }
