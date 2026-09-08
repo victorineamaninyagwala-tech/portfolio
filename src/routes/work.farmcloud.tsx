@@ -213,6 +213,11 @@ const lifecycle = [
       "Add the inventory, whether for that crop or everything the farm holds.",
       "Logging an item offers to raise the expense against it, left to the farmer to take or leave.",
       "A daily work report records what was used, and takes that amount off the inventory item.",
+      "Applications and expenses keep logging until harvest.",
+      "The harvest report offers to hold the yield as a product, a product being anything the farm can sell.",
+      "It stays an offer. A farmer keeping the yield for the household declines it, and the next step is theirs to take either way.",
+      "A product that sells is invoiced from accounting, and a fulfilled invoice reads through as revenue.",
+      "The record then runs the length of the season: before planting, during it, and after harvest.",
     ],
   },
 ];
