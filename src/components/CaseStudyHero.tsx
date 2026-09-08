@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 
-import { Gutter } from "@/components/primitives";
+import { Gutter, ImageCard } from "@/components/primitives";
 
 /*
  * The opening block every case study shares: title on the left, the facts and
@@ -57,12 +57,11 @@ export function CaseStudyHero({
         </header>
 
         {image ? (
-          <img
+          <ImageCard
             src={image.src}
             alt={image.alt}
             width={image.width}
             height={image.height}
-            className="block w-full object-cover"
           />
         ) : null}
       </Gutter>

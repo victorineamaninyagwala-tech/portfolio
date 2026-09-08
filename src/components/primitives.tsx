@@ -123,3 +123,46 @@ export function EnclosureCell({ className, children }: { className?: string; chi
     </div>
   );
 }
+
+/**
+ * The full-bleed picture card.
+ *
+ * Every one is the same box: the full width of the column, held at 4:3, and
+ * capped to the viewport so a reader takes the whole card in without
+ * scrolling. The picture fills it corner to corner, which means a picture of a
+ * different shape is cropped to the card rather than shrinking inside it.
+ *
+ * The ratio and the cap live here, so a case study's lead image and its figures
+ * are literally the same size.
+ */
+export const CARD_RATIO = "4 / 3";
+export const CARD_MAX_HEIGHT = "88vh";
+
+export function ImageCard({
+  src,
+  alt,
+  width,
+  height,
+  className,
+}: {
+  src: string;
+  alt: string;
+  width: number;
+  height: number;
+  className?: string;
+}) {
+  return (
+    <div
+      className={cn("w-full overflow-hidden", className)}
+      style={{ aspectRatio: CARD_RATIO, maxHeight: CARD_MAX_HEIGHT }}
+    >
+      <img
+        src={src}
+        alt={alt}
+        width={width}
+        height={height}
+        className="size-full object-cover"
+      />
+    </div>
+  );
+}
