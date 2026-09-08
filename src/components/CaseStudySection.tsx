@@ -16,6 +16,7 @@ export function CaseStudySection({
   media,
   figure,
   children,
+  columns = 2,
 }: {
   title: string;
   /** The page title is set left, so sections follow it unless one is
@@ -28,6 +29,9 @@ export function CaseStudySection({
   figure?: ReactNode;
   /** Optional: a section can be carried by its figure alone. */
   children?: ReactNode;
+  /** Blocks run in two columns by default. One stacks them down the page,
+   *  for a section whose blocks are meant to be read in order. */
+  columns?: 1 | 2;
 }) {
   return (
     <section>
@@ -58,6 +62,8 @@ export function CaseStudySection({
                     {children}
                   </div>
                 </>
+              ) : columns === 1 ? (
+                <div className="col-span-12 space-y-16">{children}</div>
               ) : (
                 <div className="col-span-12 gap-x-16 gap-y-10 md:columns-2 [&>*]:break-inside-avoid [&>*:not(:first-child)]:mt-10">
                   {children}
@@ -72,6 +78,15 @@ export function CaseStudySection({
       </Gutter>
     </section>
   );
+}
+
+/*
+ * A heading below the section's own, for a section that carries more than one
+ * movement. It uses the third step of the scale, so it reads as subordinate to
+ * the section title without becoming another eyebrow.
+ */
+export function Subhead({ children }: { children: ReactNode }) {
+  return <h3 className="type-title">{children}</h3>;
 }
 
 /*
