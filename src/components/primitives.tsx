@@ -125,37 +125,69 @@ export function EnclosureCell({ className, children }: { className?: string; chi
 }
 
 /**
- * The full-bleed picture card.
+ * The frame.
  *
- * Every one is the same box: the full width of the column, held at 4:3, and
- * capped to the viewport so a reader takes the whole card in without
- * scrolling. The picture fills it corner to corner, which means a picture of a
- * different shape is cropped to the card rather than shrinking inside it.
+ * Every picture, screen and held box on the site sits in one of these, so they
+ * are all the same shape and the same ground. It is held at 4:3 and capped to
+ * the viewport, so a reader takes a whole frame in without scrolling.
  *
- * The ratio and the cap live here, so a case study's lead image and its figures
- * are literally the same size.
+ * Two sizes: `full` spans the content column, `half` sits in a two-up grid and
+ * so needs a smaller share of the screen. Anything else about it — the ratio,
+ * the ground, the corner — is one edit here.
  */
-export const CARD_RATIO = "4 / 3";
-export const CARD_MAX_HEIGHT = "88vh";
+export const FRAME_RATIO = "4 / 3";
 
+const FRAME_MAX_HEIGHT = { full: "88vh", half: "56vh" } as const;
+
+export type FrameSize = keyof typeof FRAME_MAX_HEIGHT;
+
+export function Frame({
+  size = "full",
+  className,
+  style,
+  children,
+  ref,
+  ...rest
+}: {
+  size?: FrameSize;
+  className?: string;
+  children?: ReactNode;
+  /** So a caller can measure or scroll the frame it owns. */
+  ref?: React.Ref<HTMLDivElement>;
+} & Omit<React.HTMLAttributes<HTMLDivElement>, "children" | "className">) {
+  return (
+    <div
+      ref={ref}
+      className={cn("w-full overflow-hidden rounded-lg bg-ground", className)}
+      style={{ aspectRatio: FRAME_RATIO, maxHeight: FRAME_MAX_HEIGHT[size], ...style }}
+      {...rest}
+    >
+      {children}
+    </div>
+  );
+}
+
+/**
+ * A picture in a frame. The frame governs the shape, so a picture of another
+ * shape is cropped to fill it rather than shrinking inside it.
+ */
 export function ImageCard({
   src,
   alt,
   width,
   height,
+  size = "full",
   className,
 }: {
   src: string;
   alt: string;
   width: number;
   height: number;
+  size?: FrameSize;
   className?: string;
 }) {
   return (
-    <div
-      className={cn("w-full overflow-hidden", className)}
-      style={{ aspectRatio: CARD_RATIO, maxHeight: CARD_MAX_HEIGHT }}
-    >
+    <Frame size={size} className={className}>
       <img
         src={src}
         alt={alt}
@@ -163,6 +195,6 @@ export function ImageCard({
         height={height}
         className="size-full object-cover"
       />
-    </div>
+    </Frame>
   );
 }

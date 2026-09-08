@@ -5,7 +5,7 @@
 /*
  * Design system definition.
  *
- * Four colours, one radius, two families. @theme inline is what turns them
+ * Five colours, one radius, two families. @theme inline is what turns them
  * into utilities — --color-ink becomes text-ink, bg-ink, border-ink.
  *
  * Colours are oklch so that opacity modifiers (border-ink/10) mix predictably.
@@ -21,6 +21,7 @@
   --color-ink: var(--ink);
   --color-cream: var(--cream);
   --color-olive: var(--olive);
+  --color-ground: var(--ground);
 
   /* Every step maps to the same value on purpose: --radius is meant to be one
      lever, and a scale built with calc() means rounded-xl quietly returns 4px
@@ -41,6 +42,9 @@
   --ink: oklch(0.171 0 0);
   --cream: oklch(0.965 0.006 84.6);
   --olive: oklch(0.475 0.031 106.5);
+  /* What a frame sits on: the walkthroughs, the picture cards, the project
+     media on the homepage. #e6e6cc. */
+  --ground: oklch(0.918 0.034 107.1);
 
   /* Headings only. DotGothic16 ships one weight, so the heading steps set 400. */
   --font-display: "DotGothic16", var(--font-sans);
@@ -259,16 +263,6 @@
   to {
     opacity: 0;
     transform: translate(-50%, -50%) scale(1.7);
-  }
-}
-
-/* The bar under the tab strip, filling over the life of one step. */
-@keyframes wt-progress {
-  from {
-    transform: scaleX(0);
-  }
-  to {
-    transform: scaleX(1);
   }
 }
 

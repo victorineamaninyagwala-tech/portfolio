@@ -61,7 +61,7 @@ const FIT_ZOOM_MS = 700;
 const FIT_HOLD_OUT = 1300;
 const FIT_TOTAL = FIT_HOLD_IN + FIT_ZOOM_MS + FIT_HOLD_OUT;
 
-const DARK_GREEN = "#1d4a21";
+
 
 const easeInOut = (t: number) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
 
@@ -281,7 +281,7 @@ export function ProjectMedia({
       onPointerLeave={reset}
       className="relative aspect-[4/5] min-h-[70vh] w-full overflow-hidden"
       style={{
-        backgroundColor: fittedIndex !== null ? DARK_GREEN : undefined,
+        backgroundColor: fittedIndex !== null ? "var(--ground)" : undefined,
         transition: `background-color ${FIT_ZOOM_MS}ms ease`,
       }}
     >

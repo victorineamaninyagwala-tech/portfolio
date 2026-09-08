@@ -1,22 +1,23 @@
 import { useCallback, useEffect, useId, useRef, useState, type KeyboardEvent } from "react";
 
-import { CARD_MAX_HEIGHT, CARD_RATIO } from "@/components/primitives";
+import { Frame, type FrameSize } from "@/components/primitives";
 import { cn } from "@/lib/utils";
 
 /*
- * A flow that plays itself, the way a prototype recording does.
+ * Screens that play themselves.
  *
- * Each step settles, a pointer travels to the button a farmer would press, the
- * press lands, and the next screen arrives. The reader can take it over at any
- * point: touching a tab, an arrow or the keyboard stops the playback and leaves
- * the step where they put it.
+ * Guided, it reads as a prototype recording: each step settles, a pointer
+ * travels to the button a farmer would press, the press lands, and the next
+ * screen arrives. Unguided, it is a carousel — the same screens turning over on
+ * their own, with no pointer and nothing joining one to the next, which is what
+ * a set of pages with no flow between them looks like.
  *
- * The frame is the same card the page's pictures use, so the walkthrough is
- * exactly the size of the lead image and advancing never moves the page. The
- * screens are inset within it, centred on a ground taken from the product, so
- * the card reads as a device holding the flow rather than as the flow itself.
- * One screen is a page far taller than the rest: that one keeps the inset width
- * and scrolls, and playback scrolls it to the button before pressing.
+ * It is held in the site's Frame, so a walkthrough is exactly the size of the
+ * pictures around it and advancing never moves the page. The screens are inset
+ * within the frame and centred on its ground, so the frame reads as a device
+ * holding the flow rather than as the flow itself. One screen is a page far
+ * taller than the rest: that one keeps the inset width and scrolls, and
+ * playback scrolls it to the button before pressing.
  */
 
 /* How much of the card the screen takes up. */
@@ -32,10 +33,8 @@ const STEP_MS = DWELL + REACH + PRESS;
 const REST = { x: 44, y: 46 };
 
 export type WalkthroughStep = {
-  /** Names the step in the tab strip. */
+  /** Names the step for anyone reading the page with a screen reader. */
   label: string;
-  /** The line that runs under the frame while this step is showing. */
-  caption: string;
   src: string;
   alt: string;
   /** The screen's own size, which sets the shape it is shown at. */
@@ -43,20 +42,24 @@ export type WalkthroughStep = {
   height: number;
   /**
    * The control a farmer would press to leave this screen, as a percentage of
-   * the screen's own width and height. Playback aims the pointer here.
+   * the screen's own width and height. Guided playback aims the pointer here;
+   * a carousel has no use for it.
    */
-  hotspot: { x: number; y: number };
+  hotspot?: { x: number; y: number };
   /** A page too long to crop into the card, which scrolls inside it instead. */
   tall?: boolean;
 };
 
 export function Walkthrough({
   steps,
-  ground,
+  size = "full",
+  guided = true,
 }: {
   steps: WalkthroughStep[];
-  /** The card's ground, usually a colour lifted from the product itself. */
-  ground?: string;
+  /** Passed through to the frame: full column width, or one of a two-up pair. */
+  size?: FrameSize;
+  /** False turns the pointer off and leaves the screens simply turning over. */
+  guided?: boolean;
 }) {
   const id = useId();
   const [active, setActive] = useState(0);
@@ -71,7 +74,7 @@ export function Walkthrough({
   const frame = useRef<HTMLDivElement>(null);
   const step = steps[active];
 
-  /* Taking control stops the playback rather than fighting it. */
+  /* Stepping by hand stops the playback rather than fighting it. */
   const goTo = useCallback((next: number) => {
     setPlaying(false);
     setPhase(null);
@@ -103,20 +106,27 @@ export function Walkthrough({
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
     setPhase("enter");
+    if (!guided) {
+      const hold = window.setTimeout(
+        () => setActive((i) => (i + 1) % steps.length),
+        STEP_MS,
+      );
+      return () => window.clearTimeout(hold);
+    }
     const timers = [
       window.setTimeout(() => {
         setPhase("reach");
         /* Bring the button into the frame before reaching for it. */
         const el = frame.current;
         if (!el) return;
-        const target = (step.hotspot.y / 100) * el.scrollHeight;
+        const target = ((step.hotspot?.y ?? 50) / 100) * el.scrollHeight;
         el.scrollTo({ top: Math.max(0, target - el.clientHeight * 0.7), behavior: "smooth" });
       }, DWELL),
       window.setTimeout(() => setPhase("press"), DWELL + REACH),
       window.setTimeout(() => setActive((i) => (i + 1) % steps.length), STEP_MS),
     ];
     return () => timers.forEach(window.clearTimeout);
-  }, [active, playing, onScreen, steps.length, step.hotspot.y]);
+  }, [active, playing, onScreen, guided, steps.length, step.hotspot?.y]);
 
   /* Left and right walk the strip, the way a tab list is expected to behave. */
   function onKeyDown(event: KeyboardEvent<HTMLDivElement>) {
@@ -129,65 +139,20 @@ export function Walkthrough({
     if (next === null) return;
     event.preventDefault();
     goTo(next);
-    document.getElementById(`${id}-tab-${next}`)?.focus();
   }
 
   const reaching = phase === "reach" || phase === "press";
 
   return (
-    <figure className="rounded-lg border border-ink/10">
-      <div role="tablist" onKeyDown={onKeyDown} className="flex overflow-x-auto">
-        {steps.map((s, i) => (
-          <button
-            key={s.label}
-            id={`${id}-tab-${i}`}
-            type="button"
-            role="tab"
-            aria-selected={i === active}
-            aria-controls={`${id}-panel`}
-            tabIndex={i === active ? 0 : -1}
-            onClick={() => goTo(i)}
-            className={cn(
-              "flex shrink-0 items-baseline gap-2 border-b px-4 py-3.5 type-label font-semibold whitespace-nowrap transition-colors sm:px-5",
-              i > 0 && "border-l border-l-ink/10",
-              i === active
-                ? "border-b-ink text-ink"
-                : "border-b-ink/10 text-ink/35 hover:text-ink/70",
-            )}
-          >
-            <span aria-hidden="true" className="text-olive">
-              {String(i + 1).padStart(2, "0")}
-            </span>
-            {s.label}
-          </button>
-        ))}
-        {/* Carries the rule to the right edge once the steps run out. */}
-        <span aria-hidden="true" className="grow border-b border-ink/10" />
-      </div>
-
-      {/* How far the current step has left to run. */}
-      <div aria-hidden="true" className="h-px bg-ink/10">
-        {playing && onScreen ? (
-          <div
-            key={active}
-            className="wt-motion h-px origin-left bg-olive"
-            style={{ animation: `wt-progress ${STEP_MS}ms linear forwards` }}
-          />
-        ) : null}
-      </div>
-
-      <div
+    <figure onKeyDown={onKeyDown}>
+      <Frame
+        size={size}
         id={`${id}-panel`}
         ref={frame}
-        role="tabpanel"
-        aria-labelledby={`${id}-tab-${active}`}
+        role="group"
+        aria-label={`${active + 1} of ${steps.length}: ${step.label}`}
         tabIndex={0}
-        className="flex w-full items-center justify-center overflow-y-auto"
-        style={{
-          aspectRatio: CARD_RATIO,
-          maxHeight: CARD_MAX_HEIGHT,
-          backgroundColor: ground ?? "var(--cream)",
-        }}
+        className="flex items-center justify-center overflow-y-auto"
       >
         {/* Sized to the screen's own shape, so the whole screen is shown and the
             pointer's percentages land on the screen rather than on the ground
@@ -212,13 +177,13 @@ export function Walkthrough({
             className={step.tall ? "block w-full" : "block size-full"}
           />
 
-          {phase ? (
+          {guided && phase ? (
             <span
               aria-hidden="true"
               className="wt-motion pointer-events-none absolute transition-[left,top] duration-700 ease-out"
               style={{
-                left: `${reaching ? step.hotspot.x : REST.x}%`,
-                top: `${reaching ? step.hotspot.y : REST.y}%`,
+                left: `${reaching ? (step.hotspot?.x ?? REST.x) : REST.x}%`,
+                top: `${reaching ? (step.hotspot?.y ?? REST.y) : REST.y}%`,
               }}
             >
               {phase === "press" ? (
@@ -231,7 +196,7 @@ export function Walkthrough({
             </span>
           ) : null}
         </div>
-      </div>
+      </Frame>
 
       {/* Fetched with the page so a step never waits on its screen. */}
       <div hidden>
@@ -240,31 +205,6 @@ export function Walkthrough({
         ))}
       </div>
 
-      <figcaption className="flex items-center justify-between gap-6 border-t border-ink/10 px-4 py-3.5 sm:px-5">
-        <p className="max-w-[62ch] type-body text-ink/75">{step.caption}</p>
-        <div className="flex shrink-0 gap-2">
-          <FrameButton
-            label={playing ? "Pause the walkthrough" : "Play the walkthrough"}
-            glyph={playing ? "❚❚" : "▶"}
-            onClick={() => {
-              setPlaying(!playing);
-              if (playing) setPhase(null);
-            }}
-          />
-          <FrameButton
-            label="Previous step"
-            glyph="←"
-            disabled={active === 0}
-            onClick={() => goTo(active - 1)}
-          />
-          <FrameButton
-            label="Next step"
-            glyph="→"
-            disabled={active === last}
-            onClick={() => goTo(active + 1)}
-          />
-        </div>
-      </figcaption>
     </figure>
   );
 }
@@ -281,29 +221,5 @@ function Pointer() {
         strokeLinejoin="round"
       />
     </svg>
-  );
-}
-
-function FrameButton({
-  label,
-  glyph,
-  disabled = false,
-  onClick,
-}: {
-  label: string;
-  glyph: string;
-  disabled?: boolean;
-  onClick: () => void;
-}) {
-  return (
-    <button
-      type="button"
-      aria-label={label}
-      disabled={disabled}
-      onClick={onClick}
-      className="flex size-8 items-center justify-center rounded-lg border border-ink/15 type-caption text-ink/70 transition-colors hover:border-ink/40 hover:text-ink disabled:pointer-events-none disabled:opacity-30"
-    >
-      <span aria-hidden="true">{glyph}</span>
-    </button>
   );
 }

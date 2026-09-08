@@ -6,6 +6,16 @@ import onboardingAccount from "@/assets/farmcloud-onboarding-1-account.webp";
 import onboardingCode from "@/assets/farmcloud-onboarding-3-code.webp";
 import onboardingContact from "@/assets/farmcloud-onboarding-4-contact.webp";
 import onboardingFarmSetup from "@/assets/farmcloud-onboarding-5-farm-setup.webp";
+import afterCrop from "@/assets/farmcloud-after-2-crop.webp";
+import afterElement from "@/assets/farmcloud-after-1-element.webp";
+import afterExpense from "@/assets/farmcloud-after-4-expense.webp";
+import afterInventory from "@/assets/farmcloud-after-3-inventory.webp";
+import afterReport from "@/assets/farmcloud-after-5-report.webp";
+import beforeDashboard from "@/assets/farmcloud-before-1-dashboard.webp";
+import beforeElement from "@/assets/farmcloud-before-3-element.webp";
+import beforeElements from "@/assets/farmcloud-before-2-elements.webp";
+import beforeInventoryPage from "@/assets/farmcloud-before-4-inventory.webp";
+import beforeReports from "@/assets/farmcloud-before-5-reports.webp";
 import onboardingVerify from "@/assets/farmcloud-onboarding-2-verify.webp";
 import researchBoard from "@/assets/farmcloud-research-board.webp";
 import { CaseStudyHero, type MetaRow } from "@/components/CaseStudyHero";
@@ -126,16 +136,10 @@ const responses = [
   },
 ];
 
-/* The dark green FarmCloud sets beside its sign-up form, sampled from the
-   screen itself, so the card the flow sits in belongs to the product. */
-const FARM_GREEN = "#062e17";
-
 /* The three rebuilt steps, in the order a farmer meets them. */
 const onboarding: WalkthroughStep[] = [
   {
     label: "Your account",
-    caption:
-      "An email is optional once a mobile number is given, and every field says what it is for.",
     src: onboardingAccount,
     width: 1600,
     height: 1198,
@@ -144,8 +148,6 @@ const onboarding: WalkthroughStep[] = [
   },
   {
     label: "Send the code",
-    caption:
-      "The code goes to whichever the farmer gave, so an address is never the price of entry.",
     src: onboardingVerify,
     width: 1600,
     height: 1125,
@@ -154,8 +156,6 @@ const onboarding: WalkthroughStep[] = [
   },
   {
     label: "Enter the code",
-    caption:
-      "Six digits, with a way back if it never arrives and a switch to the other channel.",
     src: onboardingCode,
     width: 1600,
     height: 1125,
@@ -164,8 +164,6 @@ const onboarding: WalkthroughStep[] = [
   },
   {
     label: "Contact preference",
-    caption:
-      "The farmer picks the one channel they check, and it carries alerts rather than marketing.",
     src: onboardingContact,
     width: 1600,
     height: 1125,
@@ -174,13 +172,102 @@ const onboarding: WalkthroughStep[] = [
   },
   {
     label: "Farm setup",
-    caption: "Two grouped parts: the general farm profile, then its operational data.",
     src: onboardingFarmSetup,
     width: 1600,
     height: 2356,
     hotspot: { x: 78.4, y: 95 },
     tall: true,
     alt: "Step 3 of 3, Farm setup: a general farm profile section above an operational data section",
+  },
+];
+
+/* What the second round of research found, and the flow it produced. */
+const lifecycle = [
+  {
+    label: "Where it stood",
+    items: [
+      "The rebuilt onboarding lifted self-onboarding by 70%.",
+      "Analytics then showed farmers leaving straight after it. One was still actively using the platform.",
+    ],
+  },
+  {
+    label: "A second round of research",
+    items: [
+      "Shadow sessions with 7 farmers who already held accounts, watching how they worked rather than asking them.",
+    ],
+  },
+  {
+    label: "What it showed",
+    items: [
+      "Farmers were already keeping records, spread across notebooks and separate logs.",
+      "The platform carried the same fragmentation instead of resolving it.",
+      "Work is followed by stage of production: before planting, during it, and after harvest.",
+      "The crop is what all of it hangs on. Without a crop there is no farming, and without farming there is nothing to record, so every process now sits before, during or after one.",
+    ],
+  },
+  {
+    label: "The flow it produced",
+    items: [
+      "A new farm opens on the dashboard.",
+      "Add the section of the farm being planted, then the crop going into it.",
+      "Add the inventory, whether for that crop or everything the farm holds.",
+      "Logging an item offers to raise the expense against it, left to the farmer to take or leave.",
+      "A daily work report records what was used, and takes that amount off the inventory item.",
+    ],
+  },
+];
+
+/* The pages as they stand on their own, with nothing joining one to the next. */
+const lifecycleBefore: WalkthroughStep[] = [
+  { label: "Summary", src: beforeDashboard, width: 1600, height: 1125, alt: "The FarmCloud summary dashboard" },
+  { label: "Farm elements", src: beforeElements, width: 1600, height: 1125, alt: "The farm elements list" },
+  { label: "A farm element", src: beforeElement, width: 1600, height: 1125, alt: "One farm element and the plants in it" },
+  { label: "Farm inventory", src: beforeInventoryPage, width: 1600, height: 1125, alt: "The farm inventory list" },
+  { label: "Daily work reports", src: beforeReports, width: 1600, height: 1125, alt: "The daily work reports page" },
+];
+
+/* The same product walked in the order a season is actually recorded, each
+   step logged against the crop the one before it set up. */
+const lifecycleAfter: WalkthroughStep[] = [
+  {
+    label: "The land",
+    src: afterElement,
+    width: 1600,
+    height: 1125,
+    hotspot: { x: 75.5, y: 67.2 },
+    alt: "Farm elements with the add greenhouse dialog open",
+  },
+  {
+    label: "The crop",
+    src: afterCrop,
+    width: 1600,
+    height: 1125,
+    hotspot: { x: 64.6, y: 67 },
+    alt: "A farm element with the dialog asking what type of record to add",
+  },
+  {
+    label: "The inputs",
+    src: afterInventory,
+    width: 1600,
+    height: 1125,
+    hotspot: { x: 75.5, y: 69.5 },
+    alt: "Farm inventory with the add fertilizer dialog open",
+  },
+  {
+    label: "What it cost",
+    src: afterExpense,
+    width: 1600,
+    height: 1125,
+    hotspot: { x: 75.5, y: 69.5 },
+    alt: "The same dialog with the create associated expense switch turned on",
+  },
+  {
+    label: "The work done",
+    src: afterReport,
+    width: 1600,
+    height: 1125,
+    hotspot: { x: 86.5, y: 81.6 },
+    alt: "Daily work reports with a report open against the crop",
   },
 ];
 
@@ -249,9 +336,23 @@ function FarmCloud() {
 
       <CaseStudySection
         title="What we did with the findings"
-        figure={<Walkthrough steps={onboarding} ground={FARM_GREEN} />}
+        figure={<Walkthrough steps={onboarding} />}
       >
         {responses.map((block) => (
+          <FactList key={block.label} label={block.label} items={block.items} />
+        ))}
+      </CaseStudySection>
+
+      <CaseStudySection
+        title="The Crop Lifecycle Framework"
+        figure={
+          <div className="grid gap-8 lg:grid-cols-2">
+            <Walkthrough steps={lifecycleBefore} size="half" guided={false} />
+            <Walkthrough steps={lifecycleAfter} size="half" />
+          </div>
+        }
+      >
+        {lifecycle.map((block) => (
           <FactList key={block.label} label={block.label} items={block.items} />
         ))}
       </CaseStudySection>
