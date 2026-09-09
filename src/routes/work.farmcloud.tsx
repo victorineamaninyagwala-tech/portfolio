@@ -18,7 +18,7 @@ import beforeInventoryPage from "@/assets/farmcloud-before-4-inventory.webp";
 import beforeReports from "@/assets/farmcloud-before-5-reports.webp";
 import onboardingVerify from "@/assets/farmcloud-onboarding-2-verify.webp";
 import researchBoard from "@/assets/farmcloud-research-board.webp";
-import { CaseStudyHero, type MetaRow } from "@/components/CaseStudyHero";
+import { CaseStudyHero, type MetaRow, type Outcome } from "@/components/CaseStudyHero";
 import {
   CaseStudySection,
   FactList,
@@ -26,6 +26,7 @@ import {
   SectionImage,
   Subhead,
 } from "@/components/CaseStudySection";
+import { MoreWork } from "@/components/MoreWork";
 import { Walkthrough, type WalkthroughStep } from "@/components/Walkthrough";
 
 export const Route = createFileRoute("/work/farmcloud")({
@@ -53,6 +54,14 @@ const meta: MetaRow[] = [
   { label: "Year", value: "Dec 2023 – Mar 2026" },
   { label: "Role", value: "Sole Product Designer" },
   { label: "Reach", value: "5,000+ farmers · 14 countries" },
+];
+
+/* What the work came to, carried at the top of the page. */
+const outcomes: Outcome[] = [
+  { figure: "5,000+", note: "Farmers actively using FarmCloud" },
+  { figure: "70%", note: "Self-onboarding success, up from 10% on the legacy system" },
+  { figure: "6 / 7", note: "Core surfaces originated from research findings" },
+  { figure: "14", note: "Countries reached across East and Southern Africa" },
 ];
 
 /* The usability test of the legacy system, as blocks rather than prose. */
@@ -344,6 +353,7 @@ function FarmCloud() {
     <CaseStudyHero
       title="FarmCloud"
       meta={meta}
+      outcomes={outcomes}
       deck="FarmCloud is a simple farm record keeping platform. It logs all your farm activities, tracks income and expenses, manages your inventory, and connects you to the market."
       image={{
         src: heroImage,
@@ -439,6 +449,8 @@ function FarmCloud() {
           </div>
         ))}
       </CaseStudySection>
+
+      <MoreWork current="farmcloud" />
     </CaseStudyHero>
   );
 }
