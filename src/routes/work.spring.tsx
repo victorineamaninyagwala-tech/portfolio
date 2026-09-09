@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 
 import { CaseStudyHero, type MetaRow } from "@/components/CaseStudyHero";
+import { MoreWork } from "@/components/MoreWork";
 
 export const Route = createFileRoute("/work/spring")({
   head: () => ({
@@ -28,6 +29,8 @@ function SpringOnTheGo() {
       meta={meta}
       deck="A Kenyan convenience retailer with a strong marketing presence and a digital shopping journey that was not keeping up with it. Audited end to end, then rebuilt the homepage around intent rather than inventory."
       note="Not commissioned and not implemented. An independent exercise based on publicly available information and direct evaluation."
-    />
+    >
+      <MoreWork current="spring" />
+    </CaseStudyHero>
   );
 }

@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 
 import { CaseStudyHero, type MetaRow } from "@/components/CaseStudyHero";
+import { MoreWork } from "@/components/MoreWork";
 
 export const Route = createFileRoute("/work/soulshape")({
   head: () => ({
@@ -27,6 +28,8 @@ function SoulShape() {
       title="SoulShape"
       meta={meta}
       deck="A care coordination platform for multi-disciplinary weight-loss programs, built around the principle that raw data stays, meaning moves, and continuity persists."
-    />
+    >
+      <MoreWork current="soulshape" />
+    </CaseStudyHero>
   );
 }

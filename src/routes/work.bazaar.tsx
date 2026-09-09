@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 
 import { CaseStudyHero, type MetaRow } from "@/components/CaseStudyHero";
+import { MoreWork } from "@/components/MoreWork";
 
 export const Route = createFileRoute("/work/bazaar")({
   head: () => ({
@@ -27,6 +28,8 @@ function Bazaar() {
       title="Bazaar"
       meta={meta}
       deck="Independent shops earn real trust in person, but none of it carries online. Bazaar gives each shop its own branded, verified storefront on shared infrastructure a stranger can safely buy through."
-    />
+    >
+      <MoreWork current="bazaar" />
+    </CaseStudyHero>
   );
 }

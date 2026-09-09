@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 
 import { CaseStudyHero, type MetaRow } from "@/components/CaseStudyHero";
+import { MoreWork } from "@/components/MoreWork";
 
 export const Route = createFileRoute("/work/ai-design-system")({
   head: () => ({
@@ -27,6 +28,8 @@ function AiDesignSystem() {
       title="A design system an AI agent can operate"
       meta={meta}
       deck="Don't use AI to build a design system. Build a design system an AI agent can use, then hand it real maintenance tasks and see whether the structure alone is enough for it to make the right calls."
-    />
+    >
+      <MoreWork current="ai-design-system" />
+    </CaseStudyHero>
   );
 }
