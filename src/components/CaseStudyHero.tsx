@@ -22,6 +22,7 @@ export function CaseStudyHero({
   note,
   outcomes,
   image,
+  media,
   children,
 }: {
   title: string;
@@ -32,6 +33,8 @@ export function CaseStudyHero({
   /** What the work came to, stated up front rather than saved for the end. */
   outcomes?: Outcome[];
   image?: { src: string; alt: string; width: number; height: number };
+  /** Leads the page in place of a still, for a case study whose subject moves. */
+  media?: ReactNode;
   /** The sections below the lead image. */
   children?: ReactNode;
 }) {
@@ -75,7 +78,9 @@ export function CaseStudyHero({
           </Enclosure>
         ) : null}
 
-        {image ? (
+        {media ?? null}
+
+        {image && !media ? (
           <ImageCard
             src={image.src}
             alt={image.alt}

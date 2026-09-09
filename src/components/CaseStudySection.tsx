@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 
 import { Gutter, ImageCard, Label } from "@/components/primitives";
+import { cn } from "@/lib/utils";
 
 /*
  * A movement of a case study: its heading on the left, the writing on the right.
@@ -18,7 +19,8 @@ export function CaseStudySection({
   children,
   columns = 2,
 }: {
-  title: string;
+  /** Optional: a section can open straight into its writing. */
+  title?: string;
   /** The page title is set left, so sections follow it unless one is
    *  deliberately hung off the right edge. */
   align?: "left" | "right";
@@ -40,21 +42,23 @@ export function CaseStudySection({
           of the screen. */}
       <Gutter>
         <div className="border-t border-ink/10 pt-12 pb-16 sm:pt-16 sm:pb-24">
-          <div className="grid grid-cols-12">
-            <h2
-              className={
-                align === "right" && media
-                  ? "col-span-12 type-headline text-right md:col-span-6 md:col-start-7"
-                  : align === "right"
-                    ? "col-span-12 type-headline text-right"
-                    : "col-span-12 type-headline"
-              }
-            >
-              {title}
-            </h2>
-          </div>
+          {title ? (
+            <div className="grid grid-cols-12">
+              <h2
+                className={
+                  align === "right" && media
+                    ? "col-span-12 type-headline text-right md:col-span-6 md:col-start-7"
+                    : align === "right"
+                      ? "col-span-12 type-headline text-right"
+                      : "col-span-12 type-headline"
+                }
+              >
+                {title}
+              </h2>
+            </div>
+          ) : null}
           {children ? (
-            <div className="mt-10 grid grid-cols-12 gap-y-10 sm:mt-14">
+            <div className={cn("grid grid-cols-12 gap-y-10", title && "mt-10 sm:mt-14")}>
               {media ? (
                 <>
                   <div className="col-span-12 md:col-span-5">{media}</div>
@@ -93,12 +97,31 @@ export function Subhead({ children }: { children: ReactNode }) {
  * A paragraph of case study prose.
  *
  * The measure is capped at 62ch so the line length stays readable on a wide
- * screen, and ml-auto pins the capped block to the right of its column — the
- * cap would otherwise eat into the right edge and the text would no longer
- * line up with the image above it.
+ * screen. Beside a picture the cap is pinned right, or the paragraph would pull
+ * away from the edge the picture above it sits on; on its own it starts at the
+ * left like everything else on the page.
  */
-export function Prose({ children }: { children: ReactNode }) {
-  return <p className="ml-auto max-w-[62ch] type-body-lg text-ink/75">{children}</p>;
+export function Prose({
+  children,
+  align = "left",
+  wide = false,
+}: {
+  children: ReactNode;
+  align?: "left" | "right";
+  /** A longer measure, for a paragraph that has the whole column to itself. */
+  wide?: boolean;
+}) {
+  return (
+    <p
+      className={cn(
+        "type-body-lg text-ink/75",
+        wide ? "max-w-[92ch]" : "max-w-[62ch]",
+        align === "right" && "ml-auto",
+      )}
+    >
+      {children}
+    </p>
+  );
 }
 
 /*

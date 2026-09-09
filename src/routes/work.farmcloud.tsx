@@ -375,15 +375,15 @@ function FarmCloud() {
           />
         }
       >
-        <Prose>
+        <Prose align="right">
           Onboarding ran through agents. A farmer was signed up in person, by staff, and
           self-onboarding barely happened.
         </Prose>
-        <Prose>
+        <Prose align="right">
           The system did not carry Synnefa&apos;s branding or its tone either, so the product a
           farmer used did not read as the company&apos;s own.
         </Prose>
-        <Prose>
+        <Prose align="right">
           And once a farmer was onboarded, they did not come back. Farmers simply stopped
           using it after sign-up. It was a shell.
         </Prose>
