@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 
 import { Enclosure, EnclosureCell, Gutter, Label } from "@/components/primitives";
 import { LetterSwapHeading } from "@/components/LetterSwapHeading";
+import { MochisMedia } from "@/components/MochisMedia";
 import { ProjectMedia } from "@/components/ProjectMedia";
 import { WorkHistoryList } from "@/components/WorkHistoryList";
 import { projects } from "@/data/projects";
@@ -133,8 +134,13 @@ function Index() {
                 data-cursor="view"
               >
                 {/* One still per project for now; only FarmCloud carries a
-                    sequence, so only it names a mask to open through. */}
-                <ProjectMedia images={p.images ?? []} maskSrc={p.mask} />
+                    sequence, so only it names a mask to open through, and only
+                    Mochi's puts its own homepage together out of its cover. */}
+                {p.hover === "assemble" ? (
+                  <MochisMedia alt={p.images?.[0]?.alt ?? ""} />
+                ) : (
+                  <ProjectMedia images={p.images ?? []} maskSrc={p.mask} />
+                )}
                 <div className="mt-4">
                   {/* Wraps rather than truncating: one title runs to nine words. */}
                   <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
