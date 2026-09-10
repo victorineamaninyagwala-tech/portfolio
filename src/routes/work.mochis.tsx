@@ -93,87 +93,24 @@ const learnt = [
 
 /* The flow as charted: home, through the gate, to the menu and the product,
    reviewed, and only then the guest choice that sits immediately before
-   payment. Tracking follows payment, and support follows tracking. */
+   payment. Tracking follows payment, and support follows tracking.
+
+   Captured at the size they are shown at, so the screens read rather than
+   being shrunk into the card. A page longer than the card keeps the card's
+   width and scrolls. */
+const DESK = { width: 1280, height: 800 };
+
 const flow: WalkthroughStep[] = [
-  {
-    label: "Home",
-    src: flowHome,
-    width: 1600,
-    height: 1000,
-    hotspot: { x: 19.3, y: 74.3 },
-    alt: "The Mochi's Brew home screen, with an order waiting to be started",
-  },
-  {
-    label: "Location Gate",
-    src: flowLocation,
-    width: 1600,
-    height: 1000,
-    hotspot: { x: 72.7, y: 32.7 },
-    alt: "Where are you ordering from: permission, manual entry, the radius check and store hours",
-  },
-  {
-    label: "Within Range",
-    src: flowLocationOk,
-    width: 1600,
-    height: 1000,
-    hotspot: { x: 72.7, y: 35.3 },
-    alt: "You are within pickup range: the shop pinned inside its 20km service radius, with the way through to the menu",
-  },
-  {
-    label: "Browse Menu",
-    src: flowMenu,
-    width: 1600,
-    height: 1000,
-    hotspot: { x: 35.5, y: 36.5 },
-    alt: "The menu: categories, search, product cards and availability",
-  },
-  {
-    label: "Product Details",
-    src: flowProduct,
-    width: 1600,
-    height: 1431,
-    hotspot: { x: 55.3, y: 37 },
-    alt: "A cappuccino: core configuration, customisation, fulfilment timing and product information",
-  },
-  {
-    label: "Review Order",
-    src: flowReview,
-    width: 1600,
-    height: 1133,
-    hotspot: { x: 76, y: 37.2 },
-    alt: "Review your order: the summary, the item breakdown, the price and the ways back out of it",
-  },
-  {
-    label: "Guest Checkout",
-    src: flowGuest,
-    width: 1600,
-    height: 1133,
-    hotspot: { x: 50, y: 52.1 },
-    alt: "How do you want to continue: carry on as a guest, or sign in",
-  },
-  {
-    label: "Payment",
-    src: flowPayment,
-    width: 1600,
-    height: 1115,
-    hotspot: { x: 76, y: 47.5 },
-    alt: "Payment: method selection, and the validation run at submission",
-  },
-  {
-    label: "Track Order",
-    src: flowTrack,
-    width: 1600,
-    height: 1000,
-    hotspot: { x: 76, y: 54.5 },
-    alt: "Order status: order ID, pickup code, queue status, milestone states and notifications",
-  },
-  {
-    label: "Support",
-    src: flowSupport,
-    width: 1600,
-    height: 1000,
-    alt: "Need help: fallback states, a manual status check, and a way to escalate",
-  },
+  { label: "Home", src: flowHome, ...DESK, hotspot: { x: 15.6, y: 77.3 }, alt: "The Mochi's Brew home screen, with an order waiting to be started" },
+  { label: "Location Gate", src: flowLocation, width: 1280, height: 885, hotspot: { x: 76, y: 36.9 }, alt: "Where are you ordering from: permission, manual entry, the radius check and store hours" },
+  { label: "Within Range", src: flowLocationOk, width: 1280, height: 885, hotspot: { x: 76, y: 39.9 }, alt: "You are within pickup range, with the way through to the menu" },
+  { label: "Browse Menu", src: flowMenu, ...DESK, hotspot: { x: 34.6, y: 44.6 }, alt: "The menu: categories, search, product cards and availability" },
+  { label: "Product Details", src: flowProduct, width: 1280, height: 1431, hotspot: { x: 55.2, y: 37 }, tall: true, alt: "A cappuccino: core configuration, customisation, fulfilment timing and product information" },
+  { label: "Review Order", src: flowReview, width: 1280, height: 1146, hotspot: { x: 79.8, y: 36.8 }, tall: true, alt: "Review your order: the summary, the item breakdown, the price and the ways back out of it" },
+  { label: "Guest Checkout", src: flowGuest, width: 1280, height: 1146, hotspot: { x: 50, y: 52.1 }, tall: true, alt: "How do you want to continue: carry on as a guest, or sign in" },
+  { label: "Payment", src: flowPayment, width: 1280, height: 1115, hotspot: { x: 79.8, y: 47.5 }, tall: true, alt: "Payment: method selection, and the validation run at submission" },
+  { label: "Track Order", src: flowTrack, ...DESK, hotspot: { x: 79.8, y: 68.1 }, alt: "Order status: order ID, pickup code, queue status, milestone states and notifications" },
+  { label: "Support", src: flowSupport, ...DESK, alt: "Need help: fallback states, a manual status check, and a way to escalate" },
 ];
 
 /* The same order on the phone it was designed for. */
@@ -191,15 +128,16 @@ const phoneFlow: WalkthroughStep[] = [
   { label: "Track Order", src: phoneTrack, ...PHONE, alt: "Order status on a phone, with the pickup code" },
 ];
 
-/* The system the flow is drawn from. */
+/* The system the flow is drawn from. A board taller than the card is shown at
+   a size that can be read and panned, rather than shrunk until it cannot. */
 const system: WalkthroughStep[] = [
   { label: "Colour", src: systemColour, width: 1600, height: 636, alt: "The colour palettes, each ramp from 50 to 900" },
-  { label: "Typography", src: systemTypography, width: 1600, height: 3607, alt: "The type scale and its roles" },
-  { label: "Tokens", src: systemTokens, width: 1600, height: 2153, alt: "The tokens the components read from" },
+  { label: "Typography", src: systemTypography, width: 1600, height: 3607, tall: true, alt: "The type scale and its roles" },
+  { label: "Tokens", src: systemTokens, width: 1600, height: 2153, tall: true, alt: "The tokens the components read from" },
   { label: "Grid", src: systemGrid, width: 1600, height: 944, alt: "The grid the layouts sit on" },
-  { label: "Spacing", src: systemSpacing, width: 1600, height: 1502, alt: "The spacing scale" },
-  { label: "Radius", src: systemRadius, width: 1600, height: 1502, alt: "The corner radii" },
-  { label: "Icons", src: systemIcons, width: 1600, height: 2644, alt: "The icon set" },
+  { label: "Spacing", src: systemSpacing, width: 1600, height: 1502, tall: true, alt: "The spacing scale" },
+  { label: "Radius", src: systemRadius, width: 1600, height: 1502, tall: true, alt: "The corner radii" },
+  { label: "Icons", src: systemIcons, width: 1600, height: 2644, tall: true, alt: "The icon set" },
 ];
 
 const meta: MetaRow[] = [
@@ -215,7 +153,7 @@ function MochisBrew() {
       title="Mochi's Brew"
       meta={meta}
       deck="Designing a pickup ordering flow for Kenyan coffee shops. A service flow for on the go customers."
-      media={<Walkthrough steps={flow} />}
+      media={<Walkthrough steps={flow} ratio="1280 / 800" />}
     >
       <CaseStudySection columns={1}>
         {/* Two sides: what the research was, on the left; what it turned up and
@@ -291,7 +229,7 @@ function MochisBrew() {
             </Prose>
           </div>
 
-          <Walkthrough steps={phoneFlow} size="half" />
+          <Walkthrough steps={phoneFlow} size="half" ratio="430 / 932" fit="height" />
         </div>
       </CaseStudySection>
 

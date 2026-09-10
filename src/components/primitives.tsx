@@ -132,8 +132,9 @@ export function EnclosureCell({ className, children }: { className?: string; chi
  * the viewport, so a reader takes a whole frame in without scrolling.
  *
  * Two sizes: `full` spans the content column, `half` sits in a two-up grid and
- * so needs a smaller share of the screen. Anything else about it — the ratio,
- * the ground, the corner — is one edit here.
+ * so needs a smaller share of the screen. A frame holding something of another
+ * shape entirely — a phone, say — can name its own ratio; everything else about
+ * it stays one edit here.
  */
 export const FRAME_RATIO = "4 / 3";
 
@@ -143,6 +144,8 @@ export type FrameSize = keyof typeof FRAME_MAX_HEIGHT;
 
 export function Frame({
   size = "full",
+  ratio = FRAME_RATIO,
+  fit = "width",
   className,
   style,
   children,
@@ -150,6 +153,14 @@ export function Frame({
   ...rest
 }: {
   size?: FrameSize;
+  /** The frame's shape. Defaults to the one the whole site uses. */
+  ratio?: string;
+  /**
+   * Which side the frame takes its measure from. A landscape frame fills the
+   * column and lets the cap trim its height; a portrait one is the other way
+   * round, since filling the column would make a phone taller than the page.
+   */
+  fit?: "width" | "height";
   className?: string;
   children?: ReactNode;
   /** So a caller can measure or scroll the frame it owns. */
@@ -158,8 +169,16 @@ export function Frame({
   return (
     <div
       ref={ref}
-      className={cn("w-full overflow-hidden rounded-lg bg-ground", className)}
-      style={{ aspectRatio: FRAME_RATIO, maxHeight: FRAME_MAX_HEIGHT[size], ...style }}
+      className={cn(
+        "overflow-hidden rounded-lg bg-ground",
+        fit === "width" ? "w-full" : "mx-auto max-w-full",
+        className,
+      )}
+      style={
+        fit === "width"
+          ? { aspectRatio: ratio, maxHeight: FRAME_MAX_HEIGHT[size], ...style }
+          : { aspectRatio: ratio, height: FRAME_MAX_HEIGHT[size], ...style }
+      }
       {...rest}
     >
       {children}

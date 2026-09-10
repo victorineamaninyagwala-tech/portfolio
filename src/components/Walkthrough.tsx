@@ -20,14 +20,27 @@ import { cn } from "@/lib/utils";
  * playback scrolls it to the button before pressing.
  */
 
-/* How much of the card the screen takes up. */
-const SCREEN_SIZE = "80%";
+/* How much of the card the screen takes up. Close to all of it: a screen set
+   much smaller than this stops being readable. */
+const SCREEN_SIZE = "94%";
 
 /* One beat of playback, in milliseconds. */
 const DWELL = 1900;
 const REACH = 750;
 const PRESS = 420;
 const STEP_MS = DWELL + REACH + PRESS;
+
+/* A board taller than its card is not shrunk to fit, because that is what
+   makes it unreadable. It is shown at a size that can be read and panned
+   instead: a beat to take in the top, a slow travel down at a reading pace,
+   and a beat at the foot before the next board. */
+const READ_TOP = 2200;
+const READ_FOOT = 1400;
+const PAN_PX_PER_SECOND = 110;
+const PAN_MAX = 16000;
+
+const panDuration = (overflow: number) =>
+  Math.min(PAN_MAX, Math.round((overflow / PAN_PX_PER_SECOND) * 1000));
 
 /* Where the pointer waits before it sets off. */
 const REST = { x: 44, y: 46 };
@@ -53,11 +66,18 @@ export type WalkthroughStep = {
 export function Walkthrough({
   steps,
   size = "full",
+  ratio,
+  fit,
   guided = true,
 }: {
   steps: WalkthroughStep[];
   /** Passed through to the frame: full column width, or one of a two-up pair. */
   size?: FrameSize;
+  /** The frame's shape, for a flow that is not the site's usual landscape:
+   *  a phone wants a portrait card. */
+  ratio?: string;
+  /** Passed through to the frame: a portrait flow measures from its height. */
+  fit?: "width" | "height";
   /** False turns the pointer off and leaves the screens simply turning over. */
   guided?: boolean;
 }) {
@@ -100,19 +120,49 @@ export function Walkthrough({
     return () => observer.disconnect();
   }, []);
 
-  /* The beats of one step: settle, reach for the button, press, move on. */
+  /* The beats of one step: settle, reach for the button, press, move on.
+     A carousel has no button to press, so a board that overflows its card is
+     panned instead, slowly enough to be read. */
   useEffect(() => {
     if (!playing || !onScreen) return;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
     setPhase("enter");
+    const advance = () => setActive((i) => (i + 1) % steps.length);
+
     if (!guided) {
-      const hold = window.setTimeout(
-        () => setActive((i) => (i + 1) % steps.length),
-        STEP_MS,
+      const el = frame.current;
+      const overflow = el ? el.scrollHeight - el.clientHeight : 0;
+      if (overflow <= 4) {
+        const hold = window.setTimeout(advance, STEP_MS);
+        return () => window.clearTimeout(hold);
+      }
+
+      const travel = panDuration(overflow);
+      let raf = 0;
+      let start = 0;
+      const timers: number[] = [];
+
+      timers.push(
+        window.setTimeout(() => {
+          /* Linear, because the eye is reading rather than being swept. */
+          const tick = (now: number) => {
+            if (!start) start = now;
+            const t = Math.min(1, (now - start) / travel);
+            if (frame.current) frame.current.scrollTop = overflow * t;
+            if (t < 1) raf = window.requestAnimationFrame(tick);
+          };
+          raf = window.requestAnimationFrame(tick);
+        }, READ_TOP),
       );
-      return () => window.clearTimeout(hold);
+      timers.push(window.setTimeout(advance, READ_TOP + travel + READ_FOOT));
+
+      return () => {
+        timers.forEach(window.clearTimeout);
+        window.cancelAnimationFrame(raf);
+      };
     }
+
     const timers = [
       window.setTimeout(() => {
         setPhase("reach");
@@ -123,7 +173,7 @@ export function Walkthrough({
         el.scrollTo({ top: Math.max(0, target - el.clientHeight * 0.7), behavior: "smooth" });
       }, DWELL),
       window.setTimeout(() => setPhase("press"), DWELL + REACH),
-      window.setTimeout(() => setActive((i) => (i + 1) % steps.length), STEP_MS),
+      window.setTimeout(advance, STEP_MS),
     ];
     return () => timers.forEach(window.clearTimeout);
   }, [active, playing, onScreen, guided, steps.length, step.hotspot?.y]);
@@ -147,6 +197,8 @@ export function Walkthrough({
     <figure onKeyDown={onKeyDown}>
       <Frame
         size={size}
+        ratio={ratio}
+        fit={fit}
         id={`${id}-panel`}
         ref={frame}
         role="group"
