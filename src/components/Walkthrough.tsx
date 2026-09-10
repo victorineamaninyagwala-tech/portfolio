@@ -204,7 +204,10 @@ export function Walkthrough({
         role="group"
         aria-label={`${active + 1} of ${steps.length}: ${step.label}`}
         tabIndex={0}
-        className="flex items-center justify-center overflow-y-auto"
+        /* Safe centring: a screen that fits is centred, one that overflows is
+           aligned to the top instead. Plain centring would push its head above
+           the scroll origin, where it can never be reached. */
+        className="flex [align-items:safe_center] justify-center overflow-y-auto"
       >
         {/* Sized to the screen's own shape, so the whole screen is shown and the
             pointer's percentages land on the screen rather than on the ground
