@@ -3,7 +3,7 @@ import bazaarCard from "@/assets/card-bazaar.webp";
 import mochisCard from "@/assets/card-mochis.webp";
 import soulshapeCard from "@/assets/card-soulshape.webp";
 import springCard from "@/assets/card-spring.webp";
-import farmcloudField from "@/assets/farmcloud-research-field.webp";
+import farmcloudWatering from "@/assets/farmcloud-card-watering.webp";
 import farmcloudHero from "@/assets/farmcloud-hero.webp";
 import farmcloudPeppers from "@/assets/farmcloud-research-peppers.webp";
 import synnefaMark from "@/assets/synnefa-mark.svg";
@@ -20,6 +20,9 @@ export type Project = {
   images?: Array<{ src: string; alt: string; fit?: boolean; hideBottom?: number }>;
   /** Logo the hover carousel opens through. Only set where a sequence exists. */
   mask?: string;
+  /** Set where the card builds its own subject on hover rather than turning
+   *  over a sequence of stills. */
+  hover?: "assemble";
 };
 
 export const projects: Project[] = [
@@ -32,9 +35,8 @@ export const projects: Project[] = [
       // Order drives the hover sequence: rest image, then the mark reveals the
       // dashboard, which is the only slide that zooms out onto the green.
       {
-        src: farmcloudField,
-        alt: "Two farmers reviewing crop data on a phone in a greenhouse",
-        hideBottom: 0.1,
+        src: farmcloudWatering,
+        alt: "A farmer watering young plants, seen from among the leaves",
       },
       {
         src: farmcloudHero,
@@ -52,13 +54,14 @@ export const projects: Project[] = [
     slug: "soulshape",
     title: "SoulShape",
     discipline: "UX · Healthcare · Systems Design",
-    images: [{ src: soulshapeCard, alt: "The SoulShape sign-up screen on a desktop in a clinic waiting room" }],
+    images: [{ src: soulshapeCard, alt: "A runner mid-stride, caught in motion blur against a warm ground" }],
   },
   {
     slug: "mochis",
     title: "Mochi's Brew",
     discipline: "UX · Service Design · F&B",
-    images: [{ src: mochisCard, alt: "The Mochi's Brew ordering flow on a phone" }],
+    hover: "assemble",
+    images: [{ src: mochisCard, alt: "The shop itself: a plant-filled room, the counter and the menu board behind it" }],
     status: "In progress",
   },
   {
