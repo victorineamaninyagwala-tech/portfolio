@@ -5,7 +5,7 @@ import { LetterSwapHeading } from "@/components/LetterSwapHeading";
 import { MochisMedia } from "@/components/MochisMedia";
 import { ProjectMedia } from "@/components/ProjectMedia";
 import { WorkHistoryList } from "@/components/WorkHistoryList";
-import { projects } from "@/data/projects";
+import { listed } from "@/data/projects";
 import { shareImage } from "@/lib/share";
 
 
@@ -98,11 +98,13 @@ function Index() {
               data-cursor-label=""
               className="letter-swap type-display"
             />
-            <Label className="text-ink/60 sm:shrink-0">01 / 06</Label>
+            <Label className="text-ink/60 sm:shrink-0">
+              01 / {String(listed.length).padStart(2, "0")}
+            </Label>
           </div>
 
           <div className="grid grid-cols-1 gap-x-2 gap-y-10 sm:grid-cols-3">
-            {projects.map((p) => (
+            {listed.map((p) => (
               <a
                 key={p.slug}
                 href={`/work/${p.slug}`}

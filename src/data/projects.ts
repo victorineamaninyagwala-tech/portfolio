@@ -23,9 +23,13 @@ export type Project = {
   /** Set where the card builds its own subject on hover rather than turning
    *  over a sequence of stills. */
   hover?: "assemble";
+  /** A case study that is not finished. Its route still answers, for anyone
+   *  holding the link, but it is listed nowhere — not the homepage grid, not
+   *  the footer, not the way on at the foot of another study. */
+  unlisted?: boolean;
 };
 
-export const projects: Project[] = [
+const all: Project[] = [
   {
     slug: "farmcloud",
     title: "FarmCloud",
@@ -66,12 +70,14 @@ export const projects: Project[] = [
   },
   {
     slug: "bazaar",
+    unlisted: true,
     title: "Bazaar",
     discipline: "Product Strategy · Marketplace · Systems Design",
     images: [{ src: bazaarCard, alt: "The Bazaar wordmark debossed into cream paper stock" }],
   },
   {
     slug: "ai-design-system",
+    unlisted: true,
     title: "A design system an AI agent can operate",
     discipline: "Design Systems · Tokens · AI",
     images: [{ src: aiDesignSystemCard, alt: "A design token chain, one base colour branching into tonal ramps" }],
@@ -79,8 +85,19 @@ export const projects: Project[] = [
   },
   {
     slug: "spring",
+    unlisted: true,
     title: "Spring On The Go",
     discipline: "UX · Ecommerce · Audit & Redesign",
     images: [{ src: springCard, alt: "The redesigned Spring On The Go grocery homepage on a tablet" }],
   },
 ];
+
+/** Every project, finished or not. What the site shows is `listed`, below. */
+export const projects = all;
+
+/**
+ * The projects the site shows. The homepage grid, the footer column and the
+ * way on at the foot of a case study all read this one, so an unfinished study
+ * disappears from all three at once and comes back the same way.
+ */
+export const listed = all.filter((p) => !p.unlisted);

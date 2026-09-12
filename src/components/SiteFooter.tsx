@@ -1,5 +1,5 @@
 import { Enclosure, EnclosureCell, Gutter, Label, Pill, TextLink } from "@/components/primitives";
-import { projects } from "@/data/projects";
+import { listed } from "@/data/projects";
 
 /*
  * The site footer. Rendered once from the root route, so it persists on every
@@ -26,7 +26,7 @@ const columns: Array<{
   },
   {
     label: "Selected works",
-    items: projects.map((p) => ({ text: p.title, href: `/work/${p.slug}` })),
+    items: listed.map((p) => ({ text: p.title, href: `/work/${p.slug}` })),
   },
   {
     label: "Info",

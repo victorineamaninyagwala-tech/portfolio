@@ -1,24 +1,25 @@
 import { Gutter } from "@/components/primitives";
-import { projects } from "@/data/projects";
+import { listed } from "@/data/projects";
 
 /*
  * The two pieces of work that follow this one, offered at the foot of a case
  * study so the page has somewhere to go other than back.
  *
  * They are read from the same list the homepage and the footer use, in the same
- * order, and the list wraps: the last case study points at the first two.
+ * order, and the list wraps: the last case study points at the first two. An
+ * unlisted study is never offered, and from one, the way on is the first two.
  */
 
 const HOW_MANY = 2;
 
 export function MoreWork({ current }: { current: string }) {
-  const here = projects.findIndex((p) => p.slug === current);
-  if (here === -1) return null;
+  const here = listed.findIndex((p) => p.slug === current);
 
   const next = Array.from(
-    { length: HOW_MANY },
-    (_, i) => projects[(here + 1 + i) % projects.length],
+    { length: Math.min(HOW_MANY, listed.length) },
+    (_, i) => listed[(here + 1 + i) % listed.length],
   );
+  if (next.length === 0) return null;
 
   return (
     <section>
