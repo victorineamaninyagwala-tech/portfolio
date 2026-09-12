@@ -28,9 +28,10 @@ import {
 } from "@/components/CaseStudySection";
 import { MoreWork } from "@/components/MoreWork";
 import { Walkthrough, type WalkthroughStep } from "@/components/Walkthrough";
+import { shareImage } from "@/lib/share";
 
 export const Route = createFileRoute("/work/farmcloud")({
-  head: () => ({
+  head: ({ match }) => ({
     meta: [
       { title: "FarmCloud · A UX Case Study by Victorine Amani" },
       {
@@ -38,12 +39,13 @@ export const Route = createFileRoute("/work/farmcloud")({
         content:
           "A farm management dashboard built for farmers, with agronomists alongside to provide the context and expertise to turn data into better decisions.",
       },
-      { property: "og:title", content: "FarmCloud · A UX Case Study" },
+      { property: "og:title", content: "FarmCloud · A UX Case Study by Victorine Amani" },
       {
         property: "og:description",
         content:
           "Sole product designer on FarmCloud at Synnefa, serving 5,000+ farmers across 14 countries.",
       },
+      ...shareImage(match.context.origin, "farmcloud", "The FarmCloud case study: a farmer watering young plants beside the title."),
     ],
   }),
   component: FarmCloud,

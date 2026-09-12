@@ -2,14 +2,16 @@ import { createFileRoute } from "@tanstack/react-router";
 
 import { CaseStudyHero, type MetaRow } from "@/components/CaseStudyHero";
 import { MoreWork } from "@/components/MoreWork";
+import { shareImage } from "@/lib/share";
 
 export const Route = createFileRoute("/work/spring")({
-  head: () => ({
+  head: ({ match }) => ({
     meta: [
       { title: "Spring On The Go · A UX Audit by Victorine Amani" },
       { name: "description", content: "A UX audit and e-commerce redesign concept for a Kenyan convenience retailer, rebuilt around intent rather than inventory." },
       { property: "og:title", content: "Spring On The Go · A UX Audit by Victorine Amani" },
       { property: "og:description", content: "An independent end-to-end UX audit and homepage redesign concept." },
+      ...shareImage(match.context.origin, "spring", "The Spring On The Go case study: the redesigned storefront on a screen beside the title."),
     ],
   }),
   component: SpringOnTheGo,

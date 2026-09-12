@@ -2,14 +2,16 @@ import { createFileRoute } from "@tanstack/react-router";
 
 import { CaseStudyHero, type MetaRow } from "@/components/CaseStudyHero";
 import { MoreWork } from "@/components/MoreWork";
+import { shareImage } from "@/lib/share";
 
 export const Route = createFileRoute("/work/bazaar")({
-  head: () => ({
+  head: ({ match }) => ({
     meta: [
       { title: "Bazaar · A Product Strategy Case Study by Victorine Amani" },
       { name: "description", content: "A trust and discovery layer for independent shops in Kenya: each shop gets its own branded, verified storefront on shared infrastructure." },
       { property: "og:title", content: "Bazaar · A Product Strategy Case Study by Victorine Amani" },
       { property: "og:description", content: "Self-directed product design, end to end: strategy, system, IA and onboarding." },
+      ...shareImage(match.context.origin, "bazaar", "The Bazaar case study: the Bazaar wordmark on paper beside the title."),
     ],
   }),
   component: Bazaar,

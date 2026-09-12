@@ -2,14 +2,16 @@ import { createFileRoute } from "@tanstack/react-router";
 
 import { CaseStudyHero, type MetaRow } from "@/components/CaseStudyHero";
 import { MoreWork } from "@/components/MoreWork";
+import { shareImage } from "@/lib/share";
 
 export const Route = createFileRoute("/work/ai-design-system")({
-  head: () => ({
+  head: ({ match }) => ({
     meta: [
       { title: "A design system an AI agent can operate · Victorine Amani" },
       { name: "description", content: "A self-directed test project: build a design system an AI agent can use, then hand it real maintenance tasks and see whether the structure alone is enough." },
       { property: "og:title", content: "A design system an AI agent can operate · Victorine Amani" },
       { property: "og:description", content: "Design systems, tokens and AI: a self-directed test project." },
+      ...shareImage(match.context.origin, "ai-design-system", "The design-system case study: a board of colour tokens beside the title."),
     ],
   }),
   component: AiDesignSystem,

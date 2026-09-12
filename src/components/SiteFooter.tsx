@@ -44,7 +44,9 @@ export function SiteFooter() {
     <footer id="contact" className="bg-paper text-ink">
       <Gutter>
         <div className="pt-16 pb-20 sm:pt-24 sm:pb-28">
-          <h2 className="type-headline">Let&apos;s talk about your next product.</h2>
+          {/* Addressed to whoever is reading, not to a client: the pills below
+              already say which conversations are open. */}
+          <h2 className="type-headline">Let&apos;s talk.</h2>
           <a
             href="mailto:victorinenyagwala@gmail.com"
             className="mt-6 inline-block type-headline text-ink underline decoration-ink/20 underline-offset-[6px] transition-colors hover:decoration-olive"

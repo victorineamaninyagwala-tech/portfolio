@@ -11,6 +11,7 @@ import { useEffect, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
+import { getOrigin } from "../lib/share";
 import { CustomCursor } from "../components/CustomCursor";
 import { SiteFooter } from "../components/SiteFooter";
 import { SiteHeader } from "../components/SiteHeader";
@@ -76,6 +77,9 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
 }
 
 export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()({
+  /* Where the site is being served from, put into context so any route can
+     write an absolute URL — the share image needs one. */
+  beforeLoad: () => ({ origin: getOrigin() }),
   head: () => ({
     meta: [
       { charSet: "utf-8" },

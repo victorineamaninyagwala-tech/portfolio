@@ -1,28 +1,34 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-import { Enclosure, EnclosureCell, Gutter, Label } from "@/components/primitives";
+import { Gutter, Label } from "@/components/primitives";
 import { LetterSwapHeading } from "@/components/LetterSwapHeading";
 import { MochisMedia } from "@/components/MochisMedia";
 import { ProjectMedia } from "@/components/ProjectMedia";
 import { WorkHistoryList } from "@/components/WorkHistoryList";
 import { projects } from "@/data/projects";
+import { shareImage } from "@/lib/share";
 
+
+/*
+ * The one sentence the site makes, with the place in front of it. A meta
+ * description has no eyebrow above it, so this is the one place "based in
+ * Nairobi" is doing work rather than repeating what the page already said.
+ */
+const DESCRIPTION =
+  "Product designer based in Nairobi, Kenya. My work explores when systems should automate complexity and when they should expose it to support human judgment, accountability, and agency.";
 
 export const Route = createFileRoute("/")({
-  head: () => ({
+  head: ({ match }) => ({
     meta: [
       { title: "Victorine Amani · Product Designer, Nairobi" },
-      {
-        name: "description",
-        content:
-          "Victorine Amani is a product designer in Nairobi working on product systems, mobile interfaces and research for fintech, health and mobility teams.",
-      },
+      { name: "description", content: DESCRIPTION },
       { property: "og:title", content: "Victorine Amani · Product Designer, Nairobi" },
-      {
-        property: "og:description",
-        content:
-          "Selected product design work: lending, health, utilities and design systems. Based in Nairobi, Kenya.",
-      },
+      { property: "og:description", content: DESCRIPTION },
+      ...shareImage(
+        match.context.origin,
+        "home",
+        "Victorine Amani, product designer in Nairobi: when systems should automate complexity and when they should expose it.",
+      ),
     ],
   }),
   component: Index,
@@ -60,35 +66,6 @@ const workHistory = [
   },
 ];
 
-const capabilities = [
-  {
-    n: "01",
-    label: "Research & Strategy",
-    items: [
-      "User Experience (UX) Research",
-      "Product Strategy",
-      "Growth Design",
-      "Service Design",
-      "Information Architecture (IA)",
-    ],
-  },
-  {
-    n: "02",
-    label: "Systems & Operations",
-    items: ["Systems Design", "Design Systems Engineering", "Design Engineering"],
-  },
-  {
-    n: "03",
-    label: "Interface & Experience Design",
-    items: ["Interaction Design (IxD)", "User Interface (UI) Design"],
-  },
-  {
-    n: "04",
-    label: "Specialized & Emerging Tech",
-    items: ["AI & Algorithmic Experience Design", "Data Visualization"],
-  },
-];
-
 function Index() {
   return (
     <main className="bg-paper text-ink">
@@ -96,19 +73,19 @@ function Index() {
       <section>
         <Gutter className="pt-16 pb-14 sm:pt-24 sm:pb-20">
           <Label className="block text-olive">Product Designer · Nairobi</Label>
+          {/* One claim, made once. The eyebrow already carries the role and the
+              city, so neither is said again below it. Twenty-five words at
+              display size wants the whole measure: capped at a reading width
+              it runs to six lines, and the claim turns into a wall. */}
           <h1 className="mt-7 type-display">
-            Designing the boundary between human responsibility and technological assistance
+            My work explores when systems should automate complexity and when they should expose it to support human judgment, accountability, and agency.
           </h1>
-          <div className="mt-9 flex flex-col gap-8 sm:flex-row sm:items-end sm:justify-between sm:gap-12">
-            <p className="type-body-lg text-ink/70">
-              My work explores when systems should automate complexity and when they should expose it to support human judgment, accountability, and agency.
-            </p>
-            <ul className="space-y-1.5 type-label font-semibold text-ink/60 sm:shrink-0">
-              <li>Practice · 2023 / Present</li>
-              <li>Focus · Systems &amp; mobile</li>
-              <li>Base · Nairobi, KE</li>
-            </ul>
-          </div>
+          <ul className="mt-9 space-y-1.5 type-label font-semibold text-ink/60">
+            <li>Practice · 2023 / Present</li>
+            {/* The four disciplines the work actually evidences, and no more:
+                a longer list here would claim more than the one claim above. */}
+            <li>Focus · Research, systems design, design systems, interface</li>
+          </ul>
         </Gutter>
       </section>
 
@@ -159,29 +136,9 @@ function Index() {
 
       <section id="about">
         <Gutter>
-          <div className="pt-16 pb-14 sm:pt-24 sm:pb-20">
+          <div className="pt-16 pb-16 sm:pt-24 sm:pb-24">
             <WorkHistoryList roles={workHistory} />
           </div>
-
-          <Enclosure columns={4}>
-            {capabilities.map((f) => (
-              <EnclosureCell key={f.label} className="py-9 md:py-12">
-                <Label dot className="text-ink/60">
-                  {f.n}
-                </Label>
-                <dt className="mt-8 type-title md:min-h-[4.5em]">
-                  {f.label}
-                </dt>
-                <dd className="mt-4 space-y-1.5 type-body text-ink">
-                  {f.items.map((item) => (
-                    <div key={item}>{item}</div>
-                  ))}
-                </dd>
-              </EnclosureCell>
-            ))}
-          </Enclosure>
-
-          <div className="pb-16 sm:pb-24" />
         </Gutter>
       </section>
 

@@ -43,9 +43,10 @@ import {
 import { Label } from "@/components/primitives";
 import { MoreWork } from "@/components/MoreWork";
 import { Walkthrough, type WalkthroughStep } from "@/components/Walkthrough";
+import { shareImage } from "@/lib/share";
 
 export const Route = createFileRoute("/work/mochis")({
-  head: () => ({
+  head: ({ match }) => ({
     meta: [
       {
         title: "Mochi's Brew · A Service Design Case Study by Victorine Amani",
@@ -65,6 +66,7 @@ export const Route = createFileRoute("/work/mochis")({
         content:
           "UX case study on a pickup ordering service flow. In progress.",
       },
+      ...shareImage(match.context.origin, "mochis", "The Mochi's Brew case study: the shop's plant-filled room beside the title."),
     ],
   }),
   component: MochisBrew,
