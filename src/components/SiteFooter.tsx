@@ -53,6 +53,18 @@ export function SiteFooter() {
           >
             victorinenyagwala@gmail.com
           </a>
+          {/* The CV beside the address rather than only down in the columns:
+              for the reader who is hiring, it is the second thing they want. */}
+          <div className="mt-5">
+            <TextLink
+              href="/victorine-nyagwala-cv.pdf"
+              target="_blank"
+              rel="noreferrer"
+              className="type-body font-semibold"
+            >
+              Read the CV
+            </TextLink>
+          </div>
         </div>
 
         <Enclosure columns={3}>
