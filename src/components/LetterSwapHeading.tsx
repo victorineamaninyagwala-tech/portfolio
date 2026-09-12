@@ -5,10 +5,16 @@ import { CURSOR_DISC_SIZE } from "./CustomCursor";
 /*
  * A heading whose letters swap typeface under the cursor.
  *
- * Every character is its own span, and a span swaps when the cursor disc
- * overlaps it — so a disc covering four letters swaps all four, not just the
- * one directly under the pointer. That is why this uses geometry rather than
+ * Every character is its own span, and a span swaps when the cursor overlaps
+ * it — so the disc covering four letters swaps all four, not just the one
+ * directly under the pointer. That is why this uses geometry rather than
  * :hover, which can only ever match a single element.
+ *
+ * "The cursor" means the shape that is actually on screen. It is only the wide
+ * disc while it is over a view surface; everywhere else it is a dot, and a dot
+ * sitting below the line must not reach up and swap letters it is nowhere
+ * near. So the radius follows the shape, decided the same way the cursor
+ * decides it, and the two cannot disagree.
  *
  * The swapped face has wider metrics than the display face, so each span is
  * locked to the width it measures at rest; otherwise the line reflows mid-hover
@@ -18,6 +24,9 @@ import { CURSOR_DISC_SIZE } from "./CustomCursor";
 
 /** Must match the face named in the .letter-swap rule in styles.css. */
 const SWAP_FONT = "Caacupe One";
+
+/** The surfaces the cursor grows into its disc over. Mirrors CustomCursor. */
+const VIEWABLE = '[data-cursor="view"]';
 
 export function LetterSwapHeading({
   text,
@@ -64,20 +73,39 @@ export function LetterSwapHeading({
 
     const apply = () => {
       frame = 0;
-      // Use the disc's declared size rather than measuring it: the disc only
-      // grows to full size after React commits the hover state, so measuring
-      // here would read the 9px dot and match a single letter. Absence of the
-      // disc means the custom cursor is off, so fall back to a point.
+      // Which shape the cursor is in right now. Hit-tested rather than read off
+      // the disc element, because the disc only grows after React commits the
+      // hover state — a frame behind the pointer — whereas the hit test is the
+      // very thing that decides it. Over a view surface the cursor is the wide
+      // disc, whose declared size is used so the first frame is not measured
+      // small; anywhere else it is a dot, and a dot is treated as a point. No
+      // disc element at all means the custom cursor is off: a point again.
       const hasDisc = document.querySelector("[data-cursor-disc]") !== null;
-      const radius = hasDisc ? CURSOR_DISC_SIZE / 2 : 0;
+      const under = pointerInside ? document.elementFromPoint(cursorX, cursorY) : null;
+      const onViewSurface = under?.closest(VIEWABLE) != null;
+      const radius = hasDisc && onViewSurface ? CURSOR_DISC_SIZE / 2 : 0;
+
+      // The pointer itself has to be on the line. The disc is wide enough to
+      // graze the heading from a card standing underneath it, and a swap set
+      // off from there reads as the letters changing at a distance.
+      const line = el.getBoundingClientRect();
+      const onLine =
+        pointerInside &&
+        cursorX >= line.left &&
+        cursorX <= line.right &&
+        cursorY >= line.top &&
+        cursorY <= line.bottom;
 
       spans().forEach((span) => {
+        if (!onLine) {
+          span.classList.remove("is-swapped");
+          return;
+        }
         const box = span.getBoundingClientRect();
         // Closest point on the letter's box to the centre of the disc.
         const nearestX = Math.max(box.left, Math.min(cursorX, box.right));
         const nearestY = Math.max(box.top, Math.min(cursorY, box.bottom));
-        const overlaps =
-          pointerInside && Math.hypot(cursorX - nearestX, cursorY - nearestY) <= radius;
+        const overlaps = Math.hypot(cursorX - nearestX, cursorY - nearestY) <= radius;
         span.classList.toggle("is-swapped", overlaps);
       });
     };

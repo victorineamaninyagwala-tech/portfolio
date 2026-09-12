@@ -227,6 +227,11 @@
   display: inline-block;
   text-align: center;
   white-space: pre;
+  /* Pinned to the top of the line rather than to the baseline. The swap face
+     carries its baseline at a different height, and baseline-aligned boxes
+     would push the line taller every time a letter swapped, so the whole page
+     under the heading jumped on hover. */
+  vertical-align: top;
 }
 
 /* Applied by LetterSwapHeading to every letter the cursor disc overlaps. */
