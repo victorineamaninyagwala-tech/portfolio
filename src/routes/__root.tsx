@@ -15,6 +15,7 @@ import { getOrigin } from "../lib/share";
 import { CustomCursor } from "../components/CustomCursor";
 import { SiteFooter } from "../components/SiteFooter";
 import { SiteHeader } from "../components/SiteHeader";
+import { PRELOADED_CLASS, Preloader, hasPreloaded } from "../components/Preloader";
 
 function NotFoundComponent() {
   return (
@@ -110,10 +111,21 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
 });
 
 function RootShell({ children }: { children: ReactNode }) {
+  /* Rendered on the server from the session cookie, so a visitor the
+     preloader has already played for gets a page with no panel in it at all —
+     nothing to hide after the fact, nothing to flash. */
+  const preloaded = hasPreloaded();
   return (
-    <html lang="en">
+    /* The cookie can only differ between server and client if another tab set
+       it mid-load; that one attribute is allowed to reconcile quietly. */
+    <html lang="en" className={preloaded ? PRELOADED_CLASS : undefined} suppressHydrationWarning>
       <head>
         <HeadContent />
+        {/* Without JavaScript the sequence cannot run, so the panel must not
+            be there at all: the page is server-rendered underneath it. */}
+        <noscript>
+          <style>{".preloader{display:none}"}</style>
+        </noscript>
       </head>
       <body>
         {children}
@@ -128,6 +140,8 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
+      {/* First on a first visit, and gone once it has played. */}
+      <Preloader />
       {/* Site-wide, so every page carries the same masthead and nav. */}
       <SiteHeader />
       {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}

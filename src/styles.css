@@ -159,6 +159,13 @@
   text-transform: uppercase;
 }
 
+/* The scrollbar's gutter is reserved whether or not there is a scrollbar to
+   put in it, so that locking scroll — the preloader does, for three seconds —
+   never changes the width of the page and moves everything a few pixels. */
+html {
+  scrollbar-gutter: stable;
+}
+
 /*
  * Custom cursor. The class is added by <CustomCursor> only on fine-pointer
  * devices that have not asked for reduced motion, so the system cursor
@@ -277,4 +284,128 @@
     animation: none !important;
     transition: none !important;
   }
+}
+
+/*
+ * Preloader. The sequence itself lives in Preloader.tsx; these are its states.
+ *
+ * The site's own paper, edge to edge, with the deck and then the initials at
+ * its centre; nothing goes dark. Beneath the custom cursor — the system cursor
+ * is hidden site-wide, so a panel above the disc would leave the visitor with
+ * no pointer — and above everything else. Hidden outright once it has played
+ * this session (the root arrives marked from the server), for a reader who
+ * has asked for reduced motion, and without JavaScript, where the page
+ * underneath must never wait on a script to be seen.
+ */
+.preloader {
+  position: fixed;
+  inset: 0;
+  /* The full window, scrollbar gutter included, so no strip of page shows
+     beside the panel on a browser that draws a classic scrollbar. */
+  width: 100vw;
+  z-index: 9990;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: var(--paper);
+  color: var(--ink);
+  transition: transform 750ms cubic-bezier(0.77, 0, 0.175, 1);
+  /* The bail-out: with no script involved at all, the panel lifts seven
+     seconds in. The sequence normally finishes and removes it well before
+     that; this is for the visit where the script never arrives. Must match
+     BAIL_MS in Preloader.tsx. */
+  animation: preloader-bail 750ms cubic-bezier(0.77, 0, 0.175, 1) 7s forwards;
+}
+.preloader[data-phase="slide"] {
+  transform: translateY(-100%);
+}
+@keyframes preloader-bail {
+  to {
+    transform: translateY(-100%);
+    visibility: hidden;
+  }
+}
+.preloaded .preloader {
+  display: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .preloader {
+    display: none;
+  }
+}
+
+/* The deck: one 3:2 frame, every card cover-cropped into it. It shrinks away
+   once the last card has been held. */
+.preloader-deck {
+  position: relative;
+  width: min(450px, 80vw);
+  aspect-ratio: 3 / 2;
+  transition:
+    transform 350ms cubic-bezier(0.45, 0, 0.55, 1),
+    opacity 350ms cubic-bezier(0.45, 0, 0.55, 1);
+}
+.preloader:not([data-phase="deck"]) .preloader-deck {
+  transform: scale(0.82);
+  opacity: 0;
+}
+
+/* A card cuts in — no fade — with a forty-millisecond pop from just under
+   full size, which is what makes a flip read as a flip. */
+.preloader-card {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transform: scale(0.96);
+  transition: transform 40ms ease-out;
+}
+.preloader-card[data-on] {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* The initials: two lines in a 220 × 120 box, drawn in ink. The box is
+   sized here and nowhere else — it is a mark, not a type step. */
+.preloader-initials {
+  position: absolute;
+  width: clamp(9rem, 26vw, 14rem);
+  height: auto;
+  overflow: visible;
+  opacity: 0;
+  transition: opacity 100ms linear;
+}
+.preloader[data-phase="initials"] .preloader-initials {
+  opacity: 1;
+}
+.preloader[data-phase="leave"] .preloader-initials,
+.preloader[data-phase="slide"] .preloader-initials {
+  opacity: 0;
+  transform: scale(0.85);
+  transition:
+    opacity 350ms cubic-bezier(0.55, 0.085, 0.68, 0.53),
+    transform 350ms cubic-bezier(0.55, 0.085, 0.68, 0.53);
+}
+
+/* Each line is dashed to exactly its own length and offset by the same, so
+   none of it shows; drawing is the offset running to nothing, which reveals
+   the line from its first point onward — the end nearest the middle of the
+   mark, by the order the points are written in. Butt ends and mitred joins:
+   a pen line, with a sharp point where it turns. */
+.preloader-initials path {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 14;
+  stroke-linecap: butt;
+  stroke-linejoin: miter;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  transition: stroke-dashoffset 800ms cubic-bezier(0.45, 0, 0.55, 1);
+}
+.preloader:is([data-phase="initials"], [data-phase="leave"], [data-phase="slide"])
+  .preloader-initials
+  path {
+  stroke-dashoffset: 0;
 }
