@@ -367,11 +367,11 @@ html {
   transform: scale(1);
 }
 
-/* The initials: two lines in a 220 × 120 box, drawn in ink. The box is
+/* The initials: two lines in a 191 × 121 box, drawn in ink. The box is
    sized here and nowhere else — it is a mark, not a type step. */
 .preloader-initials {
   position: absolute;
-  width: clamp(9rem, 26vw, 14rem);
+  width: clamp(8rem, 23vw, 12.5rem);
   height: auto;
   overflow: visible;
   opacity: 0;

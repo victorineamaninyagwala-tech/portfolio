@@ -73,12 +73,19 @@ const markPreloaded = () => {
 const DECK = [watering, runner, cafe, dashboard, mochisHome, field];
 
 /*
- * The mark, in a 220 × 120 box. Each letter is one polyline; the order of its
+ * The mark, in a 191 × 121 box. Each letter is one polyline; the order of its
  * points is the order it is drawn in, which is what makes both lines set off
  * from the middle of the mark and travel outward.
+ *
+ * The two letters are the same shape, but a mitred point overshoots the
+ * corner it turns at by 18.2 units, while a butt end overshoots its corner by
+ * only 2.7 — so a V and an A whose corners sat at the same heights would not
+ * share a top or a bottom of ink. These corners are placed so the ink does:
+ * both letters run from 2 to 118.9 on the page, exactly.
  */
-const V_LINE = "M 90 12 L 50 108 L 10 12";
-const A_LINE = "M 130 108 L 170 12 L 210 108";
+const V_LINE = "M 90 4.69 L 50 100.69 L 10 4.69";
+const A_LINE = "M 98 116.2 L 138 20.2 L 178 116.2";
+const MARK_BOX = "0 0 191 121";
 
 /* One beat of the sequence, in milliseconds. */
 const FLIP = 120; // each card
@@ -215,7 +222,7 @@ export function Preloader() {
 
       {/* pathLength normalises each line to 1, so the same dash rule draws
           both from nothing to whole whatever their true lengths. */}
-      <svg className="preloader-initials" viewBox="0 0 220 120" aria-hidden="true">
+      <svg className="preloader-initials" viewBox={MARK_BOX} aria-hidden="true">
         <path d={V_LINE} pathLength={1} />
         <path d={A_LINE} pathLength={1} />
       </svg>
