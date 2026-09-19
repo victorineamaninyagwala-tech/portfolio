@@ -24,10 +24,13 @@ import field from "@/assets/deck-6-field.webp";
  * They draw outward together and finish as the letters. The A has no crossbar
  * — it is the V's line, the other way up.
  *
- * It plays once per browser session. When it has, a session cookie says so,
- * and the server reads that cookie and renders the root already marked — so
- * on the next load, in this tab or a new one, the panel is never painted at
- * all, with no script in the head to make it so and nothing to flash. It does
+ * It plays once per visit. When it has, a cookie says so for the next few
+ * hours, and the server reads that cookie and renders the root already marked
+ * — so on the next load, in this tab or a new one, the panel is never painted
+ * at all, with no script in the head to make it so and nothing to flash. The
+ * cookie has a fixed life rather than a browser session's, because browsers
+ * that reopen where they left off keep session cookies alive for days, and
+ * someone coming back tomorrow should see the opening again. It does
  * not play for a reader who has asked for reduced motion, and without
  * JavaScript it is not shown at all — the page is server-rendered underneath
  * it and must never depend on a script to become visible.
@@ -44,8 +47,10 @@ import field from "@/assets/deck-6-field.webp";
  * page that is already showing.
  */
 
-/** The cookie set once the sequence has played this browser session. */
+/** The cookie set once the sequence has played. */
 export const PRELOADED_KEY = "preloaded";
+/** How long that holds: long enough to cover one visit, and no longer. */
+const PRELOADED_FOR_SECONDS = 4 * 60 * 60;
 /** The class the root shell renders on <html> when that cookie is present. */
 export const PRELOADED_CLASS = "preloaded";
 
@@ -58,10 +63,10 @@ export const hasPreloaded = createIsomorphicFn()
   .server(() => getCookie(PRELOADED_KEY) === "1")
   .client(() => document.cookie.split("; ").includes(`${PRELOADED_KEY}=1`));
 
-/** Remember that it has played, for the rest of this browser session. */
+/** Remember that it has played, for the rest of this visit. */
 const markPreloaded = () => {
   try {
-    document.cookie = `${PRELOADED_KEY}=1; path=/; SameSite=Lax`;
+    document.cookie = `${PRELOADED_KEY}=1; path=/; max-age=${PRELOADED_FOR_SECONDS}; SameSite=Lax`;
   } catch {
     /* Cookies off: it will simply play again. */
   }
