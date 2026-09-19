@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 
 import heroImage from "@/assets/soulshape-hero.webp";
 import { CaseStudyHero, type MetaRow } from "@/components/CaseStudyHero";
+import { CaseStudySection, Prose, Subhead } from "@/components/CaseStudySection";
 import { MoreWork } from "@/components/MoreWork";
 import { shareImage } from "@/lib/share";
 
@@ -38,6 +39,35 @@ function SoulShape() {
         height: 1086,
       }}
     >
+      <CaseStudySection title="Rebuilding care around the patient's journey" columns={1}>
+        {/* The question on the left, where the eye lands; the argument beside
+            it, ending on the question the rest of the page answers. */}
+        <div className="grid gap-x-12 gap-y-10 md:grid-cols-2">
+          <Subhead>
+            How can multi-disciplinary care hold together across time, when the
+            professionals rarely meet and the patient carries all the context?
+          </Subhead>
+
+          <div className="space-y-6">
+            <Prose wide>
+              Healthcare is not failing for lack of expertise. It is failing at
+              coordination. A patient managing a chronic illness is routinely left to
+              manage several professionals at once, reconcile advice that arrives in
+              fragments, and keep their own care consistent, with no system behind them
+              to do any of it.
+            </Prose>
+            <Prose wide>
+              The work of stitching care together falls entirely on the patient. That is
+              not a failure of clinical skill. It is a failure of system design.
+            </Prose>
+            <Prose wide>
+              What does it take to make care continuous, when neither the patient's life
+              nor the professionals around them are?
+            </Prose>
+          </div>
+        </div>
+      </CaseStudySection>
+
       <MoreWork current="soulshape" />
     </CaseStudyHero>
   );
