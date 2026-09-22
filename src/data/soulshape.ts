@@ -21,7 +21,7 @@
  * NOTE, AND IT MATTERS: her portfolio summary of this table gave Clinicea 0
  * on both of the last two dimensions. Her own scorecard gives it 1 on each,
  * and the totals prove the scorecard right — 2+2+2+1+1+1+0+1+1 is the 11/18
- * she publishes, where six twos and three zeros would be 9. The last
+ * she publishes, where the same column with those last two zeroed is 9. The last
  * dimension is also named "Recirculation handling"; "re-entry" is the word she
  * coined for it afterwards, not the word on the scorecard.
  *
@@ -118,8 +118,10 @@ export const evidence = [
  * "the patient takes pictures of results and sends them back to the doctor
  * manually".
  *
- * `by` is who does the work. The patient appears four times out of seven,
- * which is the whole point of drawing it.
+ * `by` is who does the work, and by that count three of the seven steps are
+ * the patient's — the consent, the photograph, the forwarding. A fourth names
+ * them without their doing it: the clinic places the call. Three of seven is
+ * the figure the drawing shows, because it darkens a box on `by`.
  */
 export const coordinationSteps = [
   { step: "Clinic calls the patient", by: "Clinic", hand: true },

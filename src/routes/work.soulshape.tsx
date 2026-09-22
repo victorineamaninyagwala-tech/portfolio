@@ -222,8 +222,9 @@ function Scorecard() {
 
 /*
  * The coordination workflow as it was described to her. Every step marked by
- * hand is one a person performs, and four of the seven are performed by the
- * patient — which is the finding, not the interface.
+ * hand is one a person performs, and three of the seven are performed by the
+ * patient — which is the finding, not the interface. The patient is named in a
+ * fourth, the call that opens it, but the clinic is the one placing it.
  */
 function Coordination() {
   return (
