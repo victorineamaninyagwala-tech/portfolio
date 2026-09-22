@@ -403,6 +403,7 @@ function FarmCloud() {
             alt="Two people in a greenhouse of pepper plants, looking at a phone together"
             width={1600}
             height={2400}
+            fill
           />
         }
       >

@@ -136,6 +136,7 @@ export function SectionImage({
   width,
   height,
   card = false,
+  fill = false,
 }: {
   src: string;
   alt: string;
@@ -145,13 +146,31 @@ export function SectionImage({
   /** Renders in the same card as the lead image: same width, same height, the
    *  picture cropped to fill it. */
   card?: boolean;
+  /**
+   * Takes the full height of the column it sits in, cropping to do it.
+   *
+   * A picture in the media column is as tall as its own shape makes it, which
+   * is right beside three lines of prose and wrong beside a column of facts
+   * that runs twice as long — the picture ends halfway down and the section
+   * finishes on white. This squares the two off.
+   */
+  fill?: boolean;
 }) {
   return (
-    <figure>
+    <figure className={cn(fill && "flex h-full flex-col")}>
       {card ? (
         <ImageCard src={src} alt={alt} width={width} height={height} />
       ) : (
-        <img src={src} alt={alt} width={width} height={height} className="block w-full" />
+        <img
+          src={src}
+          alt={alt}
+          width={width}
+          height={height}
+          /* min-h-0 so the picture may be shorter than its own content box:
+             without it a flex item refuses to shrink below its intrinsic
+             height and the column grows to fit the picture instead. */
+          className={cn("block w-full", fill && "min-h-0 flex-1 object-cover")}
+        />
       )}
       {caption ? (
         <figcaption className="mt-3 type-caption text-ink/60">{caption}</figcaption>
