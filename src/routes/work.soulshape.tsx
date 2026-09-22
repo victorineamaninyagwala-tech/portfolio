@@ -743,6 +743,16 @@ function SoulShape() {
           demonstration based on their existing programme structure.
         </Prose>
         <Prose wide>This also reduced the scope of the first version.</Prose>
+        <Prose wide>
+          I used the Centre's own terminology, including the 3-Month Holistic
+          Transformation, 6-Month Sustainable Wellness Journey and Mindful Eating
+          sessions.
+        </Prose>
+        <Prose wide>
+          Their weekly check-ins were being handled through phone and email, with records
+          distributed across files and coordination dependent on individual staff members.
+        </Prose>
+        <Prose wide>The first feature therefore focused on that process.</Prose>
       </Movement>
 
       <Movement
@@ -775,16 +785,6 @@ function SoulShape() {
           parts of the prototype. The first question was whether the coordination layer
           could support an existing clinic workflow.
         </Prose>
-        <Prose wide>
-          I used the Centre's own terminology, including the 3-Month Holistic
-          Transformation, 6-Month Sustainable Wellness Journey and Mindful Eating
-          sessions.
-        </Prose>
-        <Prose wide>
-          Their weekly check-ins were being handled through phone and email, with records
-          distributed across files and coordination dependent on individual staff members.
-        </Prose>
-        <Prose wide>The first feature therefore focused on that process.</Prose>
       </Movement>
 
       <Movement
