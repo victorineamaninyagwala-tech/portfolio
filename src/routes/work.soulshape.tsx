@@ -2,14 +2,29 @@ import type { ReactNode } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 
 import checkInShot from "@/assets/soulshape-check-in.webp";
-import heroImage from "@/assets/soulshape-hero.webp";
 import recordShot from "@/assets/soulshape-record.webp";
 import signalsShot from "@/assets/soulshape-signals.webp";
 import summaryShot from "@/assets/soulshape-summary.webp";
 import { CaseStudyHero, type MetaRow } from "@/components/CaseStudyHero";
 import { CaseStudySection, Prose } from "@/components/CaseStudySection";
+import { Arrow, Diagram, Matrix, Node, Row, Sequence, Stack } from "@/components/Diagram";
 import { MoreWork } from "@/components/MoreWork";
 import { ImageCard, Label } from "@/components/primitives";
+import {
+  architecture,
+  checkInAfter,
+  checkInBefore,
+  coordinationSteps,
+  decisions,
+  deferred,
+  evidence,
+  lifecycleAfter,
+  lifecycleBefore,
+  mechanisms,
+  scorecard,
+  signalTypes,
+  visibility,
+} from "@/data/soulshape";
 import { shareImage } from "@/lib/share";
 
 export const Route = createFileRoute("/work/soulshape")({
@@ -33,46 +48,9 @@ const meta: MetaRow[] = [
 ];
 
 /*
- * The three products, scored across nine dimensions. Only the overall and the
- * two dimensions that decided the scope are shown: the rest of the scorecard
- * is working material, and a reader does not need all nine to see that the
- * column that mattered is empty in every one of them.
- */
-const comparison = {
-  products: ["Clinicea", "Antara", "Zoho"],
-  rows: [
-    { dimension: "Overall", scores: ["11/18", "12/18", "6/18"] },
-    { dimension: "Longitudinal record", scores: ["0/2", "1/2", "0/2"] },
-    { dimension: "Re-entry", scores: ["0/2", "0/2", "0/2"] },
-  ],
-};
-
-/* The three layers the system was built around, in the order they stack. */
-const layers = [
-  {
-    name: "Data stays",
-    notes: [
-      "Raw information remains owned by the domain that produces it. It does not need to be shared in its original form across the system.",
-    ],
-  },
-  {
-    name: "Meaning moves",
-    notes: [
-      "Changes are represented as typed signals. A signal records what changed, why it matters and what requires attention.",
-      "Signals are append-only. An unresolved signal remains visible and can escalate rather than disappearing.",
-    ],
-  },
-  {
-    name: "Continuity persists",
-    notes: [
-      "Programmes continue across phases. Phases can be repeated or reversed, and returning patients inherit their existing context rather than starting again.",
-    ],
-  },
-];
-
-/*
  * A movement of the account: the heading in the left column, the writing in
- * the right, starting on the line the hero's facts start on.
+ * the right, starting on the line the hero's facts start on, and a drawing or
+ * a screen run full width underneath.
  *
  * The section kit sets its title above the full width, which suits a section
  * carried by a picture or by two columns of facts. A single column of
@@ -86,7 +64,6 @@ function Movement({
   children,
 }: {
   title: string;
-  /** A screen of the prototype, run full width below the writing. */
   figure?: ReactNode;
   children: ReactNode;
 }) {
@@ -103,80 +80,320 @@ function Movement({
 }
 
 /*
- * The comparison. Scores are set right: they are read down a column against
- * each other, not across a row.
+ * The system at a glance, which opens the page in place of a photograph of a
+ * screen. The argument of the whole case study in four steps: a patient, the
+ * four domains treating them, the layer between, and what it is for.
  */
-function Comparison() {
+function SystemAtAGlance() {
   return (
-    <table className="w-full border-collapse text-left">
-      <thead>
-        <tr>
-          <th scope="col" className="pb-3 type-label font-semibold text-ink/60">
-            {/* The corner of a comparison table carries nothing a reader needs,
-                but a screen reader still has to be told what the column is. */}
-            <span className="sr-only">Dimension</span>
-          </th>
-          {comparison.products.map((product) => (
-            <th
-              key={product}
-              scope="col"
-              className="pb-3 text-right type-label font-semibold text-ink/60"
-            >
-              {product}
-            </th>
+    <Diagram label="SoulShape at a glance">
+      <div className="mx-auto max-w-[62ch]">
+        <Node title="Patient" tone="subject" />
+        <Arrow />
+        <Row columns={4}>
+          {architecture[2].holds.map((domain) => (
+            <Node key={domain} title={domain} />
           ))}
-        </tr>
-      </thead>
-      <tbody>
-        {comparison.rows.map((row, r) => {
-          /* Rules are drawn above each row, so the last one draws its own below
-             as well — otherwise the table trails off unclosed. */
-          const rule = r === comparison.rows.length - 1 ? "border-y" : "border-t";
-          return (
-            <tr key={row.dimension}>
-              <th
-                scope="row"
-                className={`${rule} border-ink/10 py-4 pr-6 type-body font-semibold text-ink`}
-              >
-                {row.dimension}
-              </th>
-              {row.scores.map((score, i) => (
-                <td
-                  key={comparison.products[i]}
-                  className={`${rule} border-ink/10 py-4 text-right type-body text-ink/75`}
-                >
-                  {score}
-                </td>
-              ))}
-            </tr>
-          );
-        })}
-      </tbody>
-    </table>
+        </Row>
+        <Arrow />
+        <Node title="SoulShape" tone="subject" note="Coordination between domains, not inside them" />
+        <Arrow />
+        <Node title="Continuity" note="Across phases, across cycles, across institutions" />
+      </div>
+    </Diagram>
   );
 }
 
 /*
- * The three layers, stacked rather than set side by side: at the width of a
- * reading column, three cells would be too narrow to hold a sentence, and the
- * layers are read in the order they stack anyway.
+ * The same picture before there is a system in it: four professionals, each
+ * handing the patient something, and the patient holding all of it together.
+ * The arrows all point the same way on purpose.
  */
-function Layers() {
+function Fragmented() {
+  const hands = [
+    { from: "Doctor", gives: "Medication" },
+    { from: "Nutritionist", gives: "Meal plan" },
+    { from: "Trainer", gives: "Activity" },
+    { from: "Psychologist", gives: "Behaviour" },
+  ];
   return (
-    <div className="rounded-lg border border-ink/10">
-      {layers.map((layer) => (
-        <div key={layer.name} className="border-t border-ink/10 px-6 py-6 first:border-t-0">
-          <Label className="text-olive">{layer.name}</Label>
-          <div className="mt-3 space-y-3">
-            {layer.notes.map((note) => (
-              <p key={note} className="type-body text-ink/75">
-                {note}
-              </p>
-            ))}
+    <Diagram label="Before: four professionals, one patient holding it together">
+      <Row columns={4}>
+        {hands.map((hand) => (
+          <div key={hand.from}>
+            <Node title={hand.from} note={hand.gives} />
+            <Arrow />
           </div>
+        ))}
+      </Row>
+      <div className="mx-auto mt-2 max-w-[46ch]">
+        <Node title="Patient" tone="subject" note="Carries the information, reconciles the advice, keeps track of what changed" />
+      </div>
+    </Diagram>
+  );
+}
+
+/* The three strands of evidence, and the one finding each produced. */
+function Evidence() {
+  return (
+    <Diagram label="What the reading produced">
+      <Row columns={3}>
+        {evidence.map((strand) => (
+          <div key={strand.strand} className="rounded-lg border border-ink/25 bg-paper px-6 py-6">
+            <Label className="text-olive">{strand.strand}</Label>
+            <p className="mt-3 type-body text-ink/75">{strand.finding}</p>
+            <p className="mt-4 type-caption text-ink/45">{strand.source}</p>
+          </div>
+        ))}
+      </Row>
+    </Diagram>
+  );
+}
+
+/*
+ * The lifecycle, twice: the one the existing products implement, and the one a
+ * chronic condition actually has. The question underneath is the one the rest
+ * of the case study answers.
+ */
+function Lifecycle() {
+  return (
+    <Diagram label="The shape of a care cycle">
+      <div className="space-y-12">
+        <div>
+          <Label className="text-ink/50">In the systems that exist</Label>
+          <Sequence className="mt-4" steps={lifecycleBefore.map((name) => ({ title: name }))} />
         </div>
-      ))}
-    </div>
+        <div>
+          <Label className="text-olive">What a chronic condition does</Label>
+          <Sequence
+            className="mt-4"
+            steps={lifecycleAfter.map((name, i) => ({
+              title: name,
+              tone: i === lifecycleAfter.length - 1 ? "subject" : "plain",
+            }))}
+          />
+        </div>
+        <p className="type-title text-center text-ink">What survives the return?</p>
+      </div>
+    </Diagram>
+  );
+}
+
+/*
+ * The audit, whole. Nine dimensions rather than the three that make the point,
+ * because the point is only worth anything if the other six are there to be
+ * checked — and the two rows that decided the scope are marked, not extracted.
+ */
+function Scorecard() {
+  return (
+    <Diagram label={`Nine dimensions, two points each · ${scorecard.scale}`}>
+      <Matrix
+        columns={scorecard.products}
+        highlight={scorecard.decisive}
+        rows={[
+          ...scorecard.dimensions.map((d) => ({
+            heading: d.name,
+            cells: d.scores.map(String),
+          })),
+          { heading: "Total", cells: scorecard.totals.map((t) => `${t}/18`) },
+        ]}
+      />
+    </Diagram>
+  );
+}
+
+/*
+ * The coordination workflow as it was described to her. Every step marked by
+ * hand is one a person performs, and four of the seven are performed by the
+ * patient — which is the finding, not the interface.
+ */
+function Coordination() {
+  return (
+    <Diagram label="Moving one patient's information between two domains">
+      <div className="mx-auto max-w-[62ch]">
+        {coordinationSteps.map((step, i) => (
+          <div key={step.step}>
+            <div
+              className={
+                step.by === "Patient"
+                  ? "rounded-lg border border-ink bg-ink px-5 py-4"
+                  : "rounded-lg border border-ink/25 bg-paper px-5 py-4"
+              }
+            >
+              <div className="flex items-baseline justify-between gap-4">
+                <p
+                  className={
+                    step.by === "Patient"
+                      ? "type-body font-semibold text-paper"
+                      : "type-body font-semibold text-ink"
+                  }
+                >
+                  {step.step}
+                </p>
+                <span
+                  className={
+                    step.by === "Patient"
+                      ? "type-label font-semibold whitespace-nowrap text-paper/70"
+                      : "type-label font-semibold whitespace-nowrap text-ink/45"
+                  }
+                >
+                  {step.by}
+                </span>
+              </div>
+              {step.note ? (
+                <p
+                  className={
+                    step.by === "Patient" ? "mt-1 type-caption text-paper/60" : "mt-1 type-caption text-ink/50"
+                  }
+                >
+                  {step.note}
+                </p>
+              ) : null}
+            </div>
+            {i < coordinationSteps.length - 1 ? <Arrow label={step.hand ? "by hand" : undefined} /> : null}
+          </div>
+        ))}
+      </div>
+    </Diagram>
+  );
+}
+
+/*
+ * The decision log, in the shape it was written in: the decision, what it was
+ * chosen over, the reasoning, and what it cost. The rejected alternative is
+ * set beside the decision rather than buried in the prose, because a decision
+ * with nothing on the other side of it is not a decision.
+ */
+function DecisionLog() {
+  return (
+    <Diagram label="Five decisions, and what each one cost">
+      <div className="mx-auto max-w-[86ch] space-y-3">
+        {decisions.map((entry) => (
+          <div key={entry.decision} className="rounded-lg border border-ink/25 bg-paper px-6 py-6">
+            <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
+              <p className="type-title text-ink">{entry.decision}</p>
+              <p className="type-caption text-ink/45">not {entry.instead.toLowerCase()}</p>
+            </div>
+            <div className="mt-5 grid gap-x-10 gap-y-4 md:grid-cols-2">
+              <div>
+                <Label className="text-olive">Why</Label>
+                <p className="mt-2 type-body text-ink/75">{entry.why}</p>
+              </div>
+              <div>
+                <Label className="text-ink/40">Consequence</Label>
+                <p className="mt-2 type-body text-ink/75">{entry.consequence}</p>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </Diagram>
+  );
+}
+
+/*
+ * The architecture: three layers, each resting on the one below, with the
+ * nouns that belong to it under its name. The mechanisms built around it sit
+ * underneath, and the signal types are listed because "typed signals" means
+ * nothing until the types are named.
+ */
+function Architecture() {
+  return (
+    <Diagram label="Raw data stays. Meaning moves. Continuity persists.">
+      <Stack
+        layers={architecture.map((layer) => ({
+          name: layer.layer,
+          contents: layer.holds,
+          note: layer.note,
+        }))}
+      />
+
+      <div className="mx-auto mt-14 max-w-[86ch]">
+        <Label className="text-ink/50">Built around it</Label>
+        <Row className="mt-4" columns={3}>
+          {mechanisms.map((mechanism) => (
+            <div key={mechanism.name} className="rounded-lg border border-ink/25 bg-paper px-6 py-5">
+              <p className="type-body font-semibold text-ink">{mechanism.name}</p>
+              <p className="mt-2 type-caption text-ink/60">{mechanism.does}</p>
+            </div>
+          ))}
+        </Row>
+
+        <div className="mt-10">
+          <Label className="text-ink/50">The signal types</Label>
+          <ul className="mt-4 flex flex-wrap gap-2">
+            {signalTypes.map((type) => (
+              <li
+                key={type}
+                className="rounded-lg border border-ink/25 bg-paper px-3 py-1.5 type-caption text-ink/75"
+              >
+                {type}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </Diagram>
+  );
+}
+
+/*
+ * The visibility distinction, which is the subtle one: being able to see that
+ * something exists is not permission to read it. Two modes and one rule is the
+ * whole mechanism, and it is shorter than any explanation of it would be.
+ */
+function Visibility() {
+  return (
+    <Diagram label="Visibility is not accessibility">
+      <div className="mx-auto max-w-[62ch]">
+        <Matrix
+          columns={["Raw data"]}
+          rows={visibility.modes.map((mode) => ({
+            heading: mode.mode,
+            cells: [mode.access],
+          }))}
+        />
+        <p className="mt-8 type-body text-ink/70">{visibility.rule}</p>
+      </div>
+    </Diagram>
+  );
+}
+
+/* The Centre's weekly check-in, before and after. */
+function CheckInFlow() {
+  return (
+    <Diagram label="The weekly check-in, before and after">
+      <div className="space-y-12">
+        <div>
+          <Label className="text-ink/50">At the Centre</Label>
+          <Sequence className="mt-4" steps={checkInBefore.map((name) => ({ title: name }))} />
+        </div>
+        <div>
+          <Label className="text-olive">In the prototype</Label>
+          <Sequence
+            className="mt-4"
+            steps={checkInAfter.map((name, i) => ({ title: name, tone: i === 0 ? "subject" : "plain" }))}
+          />
+        </div>
+      </div>
+    </Diagram>
+  );
+}
+
+/*
+ * What was designed and not built. Drawn rather than described: dashed and
+ * dimmed is the whole statement, and it says the part that is missing was
+ * decided on rather than forgotten.
+ */
+function PatientLayer() {
+  return (
+    <Diagram label="Patient layer · deferred, not abandoned">
+      <Row columns={3}>
+        {deferred.map((piece) => (
+          <Node key={piece} title={piece} tone="deferred" />
+        ))}
+      </Row>
+    </Diagram>
   );
 }
 
@@ -186,14 +403,9 @@ function SoulShape() {
       title="SoulShape"
       meta={meta}
       deck="A care coordination platform for multi-disciplinary programs treating chronic illness."
-      image={{
-        src: heroImage,
-        alt: "The SoulShape account-creation screen on a monitor at a clinic's front desk",
-        width: 1448,
-        height: 1086,
-      }}
+      media={<SystemAtAGlance />}
     >
-      <Movement title="Starting point">
+      <Movement title="Starting point" figure={<Fragmented />}>
         <Prose wide>
           I started working on SoulShape after several years of trying to manage my own
           weight.
@@ -213,7 +425,15 @@ function SoulShape() {
         </Prose>
       </Movement>
 
-      <Movement title="Research">
+      <Movement
+        title="Research"
+        figure={
+          <div className="space-y-8">
+            <Evidence />
+            <Lifecycle />
+          </div>
+        }
+      >
         <Prose wide>
           I looked at research on multidisciplinary care, chronic weight management and
           healthcare coordination, as well as Kenya's Primary Health Care Network
@@ -239,7 +459,7 @@ function SoulShape() {
         <Prose wide>I began referring to this as re-entry.</Prose>
       </Movement>
 
-      <Movement title="Existing products">
+      <Movement title="Existing products" figure={<Scorecard />}>
         <Prose wide>
           I then looked at products already operating around parts of the problem.
         </Prose>
@@ -247,9 +467,6 @@ function SoulShape() {
           I compared Clinicea, Antara and Zoho across nine dimensions, including
           coordination, longitudinal records and re-entry.
         </Prose>
-
-        <Comparison />
-
         <Prose wide>
           The platforms approached different parts of care, but none carried the patient's
           context through a complete cycle of leaving and returning.
@@ -261,7 +478,7 @@ function SoulShape() {
         </Prose>
       </Movement>
 
-      <Movement title="A closer look at coordination">
+      <Movement title="A closer look at coordination" figure={<Coordination />}>
         <Prose wide>
           I spoke with a former Antara employee to understand how coordination worked in
           practice.
@@ -282,7 +499,7 @@ function SoulShape() {
         </Prose>
       </Movement>
 
-      <Movement title="Defining the system">
+      <Movement title="Defining the system" figure={<DecisionLog />}>
         <Prose wide>
           Before moving into the interface, I documented several decisions about what
           SoulShape would and would not do.
@@ -311,18 +528,19 @@ function SoulShape() {
       <Movement
         title="Architecture"
         figure={
-          <ImageCard
-            src={signalsShot}
-            alt="The signals list in the prototype. Each row is typed — trend note, handoff note, coordination request, constraint update, status update — carries a domain and a severity, and is held at active, escalated, dormant or resolved."
-            width={1932}
-            height={1449}
-          />
+          <div className="space-y-8">
+            <Architecture />
+            <Visibility />
+            <ImageCard
+              src={signalsShot}
+              alt="The signals list in the prototype. Each row is typed, carries a domain and a severity, and is held at active, escalated, dormant or resolved."
+              width={1932}
+              height={1449}
+            />
+          </div>
         }
       >
         <Prose wide>The system developed around three layers.</Prose>
-
-        <Layers />
-
         <Prose wide>I then built the supporting structures around these layers.</Prose>
         <Prose wide>
           The coordinator dashboard is designed for triage rather than interpretation.
@@ -337,7 +555,7 @@ function SoulShape() {
         </Prose>
       </Movement>
 
-      <Movement title="From research to a real clinic">
+      <Movement title="From research to a real clinic" figure={<CheckInFlow />}>
         <Prose wide>The initial work was based entirely on desk research.</Prose>
         <Prose wide>
           The Holistic Weight Management Centre became the next research step because its
@@ -353,12 +571,15 @@ function SoulShape() {
       <Movement
         title="First prototype"
         figure={
-          <ImageCard
-            src={summaryShot}
-            alt="The clinic summary: active patients, critical alerts, patients due a check-in, signals plotted by domain, and the caseload split by phase from assessment through to follow-up and re-entry."
-            width={1932}
-            height={1449}
-          />
+          <div className="space-y-8">
+            <PatientLayer />
+            <ImageCard
+              src={summaryShot}
+              alt="The clinic summary: active patients, critical alerts, patients due a check-in, signals plotted by domain, and the caseload split by phase from assessment through to follow-up and re-entry."
+              width={1932}
+              height={1449}
+            />
+          </div>
         }
       >
         <Prose wide>The first version was clinic-facing.</Prose>
