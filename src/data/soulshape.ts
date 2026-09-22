@@ -292,17 +292,6 @@ export const externalInput = [
 ];
 
 /*
- * The Centre's own products, which the prototype's vocabulary was taken from —
- * the rate card and the discovery call, not generic clinic software. They are
- * the programme names inside the built system: src/data/model.ts, PRODUCTS.
- */
-export const centreProgrammes = [
-  { name: "3-Month Holistic Transformation", short: "3-Month" },
-  { name: "6-Month Sustainable Wellness Journey", short: "6-Month" },
-  { name: "Mindful Eating", short: "Group session" },
-];
-
-/*
  * The five areas the first version carries, as the prototype's own navigation
  * groups them. Tools — settings, account, activity — sit under these and are
  * not working areas of the clinic's day.

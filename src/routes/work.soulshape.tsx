@@ -25,7 +25,6 @@ import { Label, ScreenCard } from "@/components/primitives";
 import {
   architecture,
   calculation,
-  centreProgrammes,
   coordinationSteps,
   decisions,
   evidence,
@@ -711,21 +710,12 @@ function SoulShape() {
       <Movement
         title="From research to a real clinic"
         figure={
-          <div className="space-y-8">
-            <Diagram label="The Centre's own products, which the prototype is named after">
-              <Row columns={3}>
-                {centreProgrammes.map((programme) => (
-                  <Node key={programme.name} title={programme.name} note={programme.short} />
-                ))}
-              </Row>
-            </Diagram>
-            <ScreenCard
-              src={programmesShot}
-              alt="Registering a patient in the prototype: the programme is chosen from the Centre's own products, the 3-Month Holistic Transformation and the 6-Month Sustainable Wellness Journey."
-              width={SCREEN.width}
-              height={SCREEN.height}
-            />
-          </div>
+          <ScreenCard
+            src={programmesShot}
+            alt="Registering a patient in the prototype: the programme is chosen from the Centre's own products, the 3-Month Holistic Transformation and the 6-Month Sustainable Wellness Journey."
+            width={SCREEN.width}
+            height={SCREEN.height}
+          />
         }
       >
         <Prose wide>The initial work was based entirely on desk research.</Prose>
