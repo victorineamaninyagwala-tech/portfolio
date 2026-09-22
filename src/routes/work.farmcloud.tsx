@@ -198,7 +198,7 @@ const lifecycle = [
   {
     label: "Where it stood",
     items: [
-      "The rebuilt onboarding lifted self-onboarding by 70%.",
+      "The rebuilt onboarding lifted self-onboarding from 10% to 70%.",
       "Analytics then showed farmers leaving straight after it. One was still actively using the platform.",
     ],
   },
