@@ -47,11 +47,17 @@ export function SiteFooter() {
           {/* Addressed to whoever is reading, not to a client: the pills below
               already say which conversations are open. */}
           <h2 className="type-headline">Let&apos;s talk.</h2>
+          {/* The address is one unbreakable string, and at the headline step
+              it is wider than a phone's measure — given no break to take, it
+              pushed every page on the site sideways. The <wbr> offers it the
+              one break worth taking, at the @, rather than letting the line
+              break wherever it runs out and leaving a letter stranded.
+              Above about 410px it stays on one line and the wbr does nothing. */}
           <a
             href="mailto:victorinenyagwala@gmail.com"
             className="mt-6 inline-block type-headline text-ink underline decoration-ink/20 underline-offset-[6px] transition-colors hover:decoration-olive"
           >
-            victorinenyagwala@gmail.com
+            victorinenyagwala@<wbr />gmail.com
           </a>
           {/* The CV beside the address rather than only down in the columns:
               for the reader who is hiring, it is the second thing they want. */}

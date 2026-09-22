@@ -42,11 +42,15 @@ export function CaseStudyHero({
     <main className="bg-paper text-ink">
       <Gutter>
         <header className="grid grid-cols-12 gap-y-12 pt-16 pb-20 sm:pt-24 sm:pb-28">
-          <div className="col-span-12 md:col-span-4">
+          {/* Five columns rather than four. FarmCloud and SoulShape are
+              single words with nowhere to break, and in the display face they
+              run past a four-column measure at tablet widths — the title stops
+              landing on the grid the rest of the page is built off. */}
+          <div className="col-span-12 md:col-span-5">
             <h1 className="type-display">{title}</h1>
           </div>
 
-          {/* Starts at col 6, leaving col 5 empty as the gutter to the title. */}
+          {/* Starts at col 6, so the title's column ends on this one's line. */}
           <div className="col-span-12 md:col-span-4 md:col-start-6">
             <dl className="space-y-5">
               {meta.map((row) => (
