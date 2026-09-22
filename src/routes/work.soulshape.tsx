@@ -17,7 +17,7 @@ import signalDetailShot from "@/assets/ss-signal-detail.webp";
 import escalatedShot from "@/assets/ss-signals-escalated.webp";
 import tasksShot from "@/assets/ss-tasks.webp";
 import { CaseStudyHero, type MetaRow } from "@/components/CaseStudyHero";
-import { CaseStudySection, Prose } from "@/components/CaseStudySection";
+import { CaseStudySection, Prose, Thesis } from "@/components/CaseStudySection";
 import { Arrow, Diagram, Matrix, Node, Row, Sequence, Stack } from "@/components/Diagram";
 import { MoreWork } from "@/components/MoreWork";
 import { Walkthrough, type WalkthroughStep } from "@/components/Walkthrough";
@@ -690,6 +690,11 @@ function SoulShape() {
           programme.
         </Prose>
       </Movement>
+
+      {/* After the decisions, because one of them is the proof: the system
+          surfaces what it detected and says what it means is for the domain to
+          decide. It does the detecting and stops there. */}
+      <Thesis>Designing the boundary between human responsibility and technological assistance.</Thesis>
 
       <Movement
         title="Architecture"

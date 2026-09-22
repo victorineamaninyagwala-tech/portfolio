@@ -25,6 +25,7 @@ import {
   Prose,
   SectionImage,
   Subhead,
+  Thesis,
 } from "@/components/CaseStudySection";
 import { MoreWork } from "@/components/MoreWork";
 import { Walkthrough, type WalkthroughStep } from "@/components/Walkthrough";
@@ -440,6 +441,12 @@ function FarmCloud() {
           <FactList key={block.label} label={block.label} items={block.items} />
         ))}
       </CaseStudySection>
+
+      {/* Straight after the flow, because its last step is the proof: the
+          harvest report offers to hold the yield as a product and the farmer
+          keeping it for the household declines. The system does the work and
+          leaves the decision where it belongs. */}
+      <Thesis>Designing the boundary between human responsibility and technological assistance.</Thesis>
 
       <CaseStudySection title="Beyond the Core Flow" columns={1}>
         {beyond.map((decision) => (

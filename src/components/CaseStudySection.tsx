@@ -85,6 +85,29 @@ export function CaseStudySection({
 }
 
 /*
+ * The thesis. Her sentence, named once on a page, directly after the decision
+ * that proves it — so the reader meets the decision first and the claim second,
+ * rather than being told the claim and asked to take the decision on trust.
+ *
+ * It sits between sections rather than inside one. Put among a section's own
+ * blocks it would read as another item on the list, and the whole point of it
+ * is that it is not one. It takes the reading column, where the argument of
+ * every section has already been running, and a rule above it like any other
+ * section, so it is a beat in the page rather than an ornament bolted to it.
+ */
+export function Thesis({ children }: { children: ReactNode }) {
+  return (
+    <section>
+      <Gutter>
+        <div className="grid grid-cols-12 border-t border-ink/10 py-16 sm:py-24">
+          <p className="col-span-12 type-headline md:col-span-6 md:col-start-7">{children}</p>
+        </div>
+      </Gutter>
+    </section>
+  );
+}
+
+/*
  * A heading below the section's own, for a section that carries more than one
  * movement. It uses the third step of the scale, so it reads as subordinate to
  * the section title without becoming another eyebrow.
