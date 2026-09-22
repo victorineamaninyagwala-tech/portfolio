@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 
-import heroImage from "@/assets/soulshape-hero.webp";
+import signupDesign from "@/assets/soulshape-signup.webp";
 import signalsShot from "@/assets/soulshape-signals.webp";
 import summaryShot from "@/assets/soulshape-summary.webp";
 import domainsShot from "@/assets/ss-domains.webp";
@@ -21,7 +21,7 @@ import { CaseStudySection, Prose } from "@/components/CaseStudySection";
 import { Arrow, Diagram, Matrix, Node, Row, Sequence, Stack } from "@/components/Diagram";
 import { MoreWork } from "@/components/MoreWork";
 import { Walkthrough, type WalkthroughStep } from "@/components/Walkthrough";
-import { Label, ScreenCard } from "@/components/primitives";
+import { Frame, Label, ScreenCard } from "@/components/primitives";
 import {
   architecture,
   calculation,
@@ -508,12 +508,21 @@ function SoulShape() {
       title="SoulShape"
       meta={meta}
       deck="A care coordination platform for multi-disciplinary programmes treating chronic illness."
-      image={{
-        src: heroImage,
-        alt: "The SoulShape account-creation screen on a monitor at a clinic's front desk",
-        width: 1448,
-        height: 1086,
-      }}
+      media={
+        /* Her own design of the account-creation screen, desktop and mobile,
+           at the shape she drew it at — the site's 4:3 would crop the phone
+           off the right-hand edge. It replaces a generated photograph of a
+           monitor in a clinic lobby. */
+        <Frame ratio="1959 / 1238">
+          <img
+            src={signupDesign}
+            alt="The SoulShape account-creation screen, designed for desktop and for mobile, shown side by side on the clinic's green."
+            width={1959}
+            height={1238}
+            className="size-full object-cover"
+          />
+        </Frame>
+      }
     >
       <Movement title="Starting point" figure={<Fragmented />}>
         <Prose wide>

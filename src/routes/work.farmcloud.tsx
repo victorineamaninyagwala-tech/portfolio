@@ -17,7 +17,6 @@ import beforeElements from "@/assets/farmcloud-before-2-elements.webp";
 import beforeInventoryPage from "@/assets/farmcloud-before-4-inventory.webp";
 import beforeReports from "@/assets/farmcloud-before-5-reports.webp";
 import onboardingVerify from "@/assets/farmcloud-onboarding-2-verify.webp";
-import researchBoard from "@/assets/farmcloud-research-board.webp";
 import { CaseStudyHero, type MetaRow, type Outcome } from "@/components/CaseStudyHero";
 import {
   CaseStudySection,
@@ -391,18 +390,10 @@ function FarmCloud() {
         </Prose>
       </CaseStudySection>
 
-      <CaseStudySection
-        title="The starting point"
-        figure={
-          <SectionImage
-            src={researchBoard}
-            alt="A pinboard of research findings from the farmer onboarding journey, written on sticky notes"
-            width={1408}
-            height={768}
-            card
-          />
-        }
-      >
+      {/* No picture here. What stood in for one was a generated photograph of
+          sticky notes, standing for research that actually happened — the one
+          kind of image this page cannot afford to have faked. */}
+      <CaseStudySection title="The starting point">
         {startingPoint.map((block) => (
           <FactList key={block.label} label={block.label} items={block.items} />
         ))}

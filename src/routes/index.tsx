@@ -91,16 +91,15 @@ function Index() {
 
       <section id="work">
         <Gutter className="py-14 sm:py-20">
-          <div className="mb-8 flex items-baseline justify-between gap-6 sm:mb-10">
+          {/* No counter beside the heading. It read as a carousel's position
+              and there is no carousel: every card is on the page at once. */}
+          <div className="mb-8 sm:mb-10">
             <LetterSwapHeading
               text="Selected Work"
               data-cursor="view"
               data-cursor-label=""
               className="letter-swap type-display"
             />
-            <Label className="text-ink/60 sm:shrink-0">
-              01 / {String(listed.length).padStart(2, "0")}
-            </Label>
           </div>
 
           <div className="grid grid-cols-1 gap-x-2 gap-y-10 sm:grid-cols-3">
