@@ -6,7 +6,7 @@
  * loads the homepage so the site's own stylesheet and fonts are in the page,
  * replaces the body with a card built from the site's own type steps and
  * colour tokens, and photographs it. That is what keeps a card the same thing
- * as the page it stands for, in Nunito Sans and Ubuntu on the real paper
+ * as the page it stands for, in Switzer and Ubuntu on the real paper
  * colour, rather than a lookalike drawn in something else.
  *
  * Run it again whenever a cover, a title, a description or the type changes:

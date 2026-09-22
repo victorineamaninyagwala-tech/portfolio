@@ -46,9 +46,9 @@
      media on the homepage. #e6e6cc. */
   --ground: oklch(0.918 0.034 107.1);
 
-  /* Headings only. Nunito Sans has real weights, so the heading steps set the
+  /* Headings only. Switzer has real weights, so the heading steps set the
      600 that names things everywhere else rather than a face's only option. */
-  --font-display: "Nunito Sans", var(--font-sans);
+  --font-display: "Switzer", var(--font-sans);
 
   /* Hairline used by the work-history file tabs and their panels. */
   --file-line: color-mix(in oklab, var(--ink) 24%, transparent);
@@ -77,8 +77,13 @@
 }
 
 /*
- * Text is set in Ubuntu, headings in Nunito Sans — both from Google Fonts, so
- * nothing here needs a licence.
+ * Text is set in Ubuntu, headings in Switzer. Ubuntu comes from Google Fonts
+ * and Switzer from Fontshare, so there are two stylesheets in the head and
+ * neither needs a licence bought.
+ *
+ * Switzer is the third display face this site has had, after DotGothic16 and
+ * Nunito Sans. Anything that has to know the name reads --font-display; the
+ * only places that spell it out are the link in the head and the note here.
  *
  * DotGothic16 set the headings before this. It is a pixel face, and a heading
  * is the one place on a page that has to be read at a glance rather than
@@ -94,7 +99,7 @@
  * thirteen sizes and six near-identical label styles before this.
  *
  * The three heading steps also carry the family and weight: headings are set
- * in Nunito Sans at 600, the same weight the text steps use to name things.
+ * in Switzer at 600, the same weight the text steps use to name things.
  * The four text steps fix size, line height and tracking only, and their
  * weight stays an explicit font-* class at the call site: 400 for running
  * text, 600 for anything that names something, which Ubuntu renders as Bold.

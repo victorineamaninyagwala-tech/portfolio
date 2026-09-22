@@ -96,9 +96,17 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
+      /* Switzer is not a Google face, so the display type comes from Fontshare
+         and the text from Google — two origins to warm rather than one. */
+      { rel: "preconnect", href: "https://api.fontshare.com" },
+      { rel: "preconnect", href: "https://cdn.fontshare.com", crossOrigin: "anonymous" },
       {
         rel: "stylesheet",
-        href: "https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@600&family=Ubuntu:wght@400;500;700&family=Caacupe+One&display=swap",
+        href: "https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;500;700&family=Caacupe+One&display=swap",
+      },
+      {
+        rel: "stylesheet",
+        href: "https://api.fontshare.com/v2/css?f%5B%5D=switzer@600&display=swap",
       },
       { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
     ],
