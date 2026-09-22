@@ -17,6 +17,7 @@ import beforeElements from "@/assets/farmcloud-before-2-elements.webp";
 import beforeInventoryPage from "@/assets/farmcloud-before-4-inventory.webp";
 import beforeReports from "@/assets/farmcloud-before-5-reports.webp";
 import onboardingVerify from "@/assets/farmcloud-onboarding-2-verify.webp";
+import researchPhoto from "@/assets/farmcloud-research-peppers.webp";
 import { CaseStudyHero, type MetaRow, type Outcome } from "@/components/CaseStudyHero";
 import {
   CaseStudySection,
@@ -390,10 +391,21 @@ function FarmCloud() {
         </Prose>
       </CaseStudySection>
 
-      {/* No picture here. What stood in for one was a generated photograph of
-          sticky notes, standing for research that actually happened — the one
-          kind of image this page cannot afford to have faked. */}
-      <CaseStudySection title="The starting point">
+      <CaseStudySection
+        title="The starting point"
+        /* Beside the facts rather than above them: the photograph is upright,
+           and run the width of the page it would stand two screens tall. It
+           replaces a generated picture of sticky notes — this one is from the
+           field, which is the only kind worth having here. */
+        media={
+          <SectionImage
+            src={researchPhoto}
+            alt="Two people in a greenhouse of pepper plants, looking at a phone together"
+            width={1600}
+            height={2400}
+          />
+        }
+      >
         {startingPoint.map((block) => (
           <FactList key={block.label} label={block.label} items={block.items} />
         ))}
