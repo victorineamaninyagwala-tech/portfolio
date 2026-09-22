@@ -1,15 +1,19 @@
 import type { ReactNode } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 
-import checkInShot from "@/assets/soulshape-check-in.webp";
 import heroImage from "@/assets/soulshape-hero.webp";
-import recordShot from "@/assets/soulshape-record.webp";
+import flow1 from "@/assets/ss-flow-1-record.webp";
+import flow2 from "@/assets/ss-flow-2-form.webp";
+import flow3 from "@/assets/ss-flow-3-entered.webp";
+import flow4 from "@/assets/ss-flow-4-computed.webp";
+import flow5 from "@/assets/ss-flow-5-routed.webp";
 import signalsShot from "@/assets/soulshape-signals.webp";
 import summaryShot from "@/assets/soulshape-summary.webp";
 import { CaseStudyHero, type MetaRow } from "@/components/CaseStudyHero";
 import { CaseStudySection, Prose } from "@/components/CaseStudySection";
 import { Arrow, Diagram, Matrix, Node, Row, Sequence, Stack } from "@/components/Diagram";
 import { MoreWork } from "@/components/MoreWork";
+import { Walkthrough, type WalkthroughStep } from "@/components/Walkthrough";
 import { Label, ScreenCard } from "@/components/primitives";
 import {
   architecture,
@@ -351,6 +355,59 @@ function CheckInFlow() {
   );
 }
 
+/*
+ * The check-in, played rather than pasted. A flow reported as two stills is a
+ * claim; a flow you can watch is the thing itself — and this one earns the
+ * playback, because the fourth screen is not a screen the coordinator asked
+ * for. Saving computes the change, tests it against a threshold, and hands
+ * back what it found without saying what it means.
+ *
+ * Shot against the running prototype: the readings are entered, the save is
+ * real, and the figures on the last two screens are what the system worked
+ * out from the ones on the first.
+ */
+const checkIn: WalkthroughStep[] = [
+  {
+    label: "The record as it stands",
+    src: flow1,
+    alt: "Amina Hassan's record: weight 88.4 kg, blood pressure 120/79, BMI 33.3, each against its previous reading.",
+    width: 1932,
+    height: 1449,
+    hotspot: { x: 95.2, y: 10.7 },
+  },
+  {
+    label: "The form, with the previous reading under every field",
+    src: flow2,
+    alt: "The check-in dialog. Under each field is the last value and the date it was taken, and a line saying the system evaluates the reading after it is saved, not while it is typed.",
+    width: 1932,
+    height: 1449,
+    hotspot: { x: 50, y: 34 },
+  },
+  {
+    label: "The reading entered",
+    src: flow3,
+    alt: "The dialog with 87.5 kg, 118 systolic and 76 diastolic entered against the previous 88.4 kg and 120/79.",
+    width: 1932,
+    height: 1449,
+    hotspot: { x: 64.2, y: 79 },
+  },
+  {
+    label: "Saved, and what the system made of it",
+    src: flow4,
+    alt: "The reading is saved and the change computed: down 0.9 kg since 20 September. Beneath it the system reports rapid weight loss at 3.0 kg per week against a threshold of 1.5, and says what this means is for the domain to decide.",
+    width: 1932,
+    height: 1449,
+    hotspot: { x: 65.1, y: 55.2 },
+  },
+  {
+    label: "Routed to a role, for a domain to interpret",
+    src: flow5,
+    alt: "A Risk Attention signal being created from the detected change, carrying the evidence, routed to roles rather than to named individuals, with an urgency that sets how long it stays open.",
+    width: 1932,
+    height: 1449,
+  },
+];
+
 function SoulShape() {
   return (
     <CaseStudyHero
@@ -558,26 +615,7 @@ function SoulShape() {
 
       <Movement
         title="Structured check-ins"
-        figure={
-          /* What is entered, and what it becomes: the reading on the left, the
-             record it lands in on the right. */
-          <div className="grid gap-8 lg:grid-cols-2">
-            <ScreenCard
-              size="half"
-              src={checkInShot}
-              alt="The check-in dialog, with the previous reading printed under each field and a note that the system evaluates the reading after it is saved, not while it is typed."
-              width={1288}
-              height={966}
-            />
-            <ScreenCard
-              size="half"
-              src={recordShot}
-              alt="A patient record: weight, blood pressure and BMI each shown against the previous reading, beside the four care domains and the consent held for each."
-              width={1288}
-              height={966}
-            />
-          </div>
-        }
+        figure={<Walkthrough steps={checkIn} />}
       >
         <Prose wide>
           The check-in brings together information already recorded, calculates what has
