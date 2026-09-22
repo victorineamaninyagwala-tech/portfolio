@@ -9,7 +9,7 @@ import { CaseStudyHero, type MetaRow } from "@/components/CaseStudyHero";
 import { CaseStudySection, Prose } from "@/components/CaseStudySection";
 import { Arrow, Diagram, Matrix, Node, Row, Sequence, Stack } from "@/components/Diagram";
 import { MoreWork } from "@/components/MoreWork";
-import { ImageCard, Label } from "@/components/primitives";
+import { Label, ScreenCard } from "@/components/primitives";
 import {
   architecture,
   checkInAfter,
@@ -527,7 +527,7 @@ function SoulShape() {
           <div className="space-y-8">
             <Architecture />
             <Visibility />
-            <ImageCard
+            <ScreenCard
               src={signalsShot}
               alt="The signals list in the prototype. Each row is typed, carries a domain and a severity, and is held at active, escalated, dormant or resolved."
               width={1932}
@@ -569,7 +569,7 @@ function SoulShape() {
         figure={
           <div className="space-y-8">
             <PatientLayer />
-            <ImageCard
+            <ScreenCard
               src={summaryShot}
               alt="The clinic summary: active patients, critical alerts, patients due a check-in, signals plotted by domain, and the caseload split by phase from assessment through to follow-up and re-entry."
               width={1932}
@@ -602,14 +602,14 @@ function SoulShape() {
           /* What is entered, and what it becomes: the reading on the left, the
              record it lands in on the right. */
           <div className="grid gap-8 lg:grid-cols-2">
-            <ImageCard
+            <ScreenCard
               size="half"
               src={checkInShot}
               alt="The check-in dialog, with the previous reading printed under each field and a note that the system evaluates the reading after it is saved, not while it is typed."
               width={1288}
               height={966}
             />
-            <ImageCard
+            <ScreenCard
               size="half"
               src={recordShot}
               alt="A patient record: weight, blood pressure and BMI each shown against the previous reading, beside the four care domains and the consent held for each."

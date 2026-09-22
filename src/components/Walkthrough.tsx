@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useId, useRef, useState, type KeyboardEvent } from "react";
 
-import { Frame, type FrameSize } from "@/components/primitives";
+import { Frame, type FrameSize, SCREEN_INSET } from "@/components/primitives";
 import { cn } from "@/lib/utils";
 
 /*
@@ -19,10 +19,6 @@ import { cn } from "@/lib/utils";
  * taller than the rest: that one keeps the inset width and scrolls, and
  * playback scrolls it to the button before pressing.
  */
-
-/* How much of the card the screen takes up. Close to all of it: a screen set
-   much smaller than this stops being readable. */
-const SCREEN_SIZE = "94%";
 
 /* One beat of playback, in milliseconds. */
 const DWELL = 1900;
@@ -217,12 +213,12 @@ export function Walkthrough({
           className={cn("wt-motion relative shrink-0", step.tall && "my-10")}
           style={
             step.tall
-              ? { animation: "wt-screen-in 340ms ease-out", width: SCREEN_SIZE }
+              ? { animation: "wt-screen-in 340ms ease-out", width: SCREEN_INSET }
               : {
                   animation: "wt-screen-in 340ms ease-out",
                   aspectRatio: `${step.width} / ${step.height}`,
-                  maxWidth: SCREEN_SIZE,
-                  maxHeight: SCREEN_SIZE,
+                  maxWidth: SCREEN_INSET,
+                  maxHeight: SCREEN_INSET,
                 }
           }
         >

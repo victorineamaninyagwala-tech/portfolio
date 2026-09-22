@@ -187,6 +187,56 @@ export function Frame({
 }
 
 /**
+ * How much of a frame a screen takes up. Close to all of it, since a screen
+ * set much smaller than this stops being readable — but not all of it, so the
+ * ground shows around the edge and the frame reads as something holding the
+ * screen rather than as the screen itself.
+ */
+export const SCREEN_INSET = "94%";
+
+/**
+ * A screen in a frame.
+ *
+ * A photograph is cropped to fill its frame; a screen is not. Cropping a
+ * screenshot to the frame's shape cuts off the edge of the interface, which is
+ * the part that says what kind of thing is being looked at — so a screen is
+ * shown whole and centred on the ground instead.
+ *
+ * This is the inset the walkthroughs use, so a still screen and a flow that
+ * plays itself are the same size on the page and sit on the same ground.
+ */
+export function ScreenCard({
+  src,
+  alt,
+  width,
+  height,
+  size = "full",
+  className,
+}: {
+  src: string;
+  alt: string;
+  width: number;
+  height: number;
+  size?: FrameSize;
+  className?: string;
+}) {
+  return (
+    <Frame size={size} className={cn("flex items-center justify-center", className)}>
+      <div
+        className="shrink-0"
+        style={{
+          aspectRatio: `${width} / ${height}`,
+          maxWidth: SCREEN_INSET,
+          maxHeight: SCREEN_INSET,
+        }}
+      >
+        <img src={src} alt={alt} width={width} height={height} className="block size-full" />
+      </div>
+    </Frame>
+  );
+}
+
+/**
  * A picture in a frame. The frame governs the shape, so a picture of another
  * shape is cropped to fill it rather than shrinking inside it.
  */
