@@ -46,8 +46,9 @@
      media on the homepage. #e6e6cc. */
   --ground: oklch(0.918 0.034 107.1);
 
-  /* Headings only. DotGothic16 ships one weight, so the heading steps set 400. */
-  --font-display: "DotGothic16", var(--font-sans);
+  /* Headings only. Nunito Sans has real weights, so the heading steps set the
+     600 that names things everywhere else rather than a face's only option. */
+  --font-display: "Nunito Sans", var(--font-sans);
 
   /* Hairline used by the work-history file tabs and their panels. */
   --file-line: color-mix(in oklab, var(--ink) 24%, transparent);
@@ -76,8 +77,12 @@
 }
 
 /*
- * Text is set in Ubuntu, headings in DotGothic16 — both from Google Fonts, so
+ * Text is set in Ubuntu, headings in Nunito Sans — both from Google Fonts, so
  * nothing here needs a licence.
+ *
+ * DotGothic16 set the headings before this. It is a pixel face, and a heading
+ * is the one place on a page that has to be read at a glance rather than
+ * looked at, so the headings moved to a face that is simply legible.
  *
  * Aeonik was the earlier intent for text and was never bought; it is out of the
  * stack entirely now. Putting it back means adding it ahead of Ubuntu here and
@@ -89,7 +94,7 @@
  * thirteen sizes and six near-identical label styles before this.
  *
  * The three heading steps also carry the family and weight: headings are set
- * in DotGothic16, which ships a single 400 weight, so there is nothing to choose.
+ * in Nunito Sans at 600, the same weight the text steps use to name things.
  * The four text steps fix size, line height and tracking only, and their
  * weight stays an explicit font-* class at the call site: 400 for running
  * text, 600 for anything that names something, which Ubuntu renders as Bold.
@@ -106,7 +111,7 @@
 /* Page and section titles. */
 @utility type-display {
   font-family: var(--font-display);
-  font-weight: 400;
+  font-weight: 600;
   font-size: clamp(2.125rem, 3.4vw + 1.6rem, 4.5rem);
   line-height: 1.05;
   letter-spacing: -0.03em;
@@ -115,7 +120,7 @@
 /* One rank down: the footer address block. */
 @utility type-headline {
   font-family: var(--font-display);
-  font-weight: 400;
+  font-weight: 600;
   font-size: clamp(1.75rem, 2.6vw + 0.9rem, 2.75rem);
   line-height: 1.1;
   letter-spacing: -0.02em;
@@ -124,7 +129,7 @@
 /* Named things inside a section: employers, capability groups. */
 @utility type-title {
   font-family: var(--font-display);
-  font-weight: 400;
+  font-weight: 600;
   font-size: clamp(1.25rem, 0.8vw + 0.9rem, 1.625rem);
   line-height: 1.25;
   letter-spacing: -0.02em;
@@ -241,14 +246,20 @@ html {
   vertical-align: top;
 }
 
-/* Applied by LetterSwapHeading to every letter the cursor disc overlaps. */
+/* Applied by LetterSwapHeading to every letter the cursor disc overlaps.
+   The swap face ships one weight, so the heading's 600 is dropped with it —
+   left on, the browser would smear a fake bold over a drawn face. */
 .letter-swap > span.is-swapped {
   font-family: "Caacupe One", var(--font-display), cursive;
+  font-weight: 400;
 }
 
-/* Set while widths are being measured, so the swap cannot skew the result. */
+/* Set while widths are being measured, so the swap cannot skew the result.
+   The weight goes back too: a letter measured lighter than the line it sits
+   in would be pinned too narrow, and the line would reflow on hover. */
 .letter-swap.is-measuring > span.is-swapped {
   font-family: inherit;
+  font-weight: inherit;
 }
 
 /*
