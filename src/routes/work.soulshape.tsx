@@ -2,6 +2,7 @@ import type { ReactNode } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 
 import checkInShot from "@/assets/soulshape-check-in.webp";
+import heroImage from "@/assets/soulshape-hero.webp";
 import recordShot from "@/assets/soulshape-record.webp";
 import signalsShot from "@/assets/soulshape-signals.webp";
 import summaryShot from "@/assets/soulshape-summary.webp";
@@ -16,7 +17,6 @@ import {
   checkInBefore,
   coordinationSteps,
   decisions,
-  deferred,
   evidence,
   lifecycleAfter,
   lifecycleBefore,
@@ -76,31 +76,6 @@ function Movement({
         <div className="col-span-12 space-y-6 md:col-span-6 md:col-start-7">{children}</div>
       </div>
     </CaseStudySection>
-  );
-}
-
-/*
- * The system at a glance, which opens the page in place of a photograph of a
- * screen. The argument of the whole case study in four steps: a patient, the
- * four domains treating them, the layer between, and what it is for.
- */
-function SystemAtAGlance() {
-  return (
-    <Diagram label="SoulShape at a glance">
-      <div className="mx-auto max-w-[62ch]">
-        <Node title="Patient" tone="subject" />
-        <Arrow />
-        <Row columns={4}>
-          {architecture[2].holds.map((domain) => (
-            <Node key={domain} title={domain} />
-          ))}
-        </Row>
-        <Arrow />
-        <Node title="SoulShape" tone="subject" note="The layer between the domains" />
-        <Arrow />
-        <Node title="Continuity" note="Across phases, across cycles, across institutions" />
-      </div>
-    </Diagram>
   );
 }
 
@@ -376,30 +351,18 @@ function CheckInFlow() {
   );
 }
 
-/*
- * What was designed and not built. Drawn rather than described: dashed and
- * dimmed is the whole statement, and it says the part that is missing was
- * decided on rather than forgotten.
- */
-function PatientLayer() {
-  return (
-    <Diagram label="Patient layer · deferred, not abandoned">
-      <Row columns={3}>
-        {deferred.map((piece) => (
-          <Node key={piece} title={piece} tone="deferred" />
-        ))}
-      </Row>
-    </Diagram>
-  );
-}
-
 function SoulShape() {
   return (
     <CaseStudyHero
       title="SoulShape"
       meta={meta}
       deck="A care coordination platform for multi-disciplinary programs treating chronic illness."
-      media={<SystemAtAGlance />}
+      image={{
+        src: heroImage,
+        alt: "The SoulShape account-creation screen on a monitor at a clinic's front desk",
+        width: 1448,
+        height: 1086,
+      }}
     >
       <Movement title="Starting point" figure={<Fragmented />}>
         <Prose wide>
@@ -567,15 +530,12 @@ function SoulShape() {
       <Movement
         title="First prototype"
         figure={
-          <div className="space-y-8">
-            <PatientLayer />
-            <ScreenCard
-              src={summaryShot}
-              alt="The clinic summary: active patients, critical alerts, patients due a check-in, signals plotted by domain, and the caseload split by phase from assessment through to follow-up and re-entry."
-              width={1932}
-              height={1449}
-            />
-          </div>
+          <ScreenCard
+            src={summaryShot}
+            alt="The clinic summary: active patients, critical alerts, patients due a check-in, signals plotted by domain, and the caseload split by phase from assessment through to follow-up and re-entry."
+            width={1932}
+            height={1449}
+          />
         }
       >
         <Prose wide>The first version was clinic-facing.</Prose>

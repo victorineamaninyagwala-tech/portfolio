@@ -256,32 +256,9 @@ export const checkInAfter = [
 ];
 
 /*
- * What the MVP does not carry. From the MVP documentation: "The MVP has no
- * patient side", and every component that existed to feed one "was removed
- * rather than left as decoration, on the principle that software should not
- * carry interfaces to systems that do not exist."
- *
- * Her trade-off, verbatim: "the patient-as-anchor commitment, the concept's
- * deepest idea, is not demonstrated in this MVP. It is deferred, not
- * abandoned."
+ * The MVP's patient side was drawn here once, as a panel of dimmed boxes
+ * naming what had been designed and not built. It is gone: a card whose only
+ * content is the absence of a thing asks a reader for time and gives them
+ * nothing back. Her prose already says she removed the patient-facing
+ * components, which is the whole of it.
  */
-export const deferred = [
-  "Patient application",
-  "Recipe library",
-  "Educational articles",
-  "Content assignment",
-  "Engagement analytics",
-  "Patient-submitted logs",
-];
-
-/*
- * The four commitments her own Keeps/Defers table marks "Deferred" — distinct
- * from the removals above, and from two rows marked "Reduced", which are not
- * deferred and do not belong here.
- */
-export const deferredCommitments = [
-  { name: "Patient continuity layer", state: "No patient-facing surface exists" },
-  { name: "Cross-institution portability", state: "One institution holds its own data" },
-  { name: "Consent and visibility model", state: "Reduced to role permissions" },
-  { name: "Insurance-ready export", state: "CSV export of records only" },
-];
