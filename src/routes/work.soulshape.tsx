@@ -1,11 +1,15 @@
 import type { ReactNode } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 
+import checkInShot from "@/assets/soulshape-check-in.webp";
 import heroImage from "@/assets/soulshape-hero.webp";
+import recordShot from "@/assets/soulshape-record.webp";
+import signalsShot from "@/assets/soulshape-signals.webp";
+import summaryShot from "@/assets/soulshape-summary.webp";
 import { CaseStudyHero, type MetaRow } from "@/components/CaseStudyHero";
 import { CaseStudySection, Prose } from "@/components/CaseStudySection";
 import { MoreWork } from "@/components/MoreWork";
-import { Label } from "@/components/primitives";
+import { ImageCard, Label } from "@/components/primitives";
 import { shareImage } from "@/lib/share";
 
 export const Route = createFileRoute("/work/soulshape")({
@@ -76,9 +80,18 @@ const layers = [
  * left edge, breaks its lines halfway across the page and leaves the other
  * half of the page empty. Here the heading takes that half.
  */
-function Movement({ title, children }: { title: string; children: ReactNode }) {
+function Movement({
+  title,
+  figure,
+  children,
+}: {
+  title: string;
+  /** A screen of the prototype, run full width below the writing. */
+  figure?: ReactNode;
+  children: ReactNode;
+}) {
   return (
-    <CaseStudySection columns={1}>
+    <CaseStudySection columns={1} figure={figure}>
       <div className="grid grid-cols-12 gap-y-8">
         <h2 className="col-span-12 type-headline md:col-span-5">{title}</h2>
         {/* Columns 5 and 6 are the gutter between them, the same gutter the kit
@@ -295,7 +308,17 @@ function SoulShape() {
         </Prose>
       </Movement>
 
-      <Movement title="Architecture">
+      <Movement
+        title="Architecture"
+        figure={
+          <ImageCard
+            src={signalsShot}
+            alt="The signals list in the prototype. Each row is typed — trend note, handoff note, coordination request, constraint update, status update — carries a domain and a severity, and is held at active, escalated, dormant or resolved."
+            width={1932}
+            height={1449}
+          />
+        }
+      >
         <Prose wide>The system developed around three layers.</Prose>
 
         <Layers />
@@ -327,7 +350,17 @@ function SoulShape() {
         <Prose wide>This also reduced the scope of the first version.</Prose>
       </Movement>
 
-      <Movement title="First prototype">
+      <Movement
+        title="First prototype"
+        figure={
+          <ImageCard
+            src={summaryShot}
+            alt="The clinic summary: active patients, critical alerts, patients due a check-in, signals plotted by domain, and the caseload split by phase from assessment through to follow-up and re-entry."
+            width={1932}
+            height={1449}
+          />
+        }
+      >
         <Prose wide>The first version was clinic-facing.</Prose>
         <Prose wide>
           I removed the patient-facing components rather than keeping them as incomplete
@@ -346,7 +379,29 @@ function SoulShape() {
         <Prose wide>The first feature therefore focused on that process.</Prose>
       </Movement>
 
-      <Movement title="Structured check-ins">
+      <Movement
+        title="Structured check-ins"
+        figure={
+          /* What is entered, and what it becomes: the reading on the left, the
+             record it lands in on the right. */
+          <div className="grid gap-8 lg:grid-cols-2">
+            <ImageCard
+              size="half"
+              src={checkInShot}
+              alt="The check-in dialog, with the previous reading printed under each field and a note that the system evaluates the reading after it is saved, not while it is typed."
+              width={1288}
+              height={966}
+            />
+            <ImageCard
+              size="half"
+              src={recordShot}
+              alt="A patient record: weight, blood pressure and BMI each shown against the previous reading, beside the four care domains and the consent held for each."
+              width={1288}
+              height={966}
+            />
+          </div>
+        }
+      >
         <Prose wide>
           The check-in brings together information already recorded, calculates what has
           changed and makes the result available to the relevant members of the team.
