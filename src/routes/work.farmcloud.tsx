@@ -463,6 +463,19 @@ function FarmCloud() {
         ))}
       </CaseStudySection>
 
+      {/* The ending the page did not have. It stopped on a scoping decision
+          and went straight to the next project, so a reader never learned
+          whether any of it became a product. Kept to what is known: she says
+          everything in the case study shipped. The half that is still missing
+          is what she would do differently, which is hers to write and not
+          mine to invent. */}
+      <CaseStudySection title="Where it landed" columns={1}>
+        <Prose>
+          All of it shipped: the rebuilt onboarding, the crop lifecycle framework, the
+          USSD build and Market Linkage.
+        </Prose>
+      </CaseStudySection>
+
       <MoreWork current="farmcloud" />
     </CaseStudyHero>
   );
