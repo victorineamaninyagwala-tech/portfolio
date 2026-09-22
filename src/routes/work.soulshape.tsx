@@ -44,9 +44,9 @@ export const Route = createFileRoute("/work/soulshape")({
   head: ({ match }) => ({
     meta: [
       { title: "SoulShape · A HealthTech Case Study by Victorine Amani" },
-      { name: "description", content: "A care coordination platform for multi-disciplinary programs treating chronic illness, aligned with the Kenya Digital Health Act 2023." },
+      { name: "description", content: "A care coordination platform for multi-disciplinary programmes treating chronic illness, aligned with the Kenya Digital Health Act 2023." },
       { property: "og:title", content: "SoulShape · A HealthTech Case Study by Victorine Amani" },
-      { property: "og:description", content: "A care coordination platform for multi-disciplinary programs treating chronic illness." },
+      { property: "og:description", content: "A care coordination platform for multi-disciplinary programmes treating chronic illness." },
       ...shareImage(match.context.origin, "soulshape", "The SoulShape case study: a runner mid-stride beside the title."),
     ],
   }),
@@ -506,7 +506,7 @@ function SoulShape() {
     <CaseStudyHero
       title="SoulShape"
       meta={meta}
-      deck="A care coordination platform for multi-disciplinary programs treating chronic illness."
+      deck="A care coordination platform for multi-disciplinary programmes treating chronic illness."
       image={{
         src: heroImage,
         alt: "The SoulShape account-creation screen on a monitor at a clinic's front desk",

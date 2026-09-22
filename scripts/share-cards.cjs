@@ -95,7 +95,7 @@ const CARDS = [
     html: study({
       title: "SoulShape",
       discipline: "UX · Healthcare · Systems Design",
-      line: "A care coordination platform for multi-disciplinary weight-loss programs, aligned with the Kenya Digital Health Act 2023.",
+      line: "A care coordination platform for multi-disciplinary programmes treating chronic illness, aligned with the Kenya Digital Health Act 2023.",
       cover: "card-soulshape.webp",
     }),
   },
