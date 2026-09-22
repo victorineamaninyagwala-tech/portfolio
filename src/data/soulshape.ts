@@ -3,9 +3,12 @@
  *
  * Everything here is transcribed from her own source documents — the
  * comprehensive case study, the decision log, the data architecture, the
- * signal standards, the visibility matrix, the MVP documentation — and from
- * the built prototype's own data files, which are the most recent word where
- * two sources disagree. Nothing is rounded, reordered or reconstructed. The
+ * signal standards, the visibility matrix — and from the built prototype's own
+ * data files, which are the most recent word where two sources disagree.
+ *
+ * The MVP documentation for the Holistic Weight Management Centre is NOT a
+ * source. She has said to disregard it. Nothing on the page may be traced to
+ * it, and nothing here should start citing it again. Nothing is rounded, reordered or reconstructed. The
  * comment above each block says where it came from, so a figure on the page
  * can always be traced back to a line in a document.
  *
@@ -250,34 +253,6 @@ export const visibility = {
   ],
   rule: "Domain raw data is never visible to other domains, the coordinator, mentors, or the patient in-app.",
 };
-
-/*
- * The Centre's weekly check-in before SoulShape, from her own account of the
- * discovery call, and the flow the prototype replaced it with.
- */
-export const checkInBefore = [
-  "Weekly check-in",
-  "Phone and email",
-  "Staff member gathers",
-  "Files updated",
-  "Colleague told",
-];
-
-export const checkInAfter = [
-  "Structured check-in",
-  "Records",
-  "Computed change",
-  "Shared signal",
-  "Action",
-];
-
-/*
- * The MVP's patient side was drawn here once, as a panel of dimmed boxes
- * naming what had been designed and not built. It is gone: a card whose only
- * content is the absence of a thing asks a reader for time and gives them
- * nothing back. Her prose already says she removed the patient-facing
- * components, which is the whole of it.
- */
 
 /*
  * The external layer, which was designed and documented but never built, so it
