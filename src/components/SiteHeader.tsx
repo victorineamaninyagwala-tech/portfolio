@@ -6,9 +6,12 @@ import { Gutter, TextLink } from "@/components/primitives";
  *
  * Work, About and Contact are sections of the homepage, so they are addressed
  * as /#work, /#about and /#contact — a bare hash would do nothing on a case
- * study page. Exploration is a page of its own. The last two are the asks:
- * a way to get in touch and the CV, reachable from the top of every page
- * rather than only from the foot of it.
+ * study page. The last two are the asks: a way to get in touch and the CV,
+ * reachable from the top of every page rather than only from the foot of it.
+ *
+ * There was an Exploration link here, pointing at a page that was never
+ * built. It is out of both the nav and the footer until there is something
+ * behind it.
  *
  * All five show on a phone. They do not fit on one line beside the name, so
  * below the small breakpoint the header is two rows — the name, then the
@@ -22,7 +25,6 @@ const CV = "/victorine-nyagwala-cv.pdf";
 const links = [
   { label: "Work", href: "/#work" },
   { label: "About", href: "/#about" },
-  { label: "Exploration", href: "/exploration" },
   { label: "Contact", href: "/#contact" },
   // Served from public/, so it opens in the browser's PDF viewer.
   { label: "CV", href: CV, external: true },

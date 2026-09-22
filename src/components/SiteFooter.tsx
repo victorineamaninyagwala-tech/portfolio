@@ -31,9 +31,11 @@ const columns: Array<{
   {
     label: "Info",
     items: [
-      // Routes do not exist yet — swap the <a> for a <Link> once they are built.
-      { text: "About", href: "/about" },
-      { text: "Exploration", href: "/exploration" },
+      // Both of these used to point at pages that were never built, /about and
+      // /exploration, and both answered 404. About is a section of the
+      // homepage and is addressed as one, the same way the header does it;
+      // Exploration is gone until there is a page to send anybody to.
+      { text: "About", href: "/#about" },
       { text: "Open to", pills: ["Full time", "Consulting"] },
     ],
   },
