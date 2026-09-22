@@ -77,10 +77,12 @@ function Index() {
               the city, so neither is said again below it. This is the sentence
               both case studies name at the decision that proves it, so a
               reader meets it here and meets it again as a conclusion twice
-              over. Capped at a reading measure rather than run to the full
-              width: at eleven words it does not need the whole page, and held
-              short it lands as a claim rather than a paragraph. */}
-          <h1 className="mt-7 max-w-[20ch] type-display">Designing the boundary between human responsibility and technological assistance.</h1>
+              over.
+
+              It takes the whole measure. No cap: the claim is the first thing
+              on the page and it runs the width of the page, the way it did
+              before the sentence got shorter. */}
+          <h1 className="mt-7 type-display">Designing the boundary between human responsibility and technological assistance.</h1>
           <ul className="mt-9 space-y-1.5 type-label font-semibold text-ink/60">
             <li>Practice · 2023 / Present</li>
             {/* The four disciplines the work actually evidences, and no more:
