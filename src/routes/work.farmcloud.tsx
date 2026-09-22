@@ -60,7 +60,7 @@ const meta: MetaRow[] = [
 
 /* What the work came to, carried at the top of the page. */
 const outcomes: Outcome[] = [
-  { figure: "5,000+", note: "Farmers actively using FarmCloud" },
+  { figure: "4,000", note: "Active users digitising records" },
   { figure: "70%", note: "Self-onboarding success, up from 10% on the legacy system" },
   { figure: "6 / 7", note: "Core surfaces originated from research findings" },
   { figure: "14", note: "Countries reached across East and Southern Africa" },
