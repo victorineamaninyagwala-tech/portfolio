@@ -2,13 +2,20 @@ import type { ReactNode } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 
 import heroImage from "@/assets/soulshape-hero.webp";
+import signalsShot from "@/assets/soulshape-signals.webp";
+import summaryShot from "@/assets/soulshape-summary.webp";
+import domainsShot from "@/assets/ss-domains.webp";
 import flow1 from "@/assets/ss-flow-1-record.webp";
 import flow2 from "@/assets/ss-flow-2-form.webp";
 import flow3 from "@/assets/ss-flow-3-entered.webp";
 import flow4 from "@/assets/ss-flow-4-computed.webp";
 import flow5 from "@/assets/ss-flow-5-routed.webp";
-import signalsShot from "@/assets/soulshape-signals.webp";
-import summaryShot from "@/assets/soulshape-summary.webp";
+import phaseShot from "@/assets/ss-phase-maintenance.webp";
+import programmesShot from "@/assets/ss-programmes.webp";
+import historyShot from "@/assets/ss-record-history.webp";
+import signalDetailShot from "@/assets/ss-signal-detail.webp";
+import escalatedShot from "@/assets/ss-signals-escalated.webp";
+import tasksShot from "@/assets/ss-tasks.webp";
 import { CaseStudyHero, type MetaRow } from "@/components/CaseStudyHero";
 import { CaseStudySection, Prose } from "@/components/CaseStudySection";
 import { Arrow, Diagram, Matrix, Node, Row, Sequence, Stack } from "@/components/Diagram";
@@ -17,17 +24,20 @@ import { Walkthrough, type WalkthroughStep } from "@/components/Walkthrough";
 import { Label, ScreenCard } from "@/components/primitives";
 import {
   architecture,
-  checkInAfter,
-  checkInBefore,
+  calculation,
+  centreProgrammes,
   coordinationSteps,
   decisions,
   evidence,
-  lifecycleAfter,
-  lifecycleBefore,
+  externalInput,
+  lifecycle,
+  lifecycleStops,
   mechanisms,
   scorecard,
   signalTypes,
+  survives,
   visibility,
+  workingAreas,
 } from "@/data/soulshape";
 import { shareImage } from "@/lib/share";
 
@@ -51,16 +61,19 @@ const meta: MetaRow[] = [
   { label: "Compliance", value: "Kenya Digital Health Act 2023" },
 ];
 
+/* Every screen is shot at the same size, so none of them has to say so. */
+const SCREEN = { width: 1932, height: 1449 };
+
 /*
  * A movement of the account: the heading in the left column, the writing in
- * the right, starting on the line the hero's facts start on, and a drawing or
- * a screen run full width underneath.
+ * the right, starting on the line the hero's facts start on, and the drawings
+ * or the screens run full width underneath.
  *
- * The section kit sets its title above the full width, which suits a section
- * carried by a picture or by two columns of facts. A single column of
- * narrative under a full-width heading is a different thing — it hangs at the
- * left edge, breaks its lines halfway across the page and leaves the other
- * half of the page empty. Here the heading takes that half.
+ * The page turns from drawings into screens as it goes. Up to the research it
+ * argues in diagrams, because there is no product yet to point at; from the
+ * decisions onward it argues in the interface, and a drawing appears only
+ * where the system underneath has to be explained before a screen of it could
+ * mean anything.
  */
 function Movement({
   title,
@@ -84,19 +97,48 @@ function Movement({
 }
 
 /*
- * The same picture before there is a system in it: four professionals, each
- * handing the patient something, and the patient holding all of it together.
- * The arrows all point the same way on purpose.
+ * A decision and the screen that carries it. The decision is stated once on
+ * the left and the interface answers on the right — no diagram, because the
+ * screen is the evidence that the decision was taken rather than described.
+ */
+function Decided({
+  decision,
+  why,
+  src,
+  alt,
+}: {
+  decision: string;
+  why: string;
+  src: string;
+  alt: string;
+}) {
+  return (
+    <div className="grid items-start gap-x-12 gap-y-6 lg:grid-cols-12">
+      <div className="lg:col-span-4">
+        <p className="type-title text-ink">{decision}</p>
+        <p className="mt-3 type-body text-ink/70">{why}</p>
+      </div>
+      <div className="lg:col-span-8">
+        <ScreenCard src={src} alt={alt} width={SCREEN.width} height={SCREEN.height} />
+      </div>
+    </div>
+  );
+}
+
+/*
+ * The care journey before there is a system in it: four professionals and
+ * tools, each handing the patient something, and the patient carrying all of
+ * it between them. Every arrow points the same way on purpose.
  */
 function Fragmented() {
   const hands = [
     { from: "Doctor", gives: "Medication" },
     { from: "Nutritionist", gives: "Meal plan" },
-    { from: "Trainer", gives: "Activity" },
-    { from: "Psychologist", gives: "Behaviour" },
+    { from: "Exercise", gives: "Activity" },
+    { from: "Tracking", gives: "Logs and readings" },
   ];
   return (
-    <Diagram label="Before: four professionals, one patient holding it together">
+    <Diagram label="The care journey, fragmented">
       <Row columns={4}>
         {hands.map((hand) => (
           <div key={hand.from}>
@@ -105,18 +147,22 @@ function Fragmented() {
           </div>
         ))}
       </Row>
-      <div className="mx-auto mt-2 max-w-[46ch]">
-        <Node title="Patient" tone="subject" note="Carries the information, reconciles the advice, keeps track of what changed" />
+      <div className="mx-auto mt-2 max-w-[52ch]">
+        <Node
+          title="Patient"
+          tone="subject"
+          note="Carries the information between them, reconciles the advice, and keeps track of what changed"
+        />
       </div>
     </Diagram>
   );
 }
 
-/* The three strands of evidence, and the one finding each produced. */
+/* The four strands of reading, and the one finding each produced. */
 function Evidence() {
   return (
     <Diagram label="What the reading produced">
-      <Row columns={3}>
+      <Row columns={4}>
         {evidence.map((strand) => (
           <div key={strand.strand} className="rounded-lg border border-ink/25 bg-paper px-6 py-6">
             <Label className="text-olive">{strand.strand}</Label>
@@ -130,38 +176,32 @@ function Evidence() {
 }
 
 /*
- * The lifecycle, twice: the one the existing products implement, and the one a
- * chronic condition actually has. The question underneath is the one the rest
- * of the case study answers.
+ * The cycle a chronic condition actually runs, and the point the existing
+ * products stop at. What has to survive the return is named underneath,
+ * because that is the whole of the finding.
  */
 function Lifecycle() {
   return (
-    <Diagram label="The shape of a care cycle">
-      <div className="space-y-12">
-        <div>
-          <Label className="text-ink/50">In the systems that exist</Label>
-          <Sequence className="mt-4" steps={lifecycleBefore.map((name) => ({ title: name }))} />
-        </div>
-        <div>
-          <Label className="text-olive">What a chronic condition does</Label>
-          <Sequence
-            className="mt-4"
-            steps={lifecycleAfter.map((name, i) => ({
-              title: name,
-              tone: i === lifecycleAfter.length - 1 ? "subject" : "plain",
-            }))}
-          />
-        </div>
-        <p className="type-title text-center text-ink">What survives the return?</p>
+    <Diagram label="Re-entry">
+      <Sequence
+        steps={lifecycle.map((name, i) => ({
+          title: name,
+          note: i === lifecycleStops ? "where the existing products stop" : undefined,
+          tone: i === lifecycle.length - 1 ? "subject" : "plain",
+        }))}
+      />
+      <div className="mx-auto mt-12 max-w-[62ch] text-center">
+        <Label className="text-olive">What has to survive it</Label>
+        <p className="mt-3 type-body text-ink/70">{survives}</p>
       </div>
     </Diagram>
   );
 }
 
 /*
- * The audit, whole. Nine dimensions rather than the three that make the point,
- * because the point is only worth anything if the other six are there to be
- * checked — and the two rows that decided the scope are marked, not extracted.
+ * The audit, whole. Nine dimensions rather than the two that make the point,
+ * because the point is only worth anything if the other seven are there to be
+ * checked — and the two that decided the scope are marked, not extracted.
  */
 function Scorecard() {
   return (
@@ -238,39 +278,28 @@ function Coordination() {
 }
 
 /*
- * The decision log: the decision, the reasoning, and what it cost. The
- * decision is stated and left to stand — the why and the consequence beside
- * it do the arguing.
+ * The same finding in one line: the route between two domains runs through a
+ * person, and there is no other route.
  */
-function DecisionLog() {
+function Carrier() {
   return (
-    <Diagram label="Five decisions, and what each one cost">
-      <div className="mx-auto max-w-[86ch] space-y-3">
-        {decisions.map((entry) => (
-          <div key={entry.decision} className="rounded-lg border border-ink/25 bg-paper px-6 py-6">
-            <p className="type-title text-ink">{entry.decision}</p>
-            <div className="mt-5 grid gap-x-10 gap-y-4 md:grid-cols-2">
-              <div>
-                <Label className="text-olive">Why</Label>
-                <p className="mt-2 type-body text-ink/75">{entry.why}</p>
-              </div>
-              <div>
-                <Label className="text-ink/40">Consequence</Label>
-                <p className="mt-2 type-body text-ink/75">{entry.consequence}</p>
-              </div>
-            </div>
-          </div>
-        ))}
-      </div>
+    <Diagram label="The route between two domains">
+      <Sequence
+        steps={[
+          { title: "Nutrition", note: "Holds the record" },
+          { title: "Patient", note: "Consents, photographs, forwards", tone: "subject" },
+          { title: "Medical", note: "Receives it, eventually" },
+        ]}
+      />
     </Diagram>
   );
 }
 
 /*
  * The architecture: three layers, each resting on the one below, with the
- * nouns that belong to it under its name. The mechanisms built around it sit
- * underneath, and the signal types are listed because "typed signals" means
- * nothing until the types are named.
+ * nouns that belong to it under its name. The signal types are listed because
+ * "typed signals" means nothing until the types are named, and the mechanisms
+ * built around the layers sit beneath them.
  */
 function Architecture() {
   return (
@@ -312,6 +341,50 @@ function Architecture() {
   );
 }
 
+/* Where each layer of that drawing surfaces in the built system. */
+function LayerScreens() {
+  const shown = [
+    {
+      layer: "Data",
+      src: historyShot,
+      alt: "A patient record, where each domain's own material is held against the patient it belongs to.",
+    },
+    {
+      layer: "Meaning",
+      src: signalsShot,
+      alt: "The signals list: typed observations, each carrying a domain and a severity.",
+    },
+    {
+      layer: "Continuity",
+      src: phaseShot,
+      alt: "The maintenance phase, holding the part of the caseload that is in it.",
+    },
+    {
+      layer: "Coordination",
+      src: summaryShot,
+      alt: "The coordinator's summary of the day.",
+    },
+  ];
+  return (
+    <div className="grid gap-8 md:grid-cols-2">
+      {shown.map((item) => (
+        <div key={item.layer}>
+          <Label className="text-ink/50">{item.layer}</Label>
+          <div className="mt-3">
+            <ScreenCard
+              size="half"
+              src={item.src}
+              alt={item.alt}
+              width={SCREEN.width}
+              height={SCREEN.height}
+            />
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
 /*
  * The visibility distinction, which is the subtle one: being able to see that
  * something exists is not permission to read it. Two modes and one rule is the
@@ -334,29 +407,55 @@ function Visibility() {
   );
 }
 
-/* The Centre's weekly check-in, before and after. */
-function CheckInFlow() {
+/*
+ * The external layer, drawn rather than shown: it was specified and never
+ * built, and a screen of it would be a screen of something that does not
+ * exist. Dashed until the last step, which is the one that does.
+ */
+function ExternalInput() {
   return (
-    <Diagram label="The weekly check-in, before and after">
-      <div className="space-y-12">
-        <div>
-          <Label className="text-ink/50">At the Centre</Label>
-          <Sequence className="mt-4" steps={checkInBefore.map((name) => ({ title: name }))} />
-        </div>
-        <div>
-          <Label className="text-olive">In the prototype</Label>
-          <Sequence
-            className="mt-4"
-            steps={checkInAfter.map((name, i) => ({ title: name, tone: i === 0 ? "subject" : "plain" }))}
-          />
-        </div>
-      </div>
+    <Diagram label="External input · specified, not built">
+      <Sequence
+        steps={externalInput.map((step, i) => ({
+          title: step.step,
+          note: step.note,
+          tone: i === externalInput.length - 1 ? "subject" : "deferred",
+        }))}
+      />
+    </Diagram>
+  );
+}
+
+/* The five areas the first version carries. */
+function Scope() {
+  return (
+    <Diagram label="The scope of the first version">
+      <Row columns={5}>
+        {workingAreas.map((area) => (
+          <Node key={area.area} title={area.area} note={area.does} />
+        ))}
+      </Row>
+    </Diagram>
+  );
+}
+
+/* One calculation, followed out of the records it came from. */
+function Calculation() {
+  return (
+    <Diagram label="Where the number on the record comes from">
+      <Sequence
+        steps={[
+          { title: calculation.previous.value, note: `Previous reading · ${calculation.previous.when}` },
+          { title: calculation.current.value, note: `Entered at the check-in · ${calculation.current.when}` },
+          { title: calculation.change.value, note: calculation.change.note, tone: "subject" },
+        ]}
+      />
     </Diagram>
   );
 }
 
 /*
- * The check-in, played rather than pasted. A flow reported as two stills is a
+ * The check-in, played rather than pasted. A flow reported as stills is a
  * claim; a flow you can watch is the thing itself — and this one earns the
  * playback, because the fourth screen is not a screen the coordinator asked
  * for. Saving computes the change, tests it against a threshold, and hands
@@ -371,40 +470,35 @@ const checkIn: WalkthroughStep[] = [
     label: "The record as it stands",
     src: flow1,
     alt: "Amina Hassan's record: weight 88.4 kg, blood pressure 120/79, BMI 33.3, each against its previous reading.",
-    width: 1932,
-    height: 1449,
+    ...SCREEN,
     hotspot: { x: 95.2, y: 10.7 },
   },
   {
     label: "The form, with the previous reading under every field",
     src: flow2,
     alt: "The check-in dialog. Under each field is the last value and the date it was taken, and a line saying the system evaluates the reading after it is saved, not while it is typed.",
-    width: 1932,
-    height: 1449,
+    ...SCREEN,
     hotspot: { x: 50, y: 34 },
   },
   {
     label: "The reading entered",
     src: flow3,
     alt: "The dialog with 87.5 kg, 118 systolic and 76 diastolic entered against the previous 88.4 kg and 120/79.",
-    width: 1932,
-    height: 1449,
+    ...SCREEN,
     hotspot: { x: 64.2, y: 79 },
   },
   {
     label: "Saved, and what the system made of it",
     src: flow4,
     alt: "The reading is saved and the change computed: down 0.9 kg since 20 September. Beneath it the system reports rapid weight loss at 3.0 kg per week against a threshold of 1.5, and says what this means is for the domain to decide.",
-    width: 1932,
-    height: 1449,
+    ...SCREEN,
     hotspot: { x: 65.1, y: 55.2 },
   },
   {
     label: "Routed to a role, for a domain to interpret",
     src: flow5,
     alt: "A Risk Attention signal being created from the detected change, carrying the evidence, routed to roles rather than to named individuals, with an urgency that sets how long it stays open.",
-    width: 1932,
-    height: 1449,
+    ...SCREEN,
   },
 ];
 
@@ -494,7 +588,15 @@ function SoulShape() {
         </Prose>
       </Movement>
 
-      <Movement title="A closer look at coordination" figure={<Coordination />}>
+      <Movement
+        title="A closer look at coordination"
+        figure={
+          <div className="space-y-8">
+            <Coordination />
+            <Carrier />
+          </div>
+        }
+      >
         <Prose wide>
           I spoke with a former Antara employee to understand how coordination worked in
           practice.
@@ -515,7 +617,46 @@ function SoulShape() {
         </Prose>
       </Movement>
 
-      <Movement title="Defining the system" figure={<DecisionLog />}>
+      <Movement
+        title="Defining the system"
+        figure={
+          /* Each decision answered by the screen that carries it rather than by
+             a diagram explaining it. From here on the case study is made of the
+             product. */
+          <div className="space-y-16">
+            <Decided
+              decision={decisions[0].decision}
+              why={decisions[0].why}
+              src={summaryShot}
+              alt="The coordinator's summary: active patients across four programmes, critical alerts, patients due a check-in, and the caseload by phase."
+            />
+            <Decided
+              decision={decisions[1].decision}
+              why={decisions[1].why}
+              src={historyShot}
+              alt="A patient record carrying its accumulated history: the phase timeline across two phase instances, the coordination stream, and the check-ins behind it."
+            />
+            <Decided
+              decision={decisions[2].decision}
+              why={decisions[2].why}
+              src={domainsShot}
+              alt="The psychology domain: who is covered by it, the consent held for each of them, the signals active in it and the tasks open against it."
+            />
+            <Decided
+              decision={decisions[3].decision}
+              why={decisions[3].why}
+              src={signalDetailShot}
+              alt="A trend note in full: the summary reference, who it came from and who it is for, its confidence and expiry, and the escalation path it has not yet been through."
+            />
+            <Decided
+              decision={decisions[4].decision}
+              why={decisions[4].why}
+              src={phaseShot}
+              alt="The maintenance stabilization phase, holding its own caseload alongside assessment, active intervention, transition and follow-up."
+            />
+          </div>
+        }
+      >
         <Prose wide>
           Before moving into the interface, I documented several decisions about what
           SoulShape would and would not do.
@@ -546,13 +687,9 @@ function SoulShape() {
         figure={
           <div className="space-y-8">
             <Architecture />
+            <LayerScreens />
             <Visibility />
-            <ScreenCard
-              src={signalsShot}
-              alt="The signals list in the prototype. Each row is typed, carries a domain and a severity, and is held at active, escalated, dormant or resolved."
-              width={1932}
-              height={1449}
-            />
+            <ExternalInput />
           </div>
         }
       >
@@ -571,7 +708,26 @@ function SoulShape() {
         </Prose>
       </Movement>
 
-      <Movement title="From research to a real clinic" figure={<CheckInFlow />}>
+      <Movement
+        title="From research to a real clinic"
+        figure={
+          <div className="space-y-8">
+            <Diagram label="The Centre's own products, which the prototype is named after">
+              <Row columns={3}>
+                {centreProgrammes.map((programme) => (
+                  <Node key={programme.name} title={programme.name} note={programme.short} />
+                ))}
+              </Row>
+            </Diagram>
+            <ScreenCard
+              src={programmesShot}
+              alt="Registering a patient in the prototype: the programme is chosen from the Centre's own products, the 3-Month Holistic Transformation and the 6-Month Sustainable Wellness Journey."
+              width={SCREEN.width}
+              height={SCREEN.height}
+            />
+          </div>
+        }
+      >
         <Prose wide>The initial work was based entirely on desk research.</Prose>
         <Prose wide>
           The Holistic Weight Management Centre became the next research step because its
@@ -587,12 +743,25 @@ function SoulShape() {
       <Movement
         title="First prototype"
         figure={
-          <ScreenCard
-            src={summaryShot}
-            alt="The clinic summary: active patients, critical alerts, patients due a check-in, signals plotted by domain, and the caseload split by phase from assessment through to follow-up and re-entry."
-            width={1932}
-            height={1449}
-          />
+          <div className="space-y-8">
+            <Scope />
+            <div className="grid gap-8 md:grid-cols-2">
+              <ScreenCard
+                size="half"
+                src={escalatedShot}
+                alt="The signals list filtered to what has escalated."
+                width={SCREEN.width}
+                height={SCREEN.height}
+              />
+              <ScreenCard
+                size="half"
+                src={tasksShot}
+                alt="The tasks a signal asked somebody to do."
+                width={SCREEN.width}
+                height={SCREEN.height}
+              />
+            </div>
+          </div>
         }
       >
         <Prose wide>The first version was clinic-facing.</Prose>
@@ -615,7 +784,28 @@ function SoulShape() {
 
       <Movement
         title="Structured check-ins"
-        figure={<Walkthrough steps={checkIn} />}
+        figure={
+          /* The longest figure on the page, because this is where the research
+             and the architecture turn into something a person does. The form at
+             full size, the flow played, the one calculation followed out of the
+             records it came from, and then where what it produced turns up. */
+          <div className="space-y-8">
+            <ScreenCard
+              src={flow2}
+              alt="The check-in in full: a field for each measure, with the previous reading and the date it was taken printed beneath it, and a note that the system evaluates the reading after it is saved."
+              width={SCREEN.width}
+              height={SCREEN.height}
+            />
+            <Walkthrough steps={checkIn} />
+            <Calculation />
+            <ScreenCard
+              src={signalsShot}
+              alt="The signals list, where what the check-in produced joins every other typed observation, held at active, escalated, dormant or resolved."
+              width={SCREEN.width}
+              height={SCREEN.height}
+            />
+          </div>
+        }
       >
         <Prose wide>
           The check-in brings together information already recorded, calculates what has

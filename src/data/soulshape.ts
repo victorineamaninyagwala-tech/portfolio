@@ -68,16 +68,24 @@ export const phases = [
  * Program = enrollment cycle". Re-enrolment started a new programme; re-entry
  * now happens inside the existing one.
  */
-export const lifecycleBefore = ["Enrol", "Programme", "End"];
-export const lifecycleAfter = ["Enrol", "Programme", "Leave", "Return"];
+export const lifecycle = ["Enrol", "Care", "Programme ends", "Leave", "Return"];
+
+/* Where the existing products stop: the programme ends and so does the cycle,
+   so a returning patient starts again with nothing behind them. Index into
+   `lifecycle` above. */
+export const lifecycleStops = 2;
+
+/* What has to survive the return, from the continuity layer. */
+export const survives = "Programme instances · phase state · signal history · trend indicators";
 
 /*
- * The three evidence strands, from the comprehensive case study §3.1–3.2 and
- * §5.2–5.4. One finding each — the finding, not a summary of the reading.
+ * The four strands she read, and the one finding from each that changed the
+ * project — from the comprehensive case study §3.1–3.2 and from her own
+ * account. The finding, not a summary of the reading.
  */
 export const evidence = [
   {
-    strand: "Clinical research",
+    strand: "Coordination research",
     finding:
       "Coordination between disciplines is a planning problem: a change in one part of a patient's care affects decisions made elsewhere.",
     source: "Leeftink et al., 2018",
@@ -89,10 +97,16 @@ export const evidence = [
     source: "Primary Health Care Network Guidelines",
   },
   {
-    strand: "Existing products",
+    strand: "Uncoordinated care",
     finding:
-      "Recirculation is unhandled. Across three platforms, no solution scores more than one on either longitudinal record or recirculation.",
-    source: "Diagnostic scorecard, nine dimensions",
+      "Advice arriving in fragments produces cognitive overload and conflicting recommendations, which the patient is left to reconcile.",
+    source: "Clinical literature",
+  },
+  {
+    strand: "A chronic, relapsing condition",
+    finding:
+      "Care does not end when a programme does. What happens when someone leaves and returns later is the case nothing handles.",
+    source: "Obesity as chronic care",
   },
 ];
 
@@ -262,3 +276,53 @@ export const checkInAfter = [
  * nothing back. Her prose already says she removed the patient-facing
  * components, which is the whole of it.
  */
+
+/*
+ * The external layer, which was designed and documented but never built, so it
+ * is drawn rather than shown. From the comprehensive case study §9.1: a
+ * submission "is received as an ExternalInput — not a Signal", and the
+ * coordinator decides "whether to ignore it, convert it into a signal, route
+ * it into a domain record, or create a task from it."
+ */
+export const externalInput = [
+  { step: "External professional", note: "A trainer or psychologist outside the clinic" },
+  { step: "Structured form", note: "Constrained, aligned with the signal schema" },
+  { step: "ExternalInput", note: "Never a signal, and never automatically" },
+  { step: "Coordinator decides", note: "Ignore, convert, route to a record, or make a task" },
+];
+
+/*
+ * The Centre's own products, which the prototype's vocabulary was taken from —
+ * the rate card and the discovery call, not generic clinic software. They are
+ * the programme names inside the built system: src/data/model.ts, PRODUCTS.
+ */
+export const centreProgrammes = [
+  { name: "3-Month Holistic Transformation", short: "3-Month" },
+  { name: "6-Month Sustainable Wellness Journey", short: "6-Month" },
+  { name: "Mindful Eating", short: "Group session" },
+];
+
+/*
+ * The five areas the first version carries, as the prototype's own navigation
+ * groups them. Tools — settings, account, activity — sit under these and are
+ * not working areas of the clinic's day.
+ */
+export const workingAreas = [
+  { area: "Summary", does: "The day at a glance, and what needs attention" },
+  { area: "Signals", does: "Every typed observation, open or resolved" },
+  { area: "Tasks", does: "What a signal asked somebody to do" },
+  { area: "Patients", does: "The caseload, by phase" },
+  { area: "Domains", does: "Coverage and consent, one domain at a time" },
+];
+
+/*
+ * One calculation, followed through. These are the real figures from the
+ * check-in recorded against the running prototype — the previous reading, the
+ * one entered, and what the system worked out from the two. Nothing here is
+ * typed into a dashboard.
+ */
+export const calculation = {
+  previous: { value: "88.4 kg", when: "20 Sept 2026" },
+  current: { value: "87.5 kg", when: "today" },
+  change: { value: "−0.9 kg", note: "3.0 kg per week, against a threshold of 1.5" },
+};
