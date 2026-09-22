@@ -73,13 +73,14 @@ function Index() {
       <section>
         <Gutter className="pt-16 pb-14 sm:pt-24 sm:pb-20">
           <Label className="block text-olive">Product Designer · Nairobi</Label>
-          {/* One claim, made once. The eyebrow already carries the role and the
-              city, so neither is said again below it. Twenty-five words at
-              display size wants the whole measure: capped at a reading width
-              it runs to six lines, and the claim turns into a wall. */}
-          <h1 className="mt-7 type-display">
-            My work explores when systems should automate complexity and when they should expose it to support human judgment, accountability, and agency.
-          </h1>
+          {/* One claim, made once. The eyebrow already carries the role and
+              the city, so neither is said again below it. This is the sentence
+              both case studies name at the decision that proves it, so a
+              reader meets it here and meets it again as a conclusion twice
+              over. Capped at a reading measure rather than run to the full
+              width: at eleven words it does not need the whole page, and held
+              short it lands as a claim rather than a paragraph. */}
+          <h1 className="mt-7 max-w-[20ch] type-display">Designing the boundary between human responsibility and technological assistance.</h1>
           <ul className="mt-9 space-y-1.5 type-label font-semibold text-ink/60">
             <li>Practice · 2023 / Present</li>
             {/* The four disciplines the work actually evidences, and no more:

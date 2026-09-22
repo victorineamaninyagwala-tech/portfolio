@@ -57,7 +57,7 @@ const home = () => `
     <span class="type-label font-semibold text-olive">Product Designer · Nairobi</span>
     <h1 class="type-display" style="margin-top:22px">Victorine Amani</h1>
   </div>
-  <p class="type-headline text-ink/70" style="margin:0;max-width:1056px;text-wrap:balance">My work explores when systems should automate complexity and when they should expose it to support human judgment, accountability, and agency.</p>
+  <p class="type-headline text-ink/70" style="margin:0;max-width:30ch;text-wrap:balance">Designing the boundary between human responsibility and technological assistance.</p>
 </div>`;
 
 /* A case study card: the writing on the left, the cover on the right in the
