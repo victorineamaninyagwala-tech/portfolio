@@ -66,7 +66,6 @@ const all: Project[] = [
     discipline: "UX · Service Design · F&B",
     hover: "assemble",
     images: [{ src: mochisCard, alt: "The shop itself: a plant-filled room, the counter and the menu board behind it" }],
-    status: "In progress",
   },
   {
     slug: "bazaar",

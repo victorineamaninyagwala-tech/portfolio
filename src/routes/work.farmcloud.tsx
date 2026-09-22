@@ -71,7 +71,7 @@ const startingPoint = [
   {
     label: "Approach",
     items: [
-      "A usability test of the legacy system, run in person.",
+      "I ran a usability test of the legacy system in person.",
       "Two tasks: complete onboarding, and log a daily work report.",
     ],
   },
@@ -84,7 +84,7 @@ const startingPoint = [
     ],
   },
   {
-    label: "What was tested",
+    label: "What I tested",
     items: ["Onboarding: whether a farmer could get into the product unaided."],
   },
   {
@@ -137,12 +137,12 @@ const responses = [
   },
   {
     label: "Field labels",
-    items: ["Every label was rewritten, with helper text added throughout."],
+    items: ["I rewrote every label and added helper text throughout."],
   },
   {
     label: "The form itself",
     items: [
-      "Onboarding was restructured into three steps.",
+      "I restructured onboarding into three steps.",
       "The third splits the farm into two grouped parts: a general profile, and its operational data.",
     ],
   },
@@ -205,7 +205,7 @@ const lifecycle = [
   {
     label: "A second round of research",
     items: [
-      "Shadow sessions with 7 farmers who already held accounts, watching how they worked rather than asking them.",
+      "I ran shadow sessions with 7 farmers who already held accounts, watching how they worked rather than asking them.",
     ],
   },
   {
@@ -242,7 +242,7 @@ const beyond = [
       {
         label: "The research",
         items: [
-          "In-person interviews with 12 farmers on their own farms, after the beta. Most had no smartphone.",
+          "I interviewed 12 farmers in person on their own farms, after the beta. Most had no smartphone.",
           "Tech-savvy farmers ran the platform unaided, moderately conversant ones managed with guidance, and non-tech farmers held feature phones only.",
           "That third group would have been excluded outright without a deliberate alternative.",
         ],
@@ -250,8 +250,8 @@ const beyond = [
       {
         label: "The constraints",
         items: [
-          "The direction given was to mirror as much of the platform as possible in USSD.",
-          "Mapped with Africa's Talking: 182 characters a message, 180-second sessions, no multimedia, stateless sessions needing their own session management, one session per device.",
+          "I was given the direction to mirror as much of the platform as possible in USSD.",
+          "I mapped the constraints with Africa's Talking: 182 characters a message, 180-second sessions, no multimedia, stateless sessions needing their own session management, one session per device.",
           "Stakeholders aligned once the constraints were written down.",
         ],
       },
@@ -259,7 +259,7 @@ const beyond = [
         label: "What it carries",
         items: [
           "Satellite data arrived as crop health, weather, soil and eleven indices. Accurate, and unusable as a text message.",
-          "Narrowed to three things a farmer can act on: NDVI as how green a mapped area is, weather as current conditions with a five-day forecast and up to a year of history, and soil as ambient temperature, humidity and soil temperature to 10cm.",
+          "I narrowed it to three things a farmer can act on: NDVI as how green a mapped area is, weather as current conditions with a five-day forecast and up to a year of history, and soil as ambient temperature, humidity and soil temperature to 10cm.",
           "A farmer handbook covers USSD use, a daily work report worksheet and a pests and diseases reference, so the group can work without calling an agronomist first.",
         ],
       },
@@ -271,14 +271,14 @@ const beyond = [
       {
         label: "The research",
         items: [
-          "A shadowing study across 7 farms, large agricultural corporations and smallholders alike, run with a research assistant.",
+          "I ran a shadowing study across 7 farms, large agricultural corporations and smallholders alike, with a research assistant.",
           "6 of the 7 were actively using FarmCloud, and production tracking was working. What kept surfacing sat outside it: manual buyer connections landed about 40% of the time, and good yields went to waste.",
         ],
       },
       {
         label: "The other side of it",
         items: [
-          "A separate round with 10 buyers, recruited through the customer network and stakeholder referrals.",
+          "I ran a separate round with 10 buyers, recruited through the customer network and stakeholder referrals.",
           "Farmers said brokers were cutting into their margins. Buyers said the same brokers were inflating their costs.",
           "The same problem arriving from both ends of one transaction is what made it worth building.",
         ],
@@ -288,7 +288,7 @@ const beyond = [
         items: [
           "The concept on the table was a full marketplace with transactions on the platform.",
           "FarmCloud had no transaction infrastructure, and building it would have taken time the platform did not have.",
-          "Scoped instead to connections: farmers and buyers post requests for quotation, respond with quotes, and settle the order offline.",
+          "I scoped it instead to connections: farmers and buyers post requests for quotation, respond with quotes, and settle the order offline.",
           "Renaming it from Marketplace to Market Linkage came out of that decision, so the platform's part in the deal is not overstated.",
         ],
       },
@@ -365,7 +365,7 @@ function FarmCloud() {
       }}
     >
       <CaseStudySection
-        title="Why it was rebuilt"
+        title="What I inherited"
         align="right"
         media={
           <SectionImage
@@ -412,14 +412,14 @@ function FarmCloud() {
         ))}
       </CaseStudySection>
 
-      <CaseStudySection title="What the research told us">
+      <CaseStudySection title="What the research told me">
         {findings.map((block) => (
           <FactList key={block.label} label={block.label} items={block.items} />
         ))}
       </CaseStudySection>
 
       <CaseStudySection
-        title="What we did with the findings"
+        title="What I did with the findings"
         figure={<Walkthrough steps={onboarding} />}
       >
         {responses.map((block) => (
