@@ -1,4 +1,4 @@
-import { Gutter, Label, TextLink } from "@/components/primitives";
+import { Gutter, TextLink } from "@/components/primitives";
 
 /*
  * The site header. Rendered once from the root route, so it persists on every
@@ -9,6 +9,12 @@ import { Gutter, Label, TextLink } from "@/components/primitives";
  * study page. Exploration is a page of its own. The last two are the asks:
  * a way to get in touch and the CV, reachable from the top of every page
  * rather than only from the foot of it.
+ *
+ * All five show on a phone. They do not fit on one line beside the name, so
+ * below the small breakpoint the header is two rows — the name, then the
+ * navigation under it, wrapping if the screen is narrow enough to need it.
+ * The alternative, which this replaces, was to show Contact alone and leave
+ * the other four reachable only from the foot of the page.
  */
 
 const CV = "/victorine-nyagwala-cv.pdf";
@@ -25,7 +31,7 @@ const links = [
 export function SiteHeader() {
   return (
     <header className="bg-paper text-ink">
-      <Gutter className="flex h-16 items-center justify-between">
+      <Gutter className="flex flex-col gap-3 py-4 sm:h-16 sm:flex-row sm:items-center sm:justify-between sm:gap-6 sm:py-0">
         {/* A link now that the header is site-wide: on a case study this is the
             way back to the homepage. */}
         <a
@@ -37,7 +43,7 @@ export function SiteHeader() {
 
         {/* Same step as the footer's link columns, so the two sets of
             navigation read as one system. */}
-        <nav className="hidden items-center gap-8 type-body sm:flex">
+        <nav className="flex flex-wrap items-center gap-x-5 gap-y-2 type-body sm:gap-8">
           {links.map((link) => (
             <TextLink
               key={link.label}
@@ -48,12 +54,6 @@ export function SiteHeader() {
             </TextLink>
           ))}
         </nav>
-
-        {/* One link fits beside the name on a phone; the one that matters most
-            is the way to get in touch. */}
-        <a href="/#contact" className="sm:hidden">
-          <Label className="text-olive">Contact</Label>
-        </a>
       </Gutter>
     </header>
   );
