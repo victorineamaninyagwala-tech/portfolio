@@ -120,41 +120,40 @@ export const coordinationSteps = [
 /*
  * The decision log. Five commitments, each with her reasoning and what it
  * cost — from the decision log §3, §9, §6, §19, §8, and the System Intent.
- * `instead` is the alternative she rejected; several are framed that way in
- * the source, and it is the sharpest way to state a decision.
+ *
+ * Each decision states what it is and stops there. The sources often frame
+ * one as chosen over something else, and an earlier draft of this page
+ * carried that rejected alternative beside the title — her instruction was to
+ * take it out. A decision that has to name its loser is arguing; the why and
+ * the consequence below it already carry the reasoning.
  */
 export const decisions = [
   {
     decision: "Institution is a user",
-    instead: "Institution as setting",
     why: "The clinic is not an enemy that needs subduing. It is a user with power, complexity, incentives, and erratic behavior.",
     consequence:
       "It is no longer enough to optimise for one user group. The patient cannot simply be prioritised at the expense of institutional adoption.",
   },
   {
     decision: "Patient is the continuity anchor",
-    instead: "Continuity held by the institution",
     why: "Clinics provide care, but continuity should not die when the clinic relationship changes. The patient experiences the continuity.",
     consequence:
       "A patient joining a new clinic can consent and have it continue from previous signals and programme state. Raw domain data does not follow them.",
   },
   {
-    decision: "Guardrails, not enforcement",
-    instead: "Enforcing a care composition",
+    decision: "Guardrails",
     why: "Hard enforcement would make the system too rigid and likely unadoptable. No guardrails would make it another exploitative shell.",
     consequence:
       "Care can start with whatever composition exists, and the system continuously reveals what is missing. Institutions can still decide — the cost of simplified care just becomes visible.",
   },
   {
-    decision: "Observables, not judgments",
-    instead: "The system decides",
+    decision: "Observables",
     why: "If the system blindly flags 'add psychologist' every time weight loss slows, it loses credibility. Not all plateaus mean missing domains.",
     consequence:
       "SoulShape is not a decision-maker. It separates observables from derived patterns from interpretation, and interpretation is owned by professionals.",
   },
   {
     decision: "Maintenance is a phase",
-    instead: "The programme ends at completion",
     why: "Most weight loss systems focus on the active phase and do not handle the return to actual life. If maintenance is weak, relapse becomes likely.",
     consequence:
       "The system must remain useful when visible activity decreases, which makes the design harder and less dramatic than intervention-heavy systems.",

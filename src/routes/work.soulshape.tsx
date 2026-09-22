@@ -96,7 +96,7 @@ function SystemAtAGlance() {
           ))}
         </Row>
         <Arrow />
-        <Node title="SoulShape" tone="subject" note="Coordination between domains, not inside them" />
+        <Node title="SoulShape" tone="subject" note="The layer between the domains" />
         <Arrow />
         <Node title="Continuity" note="Across phases, across cycles, across institutions" />
       </div>
@@ -259,10 +259,9 @@ function Coordination() {
 }
 
 /*
- * The decision log, in the shape it was written in: the decision, what it was
- * chosen over, the reasoning, and what it cost. The rejected alternative is
- * set beside the decision rather than buried in the prose, because a decision
- * with nothing on the other side of it is not a decision.
+ * The decision log: the decision, the reasoning, and what it cost. The
+ * decision is stated and left to stand — the why and the consequence beside
+ * it do the arguing.
  */
 function DecisionLog() {
   return (
@@ -270,10 +269,7 @@ function DecisionLog() {
       <div className="mx-auto max-w-[86ch] space-y-3">
         {decisions.map((entry) => (
           <div key={entry.decision} className="rounded-lg border border-ink/25 bg-paper px-6 py-6">
-            <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
-              <p className="type-title text-ink">{entry.decision}</p>
-              <p className="type-caption text-ink/45">not {entry.instead.toLowerCase()}</p>
-            </div>
+            <p className="type-title text-ink">{entry.decision}</p>
             <div className="mt-5 grid gap-x-10 gap-y-4 md:grid-cols-2">
               <div>
                 <Label className="text-olive">Why</Label>
