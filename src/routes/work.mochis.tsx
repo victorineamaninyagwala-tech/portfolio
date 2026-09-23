@@ -177,36 +177,40 @@ const solutionPages = [
 
 function SolutionScreens() {
   return (
-    /* On the ground, like every other screen on the site. The frames carry
-       their own ground too, but a picture covers it, so without a panel
-       underneath they would be the only screens on the site floating on the
-       paper. Same corner and same padding as a Diagram. */
-    <div className="space-y-10 rounded-lg bg-ground px-6 py-10 sm:px-10 sm:py-14">
-      <div className="grid gap-6 sm:grid-cols-3">
-        {solutionPages.map((p) => (
-          <figure key={p.page}>
-            <Frame ratio="1280 / 800">
-              <img src={p.desk} alt={p.deskAlt} className="size-full object-cover" />
-            </Frame>
-            <figcaption className="mt-3">
-              <Label className="text-ink/45">{p.page}</Label>
-            </figcaption>
-          </figure>
-        ))}
+    <div className="space-y-8">
+      {/* The web app, on its own ground. */}
+      <div className="rounded-lg bg-ground px-6 py-10 sm:px-10 sm:py-14">
+        <div className="grid gap-6 sm:grid-cols-3">
+          {solutionPages.map((p) => (
+            <figure key={p.page}>
+              <Frame ratio="1280 / 800">
+                <img src={p.desk} alt={p.deskAlt} className="size-full object-cover" />
+              </Frame>
+              <figcaption className="mt-3">
+                <Label className="text-ink/45">{p.page}</Label>
+              </figcaption>
+            </figure>
+          ))}
+        </div>
       </div>
 
-      {/* Three across where there is room. On a phone they stack and hold a
-          reading width of their own: at a third of a 375px screen each one is
-          98 pixels wide, which is a picture of a phone rather than a phone
-          screen anybody can read. */}
-      <div className="mx-auto grid max-w-[34rem] gap-8 sm:grid-cols-3 sm:gap-6">
-        {solutionPages.map((p) => (
-          <div key={p.page} className="mx-auto w-full max-w-[14rem] sm:max-w-none">
-            <Frame ratio="860 / 1864">
-              <img src={p.phone} alt={p.phoneAlt} className="size-full object-cover" />
-            </Frame>
+      {/* The phone, on its own, with the flow playing beside the three stills.
+          The walkthrough takes the same ratio and the same fit as they do, so
+          the four sit at one size and the playing one is not a different
+          object from the ones it is playing through. */}
+      <div className="rounded-lg bg-ground px-6 py-10 sm:px-10 sm:py-14">
+        <div className="mx-auto grid max-w-[56rem] gap-8 sm:grid-cols-4 sm:gap-6">
+          {solutionPages.map((p) => (
+            <div key={p.page} className="mx-auto w-full max-w-[14rem] sm:max-w-none">
+              <Frame ratio="860 / 1864">
+                <img src={p.phone} alt={p.phoneAlt} className="size-full object-cover" />
+              </Frame>
+            </div>
+          ))}
+          <div className="mx-auto w-full max-w-[14rem] sm:max-w-none">
+            <Walkthrough steps={phoneFlow} ratio="430 / 932" />
           </div>
-        ))}
+        </div>
       </div>
     </div>
   );
