@@ -306,7 +306,7 @@ function Carrier() {
  */
 function Architecture() {
   return (
-    <Diagram label="Raw data stays. Meaning moves. Continuity persists.">
+    <Diagram label="The mental model behind care continuity">
       <Stack
         layers={architecture.map((layer) => ({
           name: layer.layer,
