@@ -13,7 +13,6 @@ import flow5 from "@/assets/ss-flow-5-routed.webp";
 import phaseShot from "@/assets/ss-phase-maintenance.webp";
 import programmesShot from "@/assets/ss-programmes.webp";
 import historyShot from "@/assets/ss-record-history.webp";
-import signalDetailShot from "@/assets/ss-signal-detail.webp";
 import escalatedShot from "@/assets/ss-signals-escalated.webp";
 import tasksShot from "@/assets/ss-tasks.webp";
 import { CaseStudyHero, type MetaRow } from "@/components/CaseStudyHero";
@@ -658,12 +657,6 @@ function SoulShape() {
             <Decided
               decision={decisions[3].decision}
               why={decisions[3].why}
-              src={signalDetailShot}
-              alt="A trend note in full: the summary reference, who it came from and who it is for, its confidence and expiry, and the escalation path it has not yet been through."
-            />
-            <Decided
-              decision={decisions[4].decision}
-              why={decisions[4].why}
               src={phaseShot}
               alt="The maintenance stabilization phase, holding its own caseload alongside assessment, active intervention, transition and follow-up."
             />
@@ -695,9 +688,10 @@ function SoulShape() {
         </Prose>
       </Movement>
 
-      {/* After the decisions, because one of them is the proof: the system
-          surfaces what it detected and says what it means is for the domain to
-          decide. It does the detecting and stops there. */}
+      {/* After the decisions, because one of them is the proof: care can
+          start with whatever composition exists, the system keeps showing what
+          is missing, and the institution still decides. It makes the gap
+          visible and stops there. */}
       <Thesis>Designing the boundary between human responsibility and technological assistance.</Thesis>
 
       <Movement

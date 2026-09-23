@@ -139,8 +139,8 @@ export const coordinationSteps = [
 ];
 
 /*
- * The decision log. Five commitments, each with her reasoning and what it
- * cost — from the decision log §3, §9, §6, §19, §8, and the System Intent.
+ * The decision log. Four commitments, each with her reasoning and what it
+ * cost — from the decision log §3, §9, §6, §8, and the System Intent.
  *
  * Each decision states what it is and stops there. The sources often frame
  * one as chosen over something else, and an earlier draft of this page
@@ -169,12 +169,6 @@ export const decisions = [
     why: "Hard enforcement would make the system too rigid and likely unadoptable. No guardrails would make it another exploitative shell.",
     consequence:
       "Care can start with whatever composition exists, and the system continuously reveals what is missing. Institutions can still decide — the cost of simplified care just becomes visible.",
-  },
-  {
-    decision: "Observables",
-    why: "If the system blindly flags 'add psychologist' every time weight loss slows, it loses credibility. Not all plateaus mean missing domains.",
-    consequence:
-      "SoulShape is not a decision-maker. It separates observables from derived patterns from interpretation, and interpretation is owned by professionals.",
   },
   {
     decision: "Maintenance is a phase",
