@@ -366,7 +366,7 @@ function FarmCloud() {
       }}
     >
       <CaseStudySection
-        title="What I inherited"
+        title="FarmCloud 1.0"
         align="right"
         media={
           <SectionImage

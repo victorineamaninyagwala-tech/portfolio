@@ -8,9 +8,11 @@
  *
  * The MVP documentation for the Holistic Weight Management Centre is NOT a
  * source. She has said to disregard it. Nothing on the page may be traced to
- * it, and nothing here should start citing it again. Nothing is rounded, reordered or reconstructed. The
- * comment above each block says where it came from, so a figure on the page
- * can always be traced back to a line in a document.
+ * it, and nothing here should start citing it again.
+ *
+ * Nothing is rounded, reordered or reconstructed. The comment above each block
+ * says where it came from, so a figure on the page can always be traced back
+ * to a line in a document.
  *
  * Where the documents revise each other, the later revision wins and the
  * superseded one is noted rather than deleted — the drafts that lost are part
