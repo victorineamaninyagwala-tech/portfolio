@@ -853,10 +853,6 @@ function SoulShape() {
           and surfaces context, and it stops there. It can own visibility and continuity;
           it cannot own the care decision without becoming a provider itself.
         </Prose>
-        <Prose wide>
-          The goal was never a system that knows what to do. It was one that makes it
-          obvious when something needs to be thought about.
-        </Prose>
       </Movement>
 
       <MoreWork current="soulshape" />
