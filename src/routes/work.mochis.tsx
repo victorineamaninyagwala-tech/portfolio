@@ -175,9 +175,11 @@ const solutionPages = [
   },
 ];
 
-/* One width for every phone on this page, stills and playback alike, so the
-   two cannot drift apart when one of them moves panel. */
-const PHONE_COLUMN = "w-full max-w-[13.5rem]";
+/* One width for every phone on this page, stills and playback alike. It is
+   set so that three stills and the flow, each in its own panel with its own
+   padding, still stand side by side inside the page's measure. */
+const PHONE_COLUMN = "w-[11.5rem] max-w-full";
+const PANEL = "max-w-full rounded-lg bg-ground px-6 py-10";
 
 function SolutionScreens() {
   return (
@@ -198,25 +200,24 @@ function SolutionScreens() {
         </div>
       </div>
 
-      {/* The same three pages on the phone. Centred and wrapping rather than a
-          grid, so a column that falls to the next line stays under the middle
-          of the panel instead of hanging off its left edge. */}
-      <div className="rounded-lg bg-ground px-6 py-10 sm:px-10 sm:py-14">
-        <div className="flex flex-wrap justify-center gap-8 sm:gap-6">
-          {solutionPages.map((p) => (
-            <div key={p.page} className={PHONE_COLUMN}>
-              <Frame ratio="860 / 1864">
-                <img src={p.phone} alt={p.phoneAlt} className="size-full object-cover" />
-              </Frame>
-            </div>
-          ))}
+      {/* The phone: the three pages on one ground, the flow playing on another
+          beside it. Both panels size to their contents rather than to a share
+          of the row, which is what keeps every phone in them the same width.
+          Below the measure they wrap, panel under panel. */}
+      <div className="flex flex-wrap items-start justify-center gap-8">
+        <div className={PANEL}>
+          <div className="flex flex-wrap justify-center gap-6">
+            {solutionPages.map((p) => (
+              <div key={p.page} className={PHONE_COLUMN}>
+                <Frame ratio="860 / 1864">
+                  <img src={p.phone} alt={p.phoneAlt} className="size-full object-cover" />
+                </Frame>
+              </div>
+            ))}
+          </div>
         </div>
-      </div>
 
-      {/* The flow playing, on a ground of its own and at the width the stills
-          hold, so it reads as the same phone rather than a larger one. */}
-      <div className="rounded-lg bg-ground px-6 py-10 sm:px-10 sm:py-14">
-        <div className="flex justify-center">
+        <div className={PANEL}>
           <div className={PHONE_COLUMN}>
             <Walkthrough steps={phoneFlow} ratio="430 / 932" />
           </div>
