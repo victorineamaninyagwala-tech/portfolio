@@ -64,7 +64,7 @@ export const Route = createFileRoute("/work/mochis")({
       {
         property: "og:description",
         content:
-          "UX case study on a pickup ordering service flow. In progress.",
+          "A pickup ordering flow for Kenyan coffee shops, bridging the gap between walking in and paying for delivery.",
       },
       ...shareImage(match.context.origin, "mochis", "The Mochi's Brew case study: the shop's plant-filled room beside the title."),
     ],
@@ -144,7 +144,6 @@ const system: WalkthroughStep[] = [
 
 const meta: MetaRow[] = [
   { label: "Type", value: "UX Case Study · Service Flow" },
-  { label: "Status", value: "In progress" },
   { label: "Role", value: "Product Designer" },
   { label: "Platform", value: "Responsive Web · Kenya" },
 ];
