@@ -40,7 +40,7 @@ import {
   Prose,
   Subhead,
 } from "@/components/CaseStudySection";
-import { Label } from "@/components/primitives";
+import { Frame, Label } from "@/components/primitives";
 import { MoreWork } from "@/components/MoreWork";
 import { Walkthrough, type WalkthroughStep } from "@/components/Walkthrough";
 import { shareImage } from "@/lib/share";
@@ -142,6 +142,76 @@ const system: WalkthroughStep[] = [
   { label: "Icons", src: systemIcons, width: 1600, height: 2644, tall: true, alt: "The icon set" },
 ];
 
+/*
+ * Three of the ten pages, shown on both things they were drawn for: the web
+ * app across the top, the phone under it, the same page in the same column.
+ *
+ * All three desktop screens are 1280 x 800 and all three phones 860 x 1864, so
+ * each row is one ratio and nothing in it is cropped to match its neighbour.
+ * The phones are held to a narrower measure than the desktops — at a third of
+ * the page each they would stand taller than the section they sit in.
+ */
+const solutionPages = [
+  {
+    page: "Home",
+    desk: flowHome,
+    deskAlt: "The Mochi's Brew home screen, with an order waiting to be started",
+    phone: phoneHome,
+    phoneAlt: "The home screen on a phone, with Start Order under the wordmark",
+  },
+  {
+    page: "Browse Menu",
+    desk: flowMenu,
+    deskAlt: "The menu: categories, search, product cards and availability",
+    phone: phoneMenu,
+    phoneAlt: "The menu on a phone, one card per drink",
+  },
+  {
+    page: "Track Order",
+    desk: flowTrack,
+    deskAlt: "Order status: order ID, pickup code, queue status, milestone states and notifications",
+    phone: phoneTrack,
+    phoneAlt: "Order status on a phone, with the pickup code",
+  },
+];
+
+function SolutionScreens() {
+  return (
+    /* On the ground, like every other screen on the site. The frames carry
+       their own ground too, but a picture covers it, so without a panel
+       underneath they would be the only screens on the site floating on the
+       paper. Same corner and same padding as a Diagram. */
+    <div className="space-y-10 rounded-lg bg-ground px-6 py-10 sm:px-10 sm:py-14">
+      <div className="grid gap-6 sm:grid-cols-3">
+        {solutionPages.map((p) => (
+          <figure key={p.page}>
+            <Frame ratio="1280 / 800">
+              <img src={p.desk} alt={p.deskAlt} className="size-full object-cover" />
+            </Frame>
+            <figcaption className="mt-3">
+              <Label className="text-ink/45">{p.page}</Label>
+            </figcaption>
+          </figure>
+        ))}
+      </div>
+
+      {/* Three across where there is room. On a phone they stack and hold a
+          reading width of their own: at a third of a 375px screen each one is
+          98 pixels wide, which is a picture of a phone rather than a phone
+          screen anybody can read. */}
+      <div className="mx-auto grid max-w-[34rem] gap-8 sm:grid-cols-3 sm:gap-6">
+        {solutionPages.map((p) => (
+          <div key={p.page} className="mx-auto w-full max-w-[14rem] sm:max-w-none">
+            <Frame ratio="860 / 1864">
+              <img src={p.phone} alt={p.phoneAlt} className="size-full object-cover" />
+            </Frame>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 const meta: MetaRow[] = [
   { label: "Type", value: "UX Case Study · Service Flow" },
   { label: "Role", value: "Product Designer" },
@@ -211,26 +281,20 @@ function MochisBrew() {
         </div>
       </CaseStudySection>
 
-      <CaseStudySection columns={1}>
-        {/* The solution reads on the left; the phone it was built for plays on
-            the right. */}
-        <div className="grid items-start gap-x-12 gap-y-10 md:grid-cols-2">
-          <div className="space-y-6">
-            <Subhead>The solution</Subhead>
-            <Prose wide>
-              Mochi&apos;s Brew is a pickup ordering flow the shop owns and a guest can finish
-              end to end. No account, no app, no delivery fee.
-            </Prose>
-            <Prose wide>
-              It runs on one shop&apos;s constraints: a single location, one preparation queue
-              shared with the counter, and staff whose workload decides what can be promised.
-              The system says what is true about that queue rather than naming a time it
-              cannot keep, and leaves the decision to accept, delay or refuse an order with
-              the people making the coffee.
-            </Prose>
-          </div>
-
-          <Walkthrough steps={phoneFlow} size="half" ratio="430 / 932" fit="height" />
+      <CaseStudySection columns={1} figure={<SolutionScreens />}>
+        <div className="space-y-6">
+          <Subhead>The solution</Subhead>
+          <Prose>
+            Mochi&apos;s Brew is a pickup ordering flow the shop owns and a guest can finish
+            end to end. No account, no app, no delivery fee.
+          </Prose>
+          <Prose>
+            It runs on one shop&apos;s constraints: a single location, one preparation queue
+            shared with the counter, and staff whose workload decides what can be promised.
+            The system says what is true about that queue rather than naming a time it
+            cannot keep, and leaves the decision to accept, delay or refuse an order with
+            the people making the coffee.
+          </Prose>
         </div>
       </CaseStudySection>
 
