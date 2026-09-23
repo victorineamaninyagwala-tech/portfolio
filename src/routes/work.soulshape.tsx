@@ -712,24 +712,27 @@ function SoulShape() {
       >
         <Prose wide>The initial work was based entirely on desk research.</Prose>
         <Prose wide>
-          The Holistic Weight Management Centre became the next research step because its
-          existing model already brought the relevant disciplines together.
+          The Holistic Weight Management Centre showed me what actually happens inside an
+          institution that has already brought the relevant disciplines together.
         </Prose>
         <Prose wide>
-          I contacted the Centre, reviewed their rate card and built a working
-          demonstration based on their existing programme structure.
-        </Prose>
-        <Prose wide>This also reduced the scope of the first version.</Prose>
-        <Prose wide>
-          I used the Centre's own terminology, including the 3-Month Holistic
-          Transformation, 6-Month Sustainable Wellness Journey and Mindful Eating
-          sessions.
+          It also let me keep the work on weight loss: an avenue I had already explored
+          and had proximity to, and one that tied back to the problem I started with.
         </Prose>
         <Prose wide>
-          Their weekly check-ins were being handled through phone and email, with records
-          distributed across files and coordination dependent on individual staff members.
+          I contacted the Centre and went through their rate card. Their programmes run as
+          the 3-Month Holistic Transformation and the 6-Month Sustainable Wellness
+          Journey, with group sessions such as Mindful Eating alongside them.
         </Prose>
-        <Prose wide>The first feature therefore focused on that process.</Prose>
+        <Prose wide>
+          Their weekly check-ins were handled through phone and email. Records sat across
+          separate files, and coordination depended on individual members of staff.
+        </Prose>
+        <Prose wide>
+          I built a working demonstration on that structure, in their own terminology.
+          That reduced the scope of the first version, and the first feature focused on
+          the check-in.
+        </Prose>
       </Movement>
 
       <Movement
