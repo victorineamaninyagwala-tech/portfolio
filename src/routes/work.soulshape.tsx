@@ -11,7 +11,6 @@ import flow3 from "@/assets/ss-flow-3-entered.webp";
 import flow4 from "@/assets/ss-flow-4-computed.webp";
 import flow5 from "@/assets/ss-flow-5-routed.webp";
 import phaseShot from "@/assets/ss-phase-maintenance.webp";
-import programmesShot from "@/assets/ss-programmes.webp";
 import historyShot from "@/assets/ss-record-history.webp";
 import escalatedShot from "@/assets/ss-signals-escalated.webp";
 import tasksShot from "@/assets/ss-tasks.webp";
@@ -701,14 +700,6 @@ function SoulShape() {
 
       <Movement
         title="From research to a real clinic"
-        figure={
-          <ScreenCard
-            src={programmesShot}
-            alt="Registering a patient in the prototype: the programme is chosen from the Centre's own products, the 3-Month Holistic Transformation and the 6-Month Sustainable Wellness Journey."
-            width={SCREEN.width}
-            height={SCREEN.height}
-          />
-        }
       >
         <Prose wide>The initial work was based entirely on desk research.</Prose>
         <Prose wide>
@@ -729,9 +720,9 @@ function SoulShape() {
           separate files, and coordination depended on individual members of staff.
         </Prose>
         <Prose wide>
-          I built a working demonstration on that structure, in their own terminology.
-          That reduced the scope of the first version, and the first feature focused on
-          the check-in.
+          Their structure gave me an understanding of what an implementation plan would
+          have to account for. That reduced the scope of the first version, and the first
+          feature focused on the check-in.
         </Prose>
       </Movement>
 
