@@ -277,3 +277,34 @@ export const calculation = {
   current: { value: "87.5 kg", when: "today" },
   change: { value: "−0.9 kg", note: "3.0 kg per week, against a threshold of 1.5" },
 };
+
+/*
+ * Where the complexity ended up — read out of the decision log, which returns
+ * to this question in almost every entry.
+ *
+ * The system's side is from §2 ("The burden of coordination should move away
+ * from the patient and into the system"), §19 ("The system detects patterns
+ * and surfaces context"), §10 ("Raw data stays. Meaning moves.") and §16,
+ * where every insight must be "traceable to a human or a structured pattern,
+ * not a black box".
+ *
+ * The other side is from §19 ("Professionals interpret and decide"), §18
+ * ("The system can own visibility and continuity. It cannot own care
+ * decisions without collapsing into a provider itself"), §6 (care can start
+ * with whatever composition exists) and §10, where "institutions and
+ * clinicians maintain responsibility for their own source records".
+ */
+export const allocation = {
+  system: [
+    "Coordination between domains",
+    "Continuity across phases and cycles",
+    "Detection: patterns, gaps, trends",
+    "Traceability back to a person or a rule",
+  ],
+  people: [
+    "Interpretation",
+    "The care decision",
+    "What a patient's care is composed of",
+    "Authorship of their own records",
+  ],
+};

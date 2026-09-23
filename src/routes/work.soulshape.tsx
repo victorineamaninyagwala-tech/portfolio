@@ -21,6 +21,7 @@ import { MoreWork } from "@/components/MoreWork";
 import { Walkthrough, type WalkthroughStep } from "@/components/Walkthrough";
 import { Frame, Label, ScreenCard } from "@/components/primitives";
 import {
+  allocation,
   architecture,
   calculation,
   coordinationSteps,
@@ -421,6 +422,39 @@ function Scope() {
   );
 }
 
+/*
+ * The closing figure. Every decision in the log put a piece of difficulty on
+ * one side of this line or the other, so the drawing is the line itself.
+ */
+function Allocation() {
+  return (
+    <Diagram label="Where the complexity went">
+      <div className="mx-auto grid max-w-[86ch] gap-8 md:grid-cols-2">
+        <div className="rounded-lg border border-ink bg-ink px-6 py-6">
+          <Label className="text-paper/70">The system carries</Label>
+          <ul className="mt-4 space-y-2.5">
+            {allocation.system.map((item) => (
+              <li key={item} className="type-body text-paper">
+                {item}
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div className="rounded-lg border border-ink/25 bg-paper px-6 py-6">
+          <Label className="text-olive">People keep</Label>
+          <ul className="mt-4 space-y-2.5">
+            {allocation.people.map((item) => (
+              <li key={item} className="type-body text-ink/75">
+                {item}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </Diagram>
+  );
+}
+
 /* One calculation, followed out of the records it came from. */
 function Calculation() {
   return (
@@ -750,15 +784,13 @@ function SoulShape() {
           </div>
         }
       >
-        <Prose wide>The first version covers the clinic side and nothing else.</Prose>
         <Prose wide>
-          There is no patient side in it. I took those components out rather than leaving
-          them in as parts that did not work.
+          The first version addresses the coordination layer: a caseload held by phase,
+          the signals moving between domains, and the tasks that come out of them.
         </Prose>
         <Prose wide>
-          What I wanted to know was narrower than the concept: whether the coordination
-          layer holds up on its own, across a caseload, the signals moving between
-          domains, and the tasks that come out of them.
+          That is the part the rest of the concept rests on, so it is the part I wanted to
+          see working.
         </Prose>
       </Movement>
 
@@ -801,6 +833,29 @@ function SoulShape() {
           I also removed the Security tab. The prototype could demonstrate the information
           flow, but it could not demonstrate production security, so showing security
           controls would have represented functionality that did not exist.
+        </Prose>
+      </Movement>
+
+      {/* The ending. Not what happened next — that is not settled — but where
+          every decision in the project put its share of the difficulty, which
+          is the thing the case study has been arguing the whole way down. */}
+      <Movement title="Where the complexity went" figure={<Allocation />}>
+        <Prose wide>
+          Every decision on this project put a piece of difficulty somewhere. The question
+          each time was whether it belonged in the software or with a person.
+        </Prose>
+        <Prose wide>
+          The problem I started with was not that information was missing. It was that the
+          coordination burden had been placed on the wrong person.
+        </Prose>
+        <Prose wide>
+          So the system carries the coordination and the continuity. It detects patterns
+          and surfaces context, and it stops there. It can own visibility and continuity;
+          it cannot own the care decision without becoming a provider itself.
+        </Prose>
+        <Prose wide>
+          The goal was never a system that knows what to do. It was one that makes it
+          obvious when something needs to be thought about.
         </Prose>
       </Movement>
 
