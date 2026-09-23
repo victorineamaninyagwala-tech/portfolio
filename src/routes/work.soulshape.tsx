@@ -750,11 +750,15 @@ function SoulShape() {
           </div>
         }
       >
-        <Prose wide>The first version was clinic-facing.</Prose>
+        <Prose wide>The first version covers the clinic side and nothing else.</Prose>
         <Prose wide>
-          I removed the patient-facing components rather than keeping them as incomplete
-          parts of the prototype. The first question was whether the coordination layer
-          could support an existing clinic workflow.
+          There is no patient side in it. I took those components out rather than leaving
+          them in as parts that did not work.
+        </Prose>
+        <Prose wide>
+          What I wanted to know was narrower than the concept: whether the coordination
+          layer holds up on its own, across a caseload, the signals moving between
+          domains, and the tasks that come out of them.
         </Prose>
       </Movement>
 
