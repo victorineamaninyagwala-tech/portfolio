@@ -254,20 +254,6 @@ export const visibility = {
 };
 
 /*
- * The external layer, which was designed and documented but never built, so it
- * is drawn rather than shown. From the comprehensive case study §9.1: a
- * submission "is received as an ExternalInput — not a Signal", and the
- * coordinator decides "whether to ignore it, convert it into a signal, route
- * it into a domain record, or create a task from it."
- */
-export const externalInput = [
-  { step: "External professional", note: "A trainer or psychologist outside the clinic" },
-  { step: "Structured form", note: "Constrained, aligned with the signal schema" },
-  { step: "ExternalInput", note: "Never a signal, and never automatically" },
-  { step: "Coordinator decides", note: "Ignore, convert, route to a record, or make a task" },
-];
-
-/*
  * The five areas the first version carries, as the prototype's own navigation
  * groups them. Tools — settings, account, activity — sit under these and are
  * not working areas of the clinic's day.

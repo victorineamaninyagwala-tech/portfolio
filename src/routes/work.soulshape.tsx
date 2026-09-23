@@ -27,7 +27,6 @@ import {
   coordinationSteps,
   decisions,
   evidence,
-  externalInput,
   lifecycle,
   lifecycleStops,
   mechanisms,
@@ -410,25 +409,6 @@ function Visibility() {
   );
 }
 
-/*
- * The external layer, drawn rather than shown: it was specified and never
- * built, and a screen of it would be a screen of something that does not
- * exist. Dashed until the last step, which is the one that does.
- */
-function ExternalInput() {
-  return (
-    <Diagram label="External input · specified, not built">
-      <Sequence
-        steps={externalInput.map((step, i) => ({
-          title: step.step,
-          note: step.note,
-          tone: i === externalInput.length - 1 ? "subject" : "deferred",
-        }))}
-      />
-    </Diagram>
-  );
-}
-
 /* The five areas the first version carries. */
 function Scope() {
   return (
@@ -701,7 +681,6 @@ function SoulShape() {
             <Architecture />
             <LayerScreens />
             <Visibility />
-            <ExternalInput />
           </div>
         }
       >
