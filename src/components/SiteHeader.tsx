@@ -4,9 +4,9 @@ import { Gutter, TextLink } from "@/components/primitives";
  * The site header. Rendered once from the root route, so it persists on every
  * page rather than belonging to the homepage.
  *
- * Work, About and Contact are sections of the homepage, so they are addressed
- * as /#work, /#about and /#contact — a bare hash would do nothing on a case
- * study page. The last two are the asks: a way to get in touch and the CV,
+ * Work and Contact are sections of the homepage, so they are addressed as
+ * /#work and /#contact — a bare hash would do nothing on a case study page.
+ * About is a page. The last two are the asks: a way to get in touch and the CV,
  * reachable from the top of every page rather than only from the foot of it.
  *
  * There was an Exploration link here, pointing at a page that was never
@@ -24,7 +24,7 @@ const CV = "/victorine-nyagwala-cv.pdf";
 
 const links = [
   { label: "Work", href: "/#work" },
-  { label: "About", href: "/#about" },
+  { label: "About", href: "/about" },
   { label: "Contact", href: "/#contact" },
   // Served from public/, so it opens in the browser's PDF viewer.
   { label: "CV", href: CV, external: true },

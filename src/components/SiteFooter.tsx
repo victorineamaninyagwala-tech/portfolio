@@ -31,11 +31,9 @@ const columns: Array<{
   {
     label: "Info",
     items: [
-      // Both of these used to point at pages that were never built, /about and
-      // /exploration, and both answered 404. About is a section of the
-      // homepage and is addressed as one, the same way the header does it;
-      // Exploration is gone until there is a page to send anybody to.
-      { text: "About", href: "/#about" },
+      // Exploration used to sit here too, pointing at a page that was never
+      // built. It is gone until there is one to send anybody to.
+      { text: "About", href: "/about" },
       { text: "Open to", pills: ["Full time", "Consulting"] },
     ],
   },
