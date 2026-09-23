@@ -154,7 +154,7 @@ export const decisions = [
     /* Her own account of where this came from, which the decision log's
        wording alone does not carry: the stance was a correction of her bias,
        not a position she started from. */
-    why: "My initial approach was tainted by the stance I took as a patient. The decisions were leaning towards the patient's experience without much regard for the clinic, so I had to stop treating the clinic as an enemy that needs subduing. It is a user with power, complexity, incentives, and erratic behavior.",
+    why: "My initial approach was tainted by the stance I took as a patient. The decisions were leaning towards the patient's experience without much regard for the clinic, so I had to stop treating the clinic as an enemy that needs subduing.",
     consequence:
       "It is no longer enough to optimise for one user group. The patient cannot simply be prioritised at the expense of institutional adoption.",
   },
