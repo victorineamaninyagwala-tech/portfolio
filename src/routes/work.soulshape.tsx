@@ -126,8 +126,12 @@ function Decided({
 
 /*
  * The care journey before there is a system in it: four professionals and
- * tools, each handing the patient something, and the patient carrying all of
- * it between them. Every arrow points the same way on purpose.
+ * tools, each handing her something, and her carrying all of it between them.
+ * Every arrow points the same way on purpose.
+ *
+ * The subject is "Me", not "Patient". This section is her own account, and it
+ * is the only drawing on the page where the person in the middle is the
+ * author — everywhere after it, the patient is a role the system has.
  */
 function Fragmented() {
   const hands = [
@@ -148,9 +152,9 @@ function Fragmented() {
       </Row>
       <div className="mx-auto mt-2 max-w-[52ch]">
         <Node
-          title="Patient"
+          title="Me"
           tone="subject"
-          note="Carries the information between them, reconciles the advice, and keeps track of what changed"
+          note="Carrying the information between them, reconciling the advice, keeping track of what changed"
         />
       </div>
     </Diagram>
@@ -535,8 +539,8 @@ function SoulShape() {
           much visibility into what the others were doing.
         </Prose>
         <Prose wide>
-          This meant that the person receiving care had to carry information between them,
-          reconcile different recommendations and keep track of what had changed.
+          This meant that I had to carry information between them, reconcile different
+          recommendations and keep track of what had changed.
         </Prose>
         <Prose wide>
           I wanted to understand whether this was an individual problem or a coordination
