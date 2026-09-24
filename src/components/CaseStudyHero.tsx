@@ -90,6 +90,7 @@ export function CaseStudyHero({
             alt={image.alt}
             width={image.width}
             height={image.height}
+            priority
           />
         ) : null}
       </Gutter>

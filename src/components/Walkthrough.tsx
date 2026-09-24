@@ -84,6 +84,10 @@ export function Walkthrough({
      the frame happens to be on screen, and the two must not overwrite each
      other. */
   const [onScreen, setOnScreen] = useState(false);
+  /* Whether the reader has come close enough for the flow to be worth
+     fetching. A latch, not a state: once the screens are in the cache there is
+     nothing to undo by scrolling away. */
+  const [approaching, setApproaching] = useState(false);
   /* Playback runs enter → reach → press; null while the reader is in charge. */
   const [phase, setPhase] = useState<"enter" | "reach" | "press" | null>(null);
   const last = steps.length - 1;
@@ -112,6 +116,28 @@ export function Walkthrough({
     const observer = new IntersectionObserver(([entry]) => setOnScreen(entry.isIntersecting), {
       threshold: 0.3,
     });
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
+  /* Fetching starts a screen short of the frame arriving, so the flow is in
+     hand by the time it is looked at without being on the wire at page load.
+     A case study carries three of these and every one of them was pulling its
+     whole set of screens down before the reader had left the hero. */
+  useEffect(() => {
+    const el = frame.current;
+    if (!el || typeof IntersectionObserver === "undefined") {
+      setApproaching(true);
+      return;
+    }
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting) return;
+        setApproaching(true);
+        observer.disconnect();
+      },
+      { rootMargin: "900px" },
+    );
     observer.observe(el);
     return () => observer.disconnect();
   }, []);
@@ -225,6 +251,8 @@ export function Walkthrough({
           <img
             src={step.src}
             alt={step.alt}
+            loading="lazy"
+            decoding="async"
             className={step.tall ? "block w-full" : "block size-full"}
           />
 
@@ -249,12 +277,15 @@ export function Walkthrough({
         </div>
       </Frame>
 
-      {/* Fetched with the page so a step never waits on its screen. */}
-      <div hidden>
-        {steps.map((s) => (
-          <img key={s.label} src={s.src} alt="" />
-        ))}
-      </div>
+      {/* Fetched a screen ahead of the frame, so a step never waits on its
+          picture and the page does not open by downloading every flow on it. */}
+      {approaching ? (
+        <div hidden>
+          {steps.map((s) => (
+            <img key={s.label} src={s.src} alt="" />
+          ))}
+        </div>
+      ) : null}
 
     </figure>
   );
