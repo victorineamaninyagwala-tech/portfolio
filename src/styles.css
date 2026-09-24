@@ -15,7 +15,7 @@
  */
 
 @theme inline {
-  --font-sans: "Ubuntu", Arial, Helvetica, sans-serif;
+  --font-sans: "Switzer", Arial, Helvetica, sans-serif;
 
   --color-paper: var(--paper);
   --color-ink: var(--ink);
@@ -46,8 +46,9 @@
      media on the homepage. #e6e6cc. */
   --ground: oklch(0.918 0.034 107.1);
 
-  /* Headings only. Switzer has real weights, so the heading steps set the
-     600 that names things everywhere else rather than a face's only option. */
+  /* The same family as the text. Kept as its own token because the heading
+     steps read it: the day the headings take a different face again, this is
+     the one line that changes. */
   --font-display: "Switzer", var(--font-sans);
 
   /* Hairline used by the work-history file tabs and their panels. */
@@ -77,49 +78,59 @@
 }
 
 /*
- * Text is set in Ubuntu, headings in Switzer. Ubuntu comes from Google Fonts
- * and Switzer from Fontshare, so there are two stylesheets in the head and
- * neither needs a licence bought.
+ * Switzer sets the whole site, headings and text alike, from Fontshare at
+ * 400, 500 and 600. No licence to buy.
+ *
+ * Ubuntu set the text before this and is gone. Two families meant the page
+ * was arguing with itself at every boundary between a heading and the
+ * paragraph under it; one family with real weights says the same hierarchy
+ * without the seam.
  *
  * Switzer is the third display face this site has had, after DotGothic16 and
  * Nunito Sans. Anything that has to know the name reads --font-display; the
- * only places that spell it out are the link in the head and the note here.
+ * only places that spell it out are the links in the head and the note here.
  *
- * DotGothic16 set the headings before this. It is a pixel face, and a heading
+ * DotGothic16 set the headings before those. It is a pixel face, and a heading
  * is the one place on a page that has to be read at a glance rather than
  * looked at, so the headings moved to a face that is simply legible.
  *
- * Aeonik was the earlier intent for text and was never bought; it is out of the
- * stack entirely now. Putting it back means adding it ahead of Ubuntu here and
- * dropping the files into public/fonts.
+ * Google Fonts still serves one thing: Caacupe One, which the Selected Work
+ * heading swaps its letters into on hover. It is not dead weight and it is not
+ * declared with an @font-face here — it arrives on the link in the head.
  */
 
 /*
  * Type scale. Seven steps, and nothing outside them — the page had grown
  * thirteen sizes and six near-identical label styles before this.
  *
- * The three heading steps also carry the family and weight: headings are set
- * in Switzer at 600, the same weight the text steps use to name things.
- * The four text steps fix size, line height and tracking only, and their
- * weight stays an explicit font-* class at the call site: 400 for running
- * text, 600 for anything that names something, which Ubuntu renders as Bold.
+ * The three heading steps also carry the family and weight. The four text
+ * steps fix size, line height and tracking only, and their weight stays an
+ * explicit font-* class at the call site: 400 for running text, 600 for
+ * anything that names something.
  *
- * There are exactly two weights. font-semibold names things — headings, page
- * titles, employers, every uppercase label. Everything else is regular. Arial
- * has no medium, so a 500 would silently render as regular and the hierarchy
- * would vanish; 400/600 survives the fallback.
+ * Three weights, and one of them is used once. 600 names things — section
+ * headings, page titles, employers, every uppercase label. 400 is everything
+ * else. 500 belongs to the display step alone, for the reason set out on it
+ * below. Arial, the fallback, has no medium, so a page painted before Switzer
+ * arrives shows the display step at regular — which is why that weight is
+ * preloaded in the head rather than waited for.
  *
  * The large steps are fluid, so no step needs sm:/lg: variants to follow the
  * viewport.
  */
 
-/* Page and section titles. */
+/* Page and section titles.
+ *
+ * 500 rather than the 600 the smaller steps use. This step runs to 72px, and
+ * weight reads heavier the larger it is set — the same 600 that gives a 26px
+ * title its authority turns a page title into a slab. Tracking eases off with
+ * it, to -0.02em, which is where the two steps below already sit. */
 @utility type-display {
   font-family: var(--font-display);
-  font-weight: 600;
+  font-weight: 500;
   font-size: clamp(2.125rem, 3.4vw + 1.6rem, 4.5rem);
   line-height: 1.05;
-  letter-spacing: -0.03em;
+  letter-spacing: -0.02em;
 }
 
 /* One rank down: the footer address block. */

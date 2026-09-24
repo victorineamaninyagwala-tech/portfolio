@@ -96,17 +96,34 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
-      /* Switzer is not a Google face, so the display type comes from Fontshare
-         and the text from Google — two origins to warm rather than one. */
+      /* Switzer sets the whole site now, headings and text alike, and it is
+         not a Google face — so Fontshare is the origin that matters and Google
+         is left serving one thing: the face the Selected Work heading swaps
+         its letters into on hover. */
       { rel: "preconnect", href: "https://api.fontshare.com" },
       { rel: "preconnect", href: "https://cdn.fontshare.com", crossOrigin: "anonymous" },
+      /* The heading weight, fetched beside the stylesheet rather than after
+         the browser has parsed it. Without this the hero paints in Arial and
+         reflows into Switzer a moment later, which is the first thing anyone
+         sees. The URL is Fontshare's own hashed file for switzer@500: if they
+         ever rotate it this preload simply goes unused and the stylesheet
+         below still loads the face. */
       {
-        rel: "stylesheet",
-        href: "https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;500;700&family=Caacupe+One&display=swap",
+        rel: "preload",
+        as: "font",
+        type: "font/woff2",
+        crossOrigin: "anonymous",
+        href: "https://cdn.fontshare.com/wf/OYB4CXKJQXKTNSLJMTDQOIVUL2V5EL7S/WYO2P7DQVV5RNXGMCUO2HL4RJP4VFUAS/6XPIMU23OJVRY676OG5YVJMWEHWICATX.woff2",
       },
       {
         rel: "stylesheet",
-        href: "https://api.fontshare.com/v2/css?f%5B%5D=switzer@600&display=swap",
+        href: "https://fonts.googleapis.com/css2?family=Caacupe+One&display=swap",
+      },
+      /* 400 sets running text, 500 sets the display step, 600 is what every
+         label and named thing on the site is set in. */
+      {
+        rel: "stylesheet",
+        href: "https://api.fontshare.com/v2/css?f%5B%5D=switzer@400,500,600&display=swap",
       },
       { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
     ],
