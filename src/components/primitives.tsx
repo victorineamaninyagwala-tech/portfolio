@@ -65,6 +65,39 @@ export function TextLink({
   );
 }
 
+/**
+ * A link inside a sentence.
+ *
+ * The footer underlines its address the same way — a hairline under the words
+ * that colours olive on hover — so a link in running text is that gesture at
+ * reading size rather than a new one. Not TextLink: the sliding arrow belongs
+ * to a link standing on its own, and mid-sentence it would shove the rest of
+ * the line along as the pointer passed over it.
+ */
+export function ProseLink({
+  href,
+  className,
+  children,
+}: {
+  href: string;
+  className?: string;
+  children: ReactNode;
+}) {
+  return (
+    <a
+      href={href}
+      target="_blank"
+      rel="noreferrer"
+      className={cn(
+        "underline decoration-ink/30 underline-offset-4 transition-colors hover:decoration-olive",
+        className,
+      )}
+    >
+      {children}
+    </a>
+  );
+}
+
 /** A bordered chip — availability, status, anything short and enumerable. */
 export function Pill({ className, children }: { className?: string; children: ReactNode }) {
   return (
@@ -230,7 +263,15 @@ export function ScreenCard({
           maxHeight: SCREEN_INSET,
         }}
       >
-        <img src={src} alt={alt} width={width} height={height} className="block size-full" />
+        <img
+          src={src}
+          alt={alt}
+          width={width}
+          height={height}
+          loading="lazy"
+          decoding="async"
+          className="block size-full"
+        />
       </div>
     </Frame>
   );
@@ -246,6 +287,7 @@ export function ImageCard({
   width,
   height,
   size = "full",
+  priority = false,
   className,
 }: {
   src: string;
@@ -253,6 +295,13 @@ export function ImageCard({
   width: number;
   height: number;
   size?: FrameSize;
+  /**
+   * The picture that leads a page, which is on screen before anything is
+   * scrolled. Every other picture on the site is below the fold and waits
+   * until the reader is heading for it; deferring this one would only mean
+   * the first thing anybody sees arrives last.
+   */
+  priority?: boolean;
   className?: string;
 }) {
   return (
@@ -262,6 +311,9 @@ export function ImageCard({
         alt={alt}
         width={width}
         height={height}
+        loading={priority ? "eager" : "lazy"}
+        {...(priority ? { fetchPriority: "high" as const } : {})}
+        decoding="async"
         className="size-full object-cover"
       />
     </Frame>

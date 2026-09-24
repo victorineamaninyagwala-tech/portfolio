@@ -2,7 +2,7 @@ import type { ReactNode } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 
 import { Prose } from "@/components/CaseStudySection";
-import { Gutter, Label } from "@/components/primitives";
+import { Gutter, Label, ProseLink } from "@/components/primitives";
 import { WorkHistoryList } from "@/components/WorkHistoryList";
 import { workHistory } from "@/data/work-history";
 import { shareImage } from "@/lib/share";
@@ -44,28 +44,6 @@ export const Route = createFileRoute("/about")({
   }),
   component: About,
 });
-
-/*
- * A link inside a sentence.
- *
- * The footer underlines its address in the same way — a hairline under the
- * words that colours olive on hover — so a link in running text is that same
- * gesture at reading size rather than a new one. Not TextLink: the sliding
- * arrow belongs to a link standing on its own, and mid-sentence it would
- * shove the rest of the line along as the mouse passed.
- */
-function Inline({ href, children }: { href: string; children: ReactNode }) {
-  return (
-    <a
-      href={href}
-      target="_blank"
-      rel="noreferrer"
-      className="underline decoration-ink/30 underline-offset-4 transition-colors hover:decoration-olive"
-    >
-      {children}
-    </a>
-  );
-}
 
 /*
  * One passage: the heading in the left five columns, the writing in the right
@@ -112,8 +90,7 @@ function About() {
         <div className="space-y-32 pt-28 pb-28 sm:space-y-48 sm:pt-40 sm:pb-40">
           <Passage title="Who I am">
             <Prose>
-              I started my career in tech with a background in software development before finding
-              my way into product design.
+              I came to product design by way of a short stint in backend development.
             </Prose>
             <Prose>
               Over the past few years, I&apos;ve worked on products across different domains, from
@@ -159,7 +136,7 @@ function About() {
               do with product design.
             </Prose>
             <Prose>
-              I write <Inline href="https://thehole27.wordpress.com/">poetry</Inline>. I watch
+              I write <ProseLink href="https://thehole27.wordpress.com/">poetry</ProseLink>. I watch
               films and get attached to stories and characters. I take care of my cat, which is
               mostly a very elaborate arrangement in which he allows me to live in his house.
             </Prose>

@@ -44,7 +44,7 @@ export const Route = createFileRoute("/work/farmcloud")({
       {
         property: "og:description",
         content:
-          "Sole product designer on FarmCloud at Synnefa, serving 5,000+ farmers across 14 countries.",
+          "Sole product designer on FarmCloud at Synnefa: 5,000+ farmers registered across 14 countries, 4,000 of them active.",
       },
       ...shareImage(match.context.origin, "farmcloud", "The FarmCloud case study: a farmer watering young plants beside the title."),
     ],
@@ -56,14 +56,14 @@ const meta: MetaRow[] = [
   { label: "Company", value: "Synnefa" },
   { label: "Year", value: "Dec 2023 – Mar 2026" },
   { label: "Role", value: "Sole Product Designer" },
-  { label: "Reach", value: "5,000+ farmers · 14 countries" },
+  { label: "Reach", value: "5,000+ farmers registered · 14 countries" },
 ];
 
 /* What the work came to, carried at the top of the page. */
 const outcomes: Outcome[] = [
-  { figure: "4,000", note: "Active users digitising records" },
+  { figure: "4,000", note: "Active users digitising records, of 5,000+ registered" },
   { figure: "70%", note: "Self-onboarding success, up from 10% on the legacy system" },
-  { figure: "6 / 7", note: "Farms actively using FarmCloud, confirmed in a shadowing study" },
+  { figure: "$177K", note: "Additional farmer investment unlocked across the GSMA-funded pilot" },
   { figure: "14", note: "Countries reached across East and Southern Africa" },
 ];
 
@@ -230,7 +230,6 @@ const lifecycle = [
       "The harvest report offers to hold the yield as a product, a product being anything the farm can sell.",
       "It stays an offer. A farmer keeping the yield for the household declines it, and the next step is theirs to take either way.",
       "A product that sells is invoiced from accounting, and a fulfilled invoice reads through as revenue.",
-      "The record then runs the length of the season: before planting, during it, and after harvest.",
     ],
   },
 ];
@@ -357,7 +356,7 @@ function FarmCloud() {
       title="FarmCloud"
       meta={meta}
       outcomes={outcomes}
-      deck="FarmCloud is a simple farm record keeping platform. It logs all your farm activities, tracks income and expenses, manages your inventory, and connects you to the market."
+      deck="FarmCloud is a record-keeping platform for farms, covering a season from the land and the crop through inventory, expenses and harvest, and connecting the farms using it to buyers."
       image={{
         src: heroImage,
         alt: "FarmCloud dashboard shown on a laptop set in a green field",
@@ -442,11 +441,12 @@ function FarmCloud() {
         ))}
       </CaseStudySection>
 
-      {/* Straight after the flow, because its last step is the proof: the
-          harvest report offers to hold the yield as a product and the farmer
-          keeping it for the household declines. The system does the work and
-          leaves the decision where it belongs. */}
-      <Thesis>Designing the boundary between human responsibility and technological assistance.</Thesis>
+      {/* Straight after the flow, because its last step is the proof, and the
+          proof is stated in the quote's own block rather than left in a code
+          comment where the reader cannot see it. */}
+      <Thesis lead="At harvest the system stops short: it offers to hold the yield as a product, and a farmer keeping it for the household declines. It does the work of knowing what was grown and leaves the decision about it alone.">
+        Designing the boundary between human responsibility and technological assistance.
+      </Thesis>
 
       <CaseStudySection title="Beyond the Core Flow" columns={1}>
         {beyond.map((decision) => (
@@ -465,15 +465,28 @@ function FarmCloud() {
 
       {/* The ending the page did not have. It stopped on a scoping decision
           and went straight to the next project, so a reader never learned
-          whether any of it became a product. Kept to what is known: she says
-          everything in the case study shipped. The half that is still missing
-          is what she would do differently, which is hers to write and not
-          mine to invent. */}
+          whether any of it became a product. The figures are from her CV, which
+          is the document on this site that already carries them. The half still
+          missing is what she would do differently, which is hers to write.
+
+          One block rather than three children: a stacked section puts a
+          section-sized gap between its blocks, and these are paragraphs. */}
       <CaseStudySection title="Where it landed" columns={1}>
-        <Prose>
-          All of it shipped: the rebuilt onboarding, the crop lifecycle framework, the
-          USSD build and Market Linkage.
-        </Prose>
+        <div className="space-y-6">
+          <Prose>
+            All of it shipped: the rebuilt onboarding, the crop lifecycle framework, the
+            USSD build and Market Linkage.
+          </Prose>
+          <Prose>
+            It ran as a GSMA-funded pilot across 14 African countries, with 5,000+ farmers
+            registered and 4,000 of them actively digitising records, and unlocked $177,000
+            of additional investment into the farms on it.
+          </Prose>
+          <Prose>
+            On the farms using it consistently, crop failure fell by 34%, and 61% took up
+            new farming techniques through the advisory features.
+          </Prose>
+        </div>
       </CaseStudySection>
 
       <MoreWork current="farmcloud" />

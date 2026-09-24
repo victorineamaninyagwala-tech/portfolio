@@ -15,11 +15,11 @@ import historyShot from "@/assets/ss-record-history.webp";
 import escalatedShot from "@/assets/ss-signals-escalated.webp";
 import tasksShot from "@/assets/ss-tasks.webp";
 import { CaseStudyHero, type MetaRow } from "@/components/CaseStudyHero";
-import { CaseStudySection, Prose, Thesis } from "@/components/CaseStudySection";
+import { CaseStudySection, Prose } from "@/components/CaseStudySection";
 import { Arrow, Diagram, Matrix, Node, Row, Sequence, Stack } from "@/components/Diagram";
 import { MoreWork } from "@/components/MoreWork";
 import { Walkthrough, type WalkthroughStep } from "@/components/Walkthrough";
-import { Frame, Label, ScreenCard } from "@/components/primitives";
+import { Frame, Label, ProseLink, ScreenCard } from "@/components/primitives";
 import {
   allocation,
   architecture,
@@ -55,7 +55,9 @@ const meta: MetaRow[] = [
   { label: "Domain", value: "HealthTech · Care Coordination" },
   { label: "Year", value: "April 2026" },
   { label: "Role", value: "Product Designer (Independent)" },
-  { label: "Compliance", value: "Kenya Digital Health Act 2023" },
+  /* Not "Compliance": nothing here was certified against the Act. The work was
+     designed against it, which is a different and smaller claim. */
+  { label: "Designed against", value: "Kenya Digital Health Act 2023" },
 ];
 
 /* Every screen is shot at the same size, so none of them has to say so. */
@@ -168,7 +170,15 @@ function Evidence() {
           <div key={strand.strand} className="rounded-lg border border-ink/25 bg-paper px-6 py-6">
             <Label className="text-olive">{strand.strand}</Label>
             <p className="mt-3 type-body text-ink/75">{strand.finding}</p>
-            <p className="mt-4 type-caption text-ink/45">{strand.source}</p>
+            {/* Two of the four strands are published documents and say so
+                with a link. The other two are still named rather than cited. */}
+            <p className="mt-4 type-caption text-ink/45">
+              {strand.href ? (
+                <ProseLink href={strand.href}>{strand.source}</ProseLink>
+              ) : (
+                strand.source
+              )}
+            </p>
           </div>
         ))}
       </Row>
@@ -394,7 +404,7 @@ function LayerScreens() {
  */
 function Visibility() {
   return (
-    <Diagram label="Visibility is not accessibility">
+    <Diagram label="Visibility is not permission">
       <div className="mx-auto max-w-[62ch]">
         <Matrix
           columns={["Raw data"]}
@@ -576,14 +586,19 @@ function SoulShape() {
         </Prose>
         <Prose wide>Several patterns came up repeatedly.</Prose>
         <Prose wide>
-          Leeftink et al. (2018) described coordination between disciplines as a planning
-          problem, where a change in one part of a patient's care can affect decisions
-          made elsewhere.
+          <ProseLink href="https://doi.org/10.1080/20476965.2018.1436909">
+            Leeftink et al. (2018)
+          </ProseLink>{" "}
+          described coordination between disciplines as a planning problem, where a change
+          in one part of a patient&apos;s care can affect decisions made elsewhere.
         </Prose>
         <Prose wide>
-          The PHC Network Guidelines define a coordinator role within multidisciplinary
-          care, but the processes described rely on paper records, meetings and
-          communication between providers.
+          The{" "}
+          <ProseLink href="https://www.mntrh.go.ke/sites/default/files/2024-10/Primary_Health_Care_Network_Guidelines_-_May_2021.pdf">
+            PHC Network Guidelines
+          </ProseLink>{" "}
+          define a coordinator role within multidisciplinary care, but the processes
+          described rely on paper records, meetings and communication between providers.
         </Prose>
         <Prose wide>
           Other research pointed to the effects of uncoordinated advice, including
@@ -700,12 +715,6 @@ function SoulShape() {
           programme.
         </Prose>
       </Movement>
-
-      {/* After the decisions, because one of them is the proof: care can
-          start with whatever composition exists, the system keeps showing what
-          is missing, and the institution still decides. It makes the gap
-          visible and stops there. */}
-      <Thesis>Designing the boundary between human responsibility and technological assistance.</Thesis>
 
       <Movement
         title="Architecture"

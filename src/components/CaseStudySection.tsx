@@ -95,12 +95,18 @@ export function CaseStudySection({
  * every section has already been running, and a rule above it like any other
  * section, so it is a beat in the page rather than an ornament bolted to it.
  */
-export function Thesis({ children }: { children: ReactNode }) {
+export function Thesis({ lead, children }: { lead?: ReactNode; children: ReactNode }) {
   return (
     <section>
       <Gutter>
         <div className="grid grid-cols-12 border-t border-ink/10 py-16 sm:py-24">
-          <p className="col-span-12 type-headline md:col-span-6 md:col-start-7">{children}</p>
+          <div className="col-span-12 md:col-span-6 md:col-start-7">
+            {/* The decision, in reading type, above the claim it proves. Without
+                it the quote arrives as an assertion and the reader has to go
+                back up the page to find what earned it. */}
+            {lead ? <p className="mb-6 type-body-lg text-ink/75">{lead}</p> : null}
+            <p className="type-headline">{children}</p>
+          </div>
         </div>
       </Gutter>
     </section>
@@ -189,6 +195,8 @@ export function SectionImage({
           alt={alt}
           width={width}
           height={height}
+          loading="lazy"
+          decoding="async"
           /* min-h-0 so the picture may be shorter than its own content box:
              without it a flex item refuses to shrink below its intrinsic
              height and the column grows to fit the picture instead. */

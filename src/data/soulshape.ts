@@ -26,9 +26,12 @@
  * NOTE, AND IT MATTERS: her portfolio summary of this table gave Clinicea 0
  * on both of the last two dimensions. Her own scorecard gives it 1 on each,
  * and the totals prove the scorecard right — 2+2+2+1+1+1+0+1+1 is the 11/18
- * she publishes, where the same column with those last two zeroed is 9. The last
- * dimension is also named "Recirculation handling"; "re-entry" is the word she
- * coined for it afterwards, not the word on the scorecard.
+ * she publishes, where the same column with those last two zeroed is 9.
+ *
+ * The last dimension is "Recirculation handling" on the scorecard. The table
+ * says Re-entry, which is the word she coined for it afterwards and the word
+ * the rest of the page uses — the lifecycle's last phase is Follow-Up /
+ * Re-entry and the diagram is labelled Re-entry. One name for one idea.
  *
  * Her own reading of the two rows, verbatim: "No solution scores more than one
  * on either dimension."
@@ -46,11 +49,11 @@ export const scorecard = {
     { name: "Environmental characteristics", from: "Leeftink", scores: [1, 1, 2] },
     { name: "Patient's active role", from: "Kenya PCN", scores: [0, 1, 2] },
     { name: "Longitudinal record", from: "Clinical", scores: [1, 0, 1] },
-    { name: "Recirculation handling", from: "Leeftink", scores: [1, 0, 0] },
+    { name: "Re-entry", from: "Leeftink", scores: [1, 0, 0] },
   ],
   totals: [11, 6, 12],
   /** The two rows the audit was really about. */
-  decisive: ["Longitudinal record", "Recirculation handling"],
+  decisive: ["Longitudinal record", "Re-entry"],
 };
 
 /*
@@ -94,12 +97,19 @@ export const evidence = [
     finding:
       "Coordination between disciplines is a planning problem: a change in one part of a patient's care affects decisions made elsewhere.",
     source: "Leeftink et al., 2018",
+    /* Multi-disciplinary planning in health care: a review. Health Systems
+       9(2), Leeftink, Bikker, Vliegen & Boucherie. */
+    href: "https://doi.org/10.1080/20476965.2018.1436909",
   },
   {
     strand: "Kenyan PHC guidelines",
     finding:
       "A coordinator role is defined within multi-disciplinary care, but the infrastructure under it is paper records, meetings and provider-to-provider communication.",
     source: "Primary Health Care Network Guidelines",
+    /* Kenya Ministry of Health, May 2021. The ministry's own guidelines
+       library is a single-page app with no addressable page per document, so
+       this points at the PDF itself, hosted on a government domain. */
+    href: "https://www.mntrh.go.ke/sites/default/files/2024-10/Primary_Health_Care_Network_Guidelines_-_May_2021.pdf",
   },
   {
     strand: "Uncoordinated care",

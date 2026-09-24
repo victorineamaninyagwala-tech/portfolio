@@ -20,7 +20,7 @@ export const workHistory = [
     period: "April 2026",
     bullets: [
       "A problem-led design project examining why coordinated weight-loss care fails structurally.",
-      "Built the evidence base from peer-reviewed research and policy, then designed a Signal Layer and Program Model aligned with the Kenya Digital Health Act 2023.",
+      "Built the evidence base from peer-reviewed research and policy, then designed the system in three layers: raw data stays in its domain, meaning moves between them, and continuity persists across programme cycles.",
     ],
   },
   {

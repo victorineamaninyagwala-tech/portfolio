@@ -33,7 +33,7 @@ const all: Project[] = [
   {
     slug: "farmcloud",
     title: "FarmCloud",
-    discipline: "UX · UI Design · Product Management",
+    discipline: "UX · Systems Design · USSD",
     mask: synnefaMark,
     images: [
       // Order drives the hover sequence: rest image, then the mark reveals the

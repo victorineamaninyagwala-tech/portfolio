@@ -238,7 +238,7 @@ function MochisBrew() {
     <CaseStudyHero
       title="Mochi's Brew"
       meta={meta}
-      deck="Designing a pickup ordering flow for Kenyan coffee shops. A service flow for on the go customers."
+      deck="A pickup ordering flow for Kenyan coffee shops and their on-the-go customers."
       media={<Walkthrough steps={flow} ratio="1280 / 800" />}
     >
       <CaseStudySection columns={1}>
