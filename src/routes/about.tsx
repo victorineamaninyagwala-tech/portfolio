@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 
+import { Movement, Prose } from "@/components/CaseStudySection";
 import { Gutter, Label } from "@/components/primitives";
 import { WorkHistoryList } from "@/components/WorkHistoryList";
 import { workHistory } from "@/data/work-history";
@@ -8,17 +9,17 @@ import { shareImage } from "@/lib/share";
 /*
  * About.
  *
- * It was a section at the foot of the homepage holding one thing, a list of
- * roles, and the footer linked to a /about that did not exist. It is a page
- * now, and the roles have come with it.
- *
- * What it does not yet have is a person in it. That writing is hers, and the
- * page is built so it drops in above the roles without anything else moving:
- * the heading block is its own, and the list is a section under it.
+ * Her writing, in the grammar the case studies are already read in: a heading
+ * in the left column, the writing in the right, a rule between one movement
+ * and the next. The page is a person rather than a project, so it carries no
+ * facts table and no outcomes — the name, the claim under it, three movements
+ * and the roles.
  */
 
+/* Her own opening line. It says what the work is for, which is what a search
+   result has room for. */
 const DESCRIPTION =
-  "Victorine Amani Nyagwala, product designer in Nairobi, Kenya. The roles behind the work.";
+  "I'm a Product Designer interested in how technology can absorb complexity and make room for people to do what actually matters.";
 
 export const Route = createFileRoute("/about")({
   head: ({ match }) => ({
@@ -44,17 +45,87 @@ function About() {
   return (
     <main className="bg-paper text-ink">
       <Gutter>
-        <div className="pt-16 pb-14 sm:pt-24 sm:pb-20">
-          <Label className="block text-olive">About</Label>
-          {/* The same step the homepage leads with, and no cap on it. */}
-          <h1 className="mt-7 type-display">Victorine Amani</h1>
-        </div>
+        {/* The name in the left five columns and the claim in the right six,
+            the same two columns every case study opens on. The claim is set
+            to the foot of the row so it finishes on the name's line rather
+            than floating above it. */}
+        <header className="grid grid-cols-12 gap-y-8 pt-16 pb-14 sm:pt-24 sm:pb-20">
+          <div className="col-span-12 md:col-span-5">
+            <Label className="block text-olive">About</Label>
+            <h1 className="mt-7 type-display">I&apos;m Amani.</h1>
+          </div>
+          <div className="col-span-12 md:col-span-6 md:col-start-7 md:self-end">
+            <p className="type-title text-ink/75">
+              I&apos;m a Product Designer interested in how technology can absorb complexity and
+              make room for people to do what actually matters.
+            </p>
+          </div>
+        </header>
       </Gutter>
+
+      <Movement title="Who I am">
+        <Prose>
+          I started my career in tech with a background in software development before finding my
+          way into product design.
+        </Prose>
+        <Prose>
+          Over the past few years, I&apos;ve worked on products across different domains, from
+          agritech to healthcare. My work has taken me through research, product thinking,
+          interaction design and the practical details of getting an idea into something people
+          can use.
+        </Prose>
+        <Prose>
+          I enjoy working on problems where there is a lot to understand before there is anything
+          to draw. I like talking to people, following information through a system, questioning
+          assumptions and figuring out where a product can make a process easier to navigate.
+        </Prose>
+        <Prose>
+          These days, I&apos;m particularly interested in product work that sits somewhere between
+          design, technology and the way a business actually operates.
+        </Prose>
+      </Movement>
+
+      <Movement title="My vision">
+        <Prose>I want to build technology that makes complicated things easier to live with.</Prose>
+        <Prose>
+          There is a lot of complexity in the world that cannot simply be removed. People have
+          different needs, organisations have different constraints, and the systems connecting
+          them can become complicated very quickly.
+        </Prose>
+        <Prose>
+          I&apos;m interested in what technology can take care of in the background: organising
+          information, connecting people and processes, making changes visible and carrying
+          context forward.
+        </Prose>
+        <Prose>
+          The goal is to give people better systems to work with, while leaving room for the parts
+          that require human judgement, experience and care.
+        </Prose>
+      </Movement>
+
+      <Movement title="The other Amani">
+        <Prose>
+          Outside of work, I have a few ways of making sense of the world that have nothing to do
+          with product design.
+        </Prose>
+        <Prose>
+          I write poetry. I watch films and get attached to stories and characters. I take care of
+          my cat, which is mostly a very elaborate arrangement in which he allows me to live in
+          his house.
+        </Prose>
+        <Prose>
+          There are also days when I just want to read, make something, watch something good, or
+          sit with an idea for a while without needing to turn it into anything.
+        </Prose>
+        <Prose>
+          Work is a big part of my life, but it isn&apos;t the whole thing.
+        </Prose>
+      </Movement>
 
       <section>
         <Gutter>
-          {/* A rule above, the way every section on a case study opens, so the
-              list reads as a part of the page rather than the whole of it. */}
+          {/* A rule above, the way every movement above it opens, so the list
+              reads as a part of the page rather than the whole of it. */}
           <div className="border-t border-ink/10 pt-12 pb-16 sm:pt-16 sm:pb-24">
             <Label className="block text-ink/50">Roles</Label>
             <div className="mt-8">

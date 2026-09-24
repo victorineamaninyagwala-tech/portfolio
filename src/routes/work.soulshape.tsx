@@ -15,7 +15,7 @@ import historyShot from "@/assets/ss-record-history.webp";
 import escalatedShot from "@/assets/ss-signals-escalated.webp";
 import tasksShot from "@/assets/ss-tasks.webp";
 import { CaseStudyHero, type MetaRow } from "@/components/CaseStudyHero";
-import { CaseStudySection, Prose, Thesis } from "@/components/CaseStudySection";
+import { CaseStudySection, Movement, Prose, Thesis } from "@/components/CaseStudySection";
 import { Arrow, Diagram, Matrix, Node, Row, Sequence, Stack } from "@/components/Diagram";
 import { MoreWork } from "@/components/MoreWork";
 import { Walkthrough, type WalkthroughStep } from "@/components/Walkthrough";
@@ -62,36 +62,12 @@ const meta: MetaRow[] = [
 const SCREEN = { width: 1932, height: 1449 };
 
 /*
- * A movement of the account: the heading in the left column, the writing in
- * the right, starting on the line the hero's facts start on, and the drawings
- * or the screens run full width underneath.
- *
  * The page turns from drawings into screens as it goes. Up to the research it
  * argues in diagrams, because there is no product yet to point at; from the
  * decisions onward it argues in the interface, and a drawing appears only
  * where the system underneath has to be explained before a screen of it could
  * mean anything.
  */
-function Movement({
-  title,
-  figure,
-  children,
-}: {
-  title: string;
-  figure?: ReactNode;
-  children: ReactNode;
-}) {
-  return (
-    <CaseStudySection columns={1} figure={figure}>
-      <div className="grid grid-cols-12 gap-y-8">
-        <h2 className="col-span-12 type-headline md:col-span-5">{title}</h2>
-        {/* Columns 5 and 6 are the gutter between them, the same gutter the kit
-            leaves when a section is led by a picture. */}
-        <div className="col-span-12 space-y-6 md:col-span-6 md:col-start-7">{children}</div>
-      </div>
-    </CaseStudySection>
-  );
-}
 
 /*
  * A decision and the screen that carries it. The decision is stated once on
