@@ -90,38 +90,76 @@ export const survives = "Programme instances · phase state · signal history ·
  * The four strands she read, and the one finding from each that changed the
  * project — from the comprehensive case study §3.1–3.2 and from her own
  * account. The finding, not a summary of the reading.
+ *
+ * The citations are her own reference list, §References of the comprehensive
+ * case study, and every DOI here was checked against Crossref and resolved
+ * before it was linked. One of her five did not: the 2025 European Journal of
+ * Cardiovascular Medicine review is registered to no DOI that answers, so it
+ * is named and not linked rather than pointed at a dead address.
  */
-export const evidence = [
+type Source = { name: string; href?: string };
+
+export const evidence: Array<{ strand: string; finding: string; sources: Source[] }> = [
   {
     strand: "Coordination research",
     finding:
       "Coordination between disciplines is a planning problem: a change in one part of a patient's care affects decisions made elsewhere.",
-    source: "Leeftink et al., 2018",
-    /* Multi-disciplinary planning in health care: a review. Health Systems
-       9(2), Leeftink, Bikker, Vliegen & Boucherie. */
-    href: "https://doi.org/10.1080/20476965.2018.1436909",
+    sources: [
+      {
+        /* Multi-disciplinary planning in health care: a review. Health Systems
+           9(2), 95–118. Leeftink, Bikker, Vliegen & Boucherie. */
+        name: "Leeftink et al., 2018",
+        href: "https://doi.org/10.1080/20476965.2018.1436909",
+      },
+    ],
   },
   {
     strand: "Kenyan PHC guidelines",
     finding:
       "A coordinator role is defined within multi-disciplinary care, but the infrastructure under it is paper records, meetings and provider-to-provider communication.",
-    source: "Primary Health Care Network Guidelines",
-    /* Kenya Ministry of Health, May 2021. The ministry's own guidelines
-       library is a single-page app with no addressable page per document, so
-       this points at the PDF itself, hosted on a government domain. */
-    href: "https://www.mntrh.go.ke/sites/default/files/2024-10/Primary_Health_Care_Network_Guidelines_-_May_2021.pdf",
+    sources: [
+      {
+        /* Ministry of Health, Republic of Kenya, May 2021. The ministry's own
+           guidelines library is a single-page app with no addressable page per
+           document, so this points at the PDF, on a government domain and byte
+           for byte the copy in her own folder. */
+        name: "Primary Health Care Network Guidelines",
+        href: "https://www.mntrh.go.ke/sites/default/files/2024-10/Primary_Health_Care_Network_Guidelines_-_May_2021.pdf",
+      },
+    ],
   },
   {
+    /* Two sources, because the finding is two findings: the overload is the
+       systematic review's, the conflict is Foster's. */
     strand: "Uncoordinated care",
     finding:
       "Advice arriving in fragments produces cognitive overload and conflicting recommendations, which the patient is left to reconcile.",
-    source: "Clinical literature",
+    sources: [
+      {
+        /* Multidisciplinary Team-Based Obesity Treatment in Patients With
+           Diabetes. Diabetes Spectrum 30(4), 244–249. */
+        name: "Foster et al., 2017",
+        href: "https://doi.org/10.2337/ds17-0045",
+      },
+      /* Systematic Review: Managing Obesity with Multidisciplinary Approaches,
+         thirty studies, where the phrase "cognitive overload" comes from. The
+         DOI in her reference list, 10.5083/ejcm/25-01-06, is not registered
+         and does not resolve, so this one carries no link. */
+      { name: "European Journal of Cardiovascular Medicine, 2025" },
+    ],
   },
   {
     strand: "A chronic, relapsing condition",
     finding:
       "Care does not end when a programme does. What happens when someone leaves and returns later is the case nothing handles.",
-    source: "Obesity as chronic care",
+    sources: [
+      {
+        /* Understanding and Managing Obesity: A Multidisciplinary Approach, in
+           Weight Loss — A Multidisciplinary Perspective. IntechOpen. */
+        name: "Alkhatry, 2024",
+        href: "https://doi.org/10.5772/intechopen.1004426",
+      },
+    ],
   },
 ];
 

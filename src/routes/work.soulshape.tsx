@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+import { Fragment, type ReactNode } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 
 import signupDesign from "@/assets/soulshape-signup.webp";
@@ -170,14 +170,19 @@ function Evidence() {
           <div key={strand.strand} className="rounded-lg border border-ink/25 bg-paper px-6 py-6">
             <Label className="text-olive">{strand.strand}</Label>
             <p className="mt-3 type-body text-ink/75">{strand.finding}</p>
-            {/* Two of the four strands are published documents and say so
-                with a link. The other two are still named rather than cited. */}
+            {/* Each strand names what it was read from, and links it where
+                the citation has an address that answers. */}
             <p className="mt-4 type-caption text-ink/45">
-              {strand.href ? (
-                <ProseLink href={strand.href}>{strand.source}</ProseLink>
-              ) : (
-                strand.source
-              )}
+              {strand.sources.map((source, i) => (
+                <Fragment key={source.name}>
+                  {i > 0 ? " · " : null}
+                  {source.href ? (
+                    <ProseLink href={source.href}>{source.name}</ProseLink>
+                  ) : (
+                    source.name
+                  )}
+                </Fragment>
+              ))}
             </p>
           </div>
         ))}
