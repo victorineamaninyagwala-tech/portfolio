@@ -51,8 +51,9 @@ function About() {
             than floating above it. */}
         <header className="grid grid-cols-12 gap-y-8 pt-16 pb-14 sm:pt-24 sm:pb-20">
           <div className="col-span-12 md:col-span-5">
-            <Label className="block text-olive">About</Label>
-            <h1 className="mt-7 type-display">I&apos;m Amani.</h1>
+            {/* No eyebrow. The nav item that got the reader here already said
+                About, and the page says the name straight away. */}
+            <h1 className="type-display">I&apos;m Amani.</h1>
           </div>
           <div className="col-span-12 md:col-span-6 md:col-start-7 md:self-end">
             <p className="type-title text-ink/75">
