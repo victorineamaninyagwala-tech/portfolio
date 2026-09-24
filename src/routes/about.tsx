@@ -20,10 +20,10 @@ import { shareImage } from "@/lib/share";
  * it, three passages and the roles.
  */
 
-/* Her own opening line. It says what the work is for, which is what a search
-   result has room for. */
+/* Her own opening line, word for word as the page says it. It says what the
+   work is for, which is what a search result has room for. */
 const DESCRIPTION =
-  "I'm a Product Designer interested in how technology can absorb complexity and make room for people to do what actually matters.";
+  "A Product Designer interested in how technology can absorb complexity and make room for people to do what actually matters.";
 
 export const Route = createFileRoute("/about")({
   head: ({ match }) => ({
@@ -44,6 +44,28 @@ export const Route = createFileRoute("/about")({
   }),
   component: About,
 });
+
+/*
+ * A link inside a sentence.
+ *
+ * The footer underlines its address in the same way — a hairline under the
+ * words that colours olive on hover — so a link in running text is that same
+ * gesture at reading size rather than a new one. Not TextLink: the sliding
+ * arrow belongs to a link standing on its own, and mid-sentence it would
+ * shove the rest of the line along as the mouse passed.
+ */
+function Inline({ href, children }: { href: string; children: ReactNode }) {
+  return (
+    <a
+      href={href}
+      target="_blank"
+      rel="noreferrer"
+      className="underline decoration-ink/30 underline-offset-4 transition-colors hover:decoration-olive"
+    >
+      {children}
+    </a>
+  );
+}
 
 /*
  * One passage: the heading in the left five columns, the writing in the right
@@ -75,9 +97,11 @@ function About() {
             <h1 className="type-display">I&apos;m Amani.</h1>
           </div>
           <div className="col-span-12 md:col-span-6 md:col-start-7 md:self-end">
+            {/* The name above already said I am. This finishes that sentence
+                rather than starting a second one the same way. */}
             <p className="type-title text-ink/75">
-              I&apos;m a Product Designer interested in how technology can absorb complexity and
-              make room for people to do what actually matters.
+              A Product Designer interested in how technology can absorb complexity and make room
+              for people to do what actually matters.
             </p>
           </div>
         </header>
@@ -135,9 +159,9 @@ function About() {
               do with product design.
             </Prose>
             <Prose>
-              I write poetry. I watch films and get attached to stories and characters. I take care
-              of my cat, which is mostly a very elaborate arrangement in which he allows me to live
-              in his house.
+              I write <Inline href="https://thehole27.wordpress.com/">poetry</Inline>. I watch
+              films and get attached to stories and characters. I take care of my cat, which is
+              mostly a very elaborate arrangement in which he allows me to live in his house.
             </Prose>
             <Prose>
               There are also days when I just want to read, make something, watch something good,
