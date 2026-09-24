@@ -52,6 +52,11 @@ export const Route = createFileRoute("/about")({
  * No rule above it. With the headings this quiet a hairline would be the
  * loudest thing on the page, and the space between passages is doing that work
  * instead.
+ *
+ * The writing is set wide, so it fills the column it was given rather than
+ * stopping short of it and leaving a band of white down the right-hand side.
+ * A six-column slot is already a reading measure; capping it again inside
+ * itself only makes a gap.
  */
 function Passage({ title, children }: { title: string; children: ReactNode }) {
   return (
@@ -89,62 +94,62 @@ function About() {
             rather than sitting on top of it. */}
         <div className="space-y-32 pt-28 pb-28 sm:space-y-48 sm:pt-40 sm:pb-40">
           <Passage title="Who I am">
-            <Prose>
+            <Prose wide>
               I came to product design by way of a short stint in backend development.
             </Prose>
-            <Prose>
+            <Prose wide>
               Over the past few years, I&apos;ve worked on products across different domains, from
               agritech to healthcare. My work has taken me through research, product thinking,
               interaction design and the practical details of getting an idea into something people
               can use.
             </Prose>
-            <Prose>
+            <Prose wide>
               I enjoy working on problems where there is a lot to understand before there is
               anything to draw. I like talking to people, following information through a system,
               questioning assumptions and figuring out where a product can make a process easier to
               navigate.
             </Prose>
-            <Prose>
+            <Prose wide>
               These days, I&apos;m particularly interested in product work that sits somewhere
               between design, technology and the way a business actually operates.
             </Prose>
           </Passage>
 
           <Passage title="My vision">
-            <Prose>
+            <Prose wide>
               I want to build technology that makes complicated things easier to live with.
             </Prose>
-            <Prose>
+            <Prose wide>
               There is a lot of complexity in the world that cannot simply be removed. People have
               different needs, organisations have different constraints, and the systems connecting
               them can become complicated very quickly.
             </Prose>
-            <Prose>
+            <Prose wide>
               I&apos;m interested in what technology can take care of in the background: organising
               information, connecting people and processes, making changes visible and carrying
               context forward.
             </Prose>
-            <Prose>
+            <Prose wide>
               The goal is to give people better systems to work with, while leaving room for the
               parts that require human judgement, experience and care.
             </Prose>
           </Passage>
 
           <Passage title="The other Amani">
-            <Prose>
+            <Prose wide>
               Outside of work, I have a few ways of making sense of the world that have nothing to
               do with product design.
             </Prose>
-            <Prose>
+            <Prose wide>
               I write <ProseLink href="https://thehole27.wordpress.com/">poetry</ProseLink>. I watch
               films and get attached to stories and characters. I take care of my cat, which is
               mostly a very elaborate arrangement in which he allows me to live in his house.
             </Prose>
-            <Prose>
+            <Prose wide>
               There are also days when I just want to read, make something, watch something good,
               or sit with an idea for a while without needing to turn it into anything.
             </Prose>
-            <Prose>
+            <Prose wide>
               Work is a big part of my life, but it isn&apos;t the whole thing.
             </Prose>
           </Passage>

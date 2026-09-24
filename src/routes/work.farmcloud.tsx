@@ -469,24 +469,23 @@ function FarmCloud() {
           is the document on this site that already carries them. The half still
           missing is what she would do differently, which is hers to write.
 
-          One block rather than three children: a stacked section puts a
-          section-sized gap between its blocks, and these are paragraphs. */}
-      <CaseStudySection title="Where it landed" columns={1}>
-        <div className="space-y-6">
-          <Prose>
-            All of it shipped: the rebuilt onboarding, the crop lifecycle framework, the
-            USSD build and Market Linkage.
-          </Prose>
-          <Prose>
-            It ran as a GSMA-funded pilot across 14 African countries, with 5,000+ farmers
-            registered and 4,000 of them actively digitising records, and unlocked $177,000
-            of additional investment into the farms on it.
-          </Prose>
-          <Prose>
-            On the farms using it consistently, crop failure fell by 34%, and 61% took up
-            new farming techniques through the advisory features.
-          </Prose>
-        </div>
+          Two columns, like every other titled section on this page. Stacked,
+          the paragraphs held a reading measure and left a third of the section
+          empty down the right-hand side. */}
+      <CaseStudySection title="Where it landed">
+        <Prose>
+          All of it shipped: the rebuilt onboarding, the crop lifecycle framework, the USSD
+          build and Market Linkage.
+        </Prose>
+        <Prose>
+          It ran as a GSMA-funded pilot across 14 African countries, with 5,000+ farmers
+          registered and 4,000 of them actively digitising records, and unlocked $177,000 of
+          additional investment into the farms on it.
+        </Prose>
+        <Prose>
+          On the farms using it consistently, crop failure fell by 34%, and 61% took up new
+          farming techniques through the advisory features.
+        </Prose>
       </CaseStudySection>
 
       <MoreWork current="farmcloud" />
