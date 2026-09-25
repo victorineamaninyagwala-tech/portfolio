@@ -6,8 +6,8 @@
  * loads the homepage so the site's own stylesheet and fonts are in the page,
  * replaces the body with a card built from the site's own type steps and
  * colour tokens, and photographs it. That is what keeps a card the same thing
- * as the page it stands for, in Switzer and Ubuntu on the real paper
- * colour, rather than a lookalike drawn in something else.
+ * as the page it stands for, in Switzer on the real paper colour, rather
+ * than a lookalike drawn in something else.
  *
  * Run it again whenever a cover, a title, a description or the type changes:
  *
@@ -120,7 +120,7 @@ const CARDS = [
   {
     slug: "ai-design-system",
     html: study({
-      title: "A design system an AI agent can operate",
+      title: "An AI operable Design system",
       discipline: "Design Systems · Tokens · AI",
       /* Nine words: one step down, or it runs to three lines and crowds the
          description below it. */

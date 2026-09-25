@@ -9,7 +9,7 @@ import { layers, limits, scales, themeProof, workflows } from "@/data/ai-design-
 import { shareImage } from "@/lib/share";
 
 /*
- * A design system an AI agent can operate.
+ * An AI operable Design system.
  *
  * The one case study on this site with no interface to photograph. Its subject
  * is a token file, a comment block and a build, so it argues in source and in
@@ -20,9 +20,9 @@ import { shareImage } from "@/lib/share";
 export const Route = createFileRoute("/work/ai-design-system")({
   head: ({ match }) => ({
     meta: [
-      { title: "A design system an AI agent can operate · Victorine Amani" },
+      { title: "An AI operable Design system · Victorine Amani" },
       { name: "description", content: "A self-directed test project: build a design system an AI agent can use, then hand it real maintenance tasks and see whether the structure alone is enough." },
-      { property: "og:title", content: "A design system an AI agent can operate · Victorine Amani" },
+      { property: "og:title", content: "An AI operable Design system · Victorine Amani" },
       { property: "og:description", content: "Design systems, tokens and AI: a self-directed test project." },
       ...shareImage(match.context.origin, "ai-design-system", "The design-system case study: a board of colour tokens beside the title."),
     ],
@@ -174,7 +174,7 @@ function Workflows() {
 function AiDesignSystem() {
   return (
     <CaseStudyHero
-      title="A design system an AI agent can operate"
+      title="An AI operable Design system"
       meta={meta}
       outcomes={outcomes}
       deck="Don't use AI to build a design system. Build a design system an AI agent can use, then hand it real maintenance tasks and see whether the structure alone is enough for it to make the right calls."
