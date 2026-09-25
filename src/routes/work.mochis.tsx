@@ -148,7 +148,7 @@ const system: WalkthroughStep[] = [
  *
  * All three desktop screens are 1280 x 800 and all three phones 860 x 1864, so
  * each row is one ratio and nothing in it is cropped to match its neighbour.
- * The phones are held to a narrower measure than the desktops — at a third of
+ * The phones are held to a narrower measure than the desktops, at a third of
  * the page each they would stand taller than the section they sit in.
  */
 const solutionPages = [

@@ -5,13 +5,13 @@ import { useEffect, useRef, useState } from "react";
  *
  * At rest it shows the first photograph, full bleed. On hover:
  *
- *   1. REVEAL — the mark becomes a mask over the *second* photograph, laid on
+ *   1. REVEAL: the mark becomes a mask over the *second* photograph, laid on
  *      top of the first. It starts enormous, so the card sits inside a single
  *      hole of the mark, then zooms OUT until the whole mark reads: a
  *      leaf-shaped window onto the next image, cut into the one behind it.
- *   2. OPEN — it zooms back in through that same hole and the mask is dropped,
+ *   2. OPEN: it zooms back in through that same hole and the mask is dropped,
  *      leaving the second image filling the frame.
- *   3. SCROLL — the column carries on downward through the rest.
+ *   3. SCROLL: the column carries on downward through the rest.
  *
  * A slide marked `fit` zooms out to its full frame while it is the one in view,
  * with the card behind it going dark green. It stays zoomed out and the column
@@ -26,7 +26,7 @@ export type MediaImage = {
   alt: string;
   /** Zoom out to show the whole frame rather than cropping it. */
   fit?: boolean;
-  /** Fraction of the frame to push below the card — used to lose a watermark
+  /** Fraction of the frame to push below the card, used to lose a watermark
    *  along the bottom edge. Needs extra zoom as well as a shift, since scaling
    *  alone crops the top by as much as the bottom. */
   hideBottom?: number;
@@ -35,7 +35,7 @@ export type MediaImage = {
 /*
  * The zoom is driven frame by frame rather than by a CSS transition on
  * mask-size. Percentage mask-position aligns a fraction of the image with the
- * same fraction of the box, so as the size changes the anchor slides — the
+ * same fraction of the box, so as the size changes the anchor slides: the
  * pivot drifts toward the middle and then snaps back. Writing pixel offsets
  * each frame keeps one point of the mark pinned to one point of the card, which
  * is what makes it read as zooming through that hole.
@@ -183,7 +183,7 @@ export function ProjectMedia({
 
     // The last position is a clone of the first slide. Once the column has
     // scrolled onto it, jump back to the real first slide with the transition
-    // suppressed — visually identical, but it means the column only ever
+    // suppressed: visually identical, but it means the column only ever
     // travels downward instead of rewinding to the top.
     if (index === images.length) {
       later(() => {
@@ -252,7 +252,7 @@ export function ProjectMedia({
   };
 
   // onLoad never fires for images already in cache, and the well height depends
-  // on the viewport — so measure directly once mounted and again on resize.
+  // on the viewport, so measure directly once mounted and again on resize.
   useEffect(() => {
     const box = boxRef.current;
     if (!box) return;

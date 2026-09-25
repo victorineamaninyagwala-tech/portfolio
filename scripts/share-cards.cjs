@@ -1,5 +1,5 @@
 /*
- * Draws the share cards in public/og — one per page, 1200×630, the picture a
+ * Draws the share cards in public/og: one per page, 1200×630, the picture a
  * link turns into when it is pasted into LinkedIn, Slack or a message.
  *
  * They are drawn against the running site rather than from scratch: the script
@@ -20,8 +20,8 @@
  *
  * Layout is written inline because Tailwind only emits the classes it finds in
  * source, so an arbitrary width class used only here would not exist. The type
- * steps and colours it does use — type-display, type-headline, type-body-lg,
- * type-label, text-olive, text-ink/70, bg-paper, bg-ground — all already do.
+ * steps and colours it does use (type-display, type-headline, type-body-lg,
+ * type-label, text-olive, text-ink/70, bg-paper, bg-ground) all already do.
  *
  * The one-line description on each card is the page's own meta description,
  * lightly tightened where it ran long. Keep them in step with the routes.

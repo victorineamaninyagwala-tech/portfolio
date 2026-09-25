@@ -30,15 +30,15 @@ src/
     index.tsx       the page
   lib/              cn(), error reporting
   assets/           imported images
-  router.tsx        getRouter() — TanStack Start entry, creates the QueryClient
+  router.tsx        getRouter(): TanStack Start entry, creates the QueryClient
   styles.css        Tailwind v4 + the oklch design tokens
 public/             served as-is (favicon.ico)
 ```
 
 ## UI components
 
-The project keeps the shadcn/ui baseline — `components.json`, `src/lib/utils.ts`, and
-`clsx` / `tailwind-merge` / `class-variance-authority` / `lucide-react` — but vendors no
+The project keeps the shadcn/ui baseline (`components.json`, `src/lib/utils.ts`, and
+`clsx` / `tailwind-merge` / `class-variance-authority` / `lucide-react`) but vendors no
 components. Add one when a page actually needs it:
 
 ```bash

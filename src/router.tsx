@@ -6,7 +6,7 @@ import { routeTree } from "./routeTree.gen";
 /*
  * TanStack Start calls getRouter() once per request on the server and once on
  * hydration in the browser, so the QueryClient is created fresh here rather
- * than at module scope — a shared client would leak cache between requests.
+ * than at module scope: a shared client would leak cache between requests.
  */
 export function getRouter() {
   const queryClient = new QueryClient({

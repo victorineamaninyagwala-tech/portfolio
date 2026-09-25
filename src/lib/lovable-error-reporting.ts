@@ -29,6 +29,6 @@ export function reportLovableError(error: unknown, context: ErrorContext = {}) {
       "*",
     );
   } catch {
-    // postMessage can throw across origins — reporting must never break the UI.
+    // postMessage can throw across origins, and reporting must never break the UI.
   }
 }

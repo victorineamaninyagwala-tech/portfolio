@@ -6,7 +6,7 @@ import { CURSOR_DISC_SIZE } from "./CustomCursor";
  * A heading whose letters swap typeface under the cursor.
  *
  * Every character is its own span, and a span swaps when the cursor overlaps
- * it — so the disc covering four letters swaps all four, not just the one
+ * it, so the disc covering four letters swaps all four, not just the one
  * directly under the pointer. That is why this uses geometry rather than
  * :hover, which can only ever match a single element.
  *
@@ -57,7 +57,7 @@ export function LetterSwapHeading({
 
     if (document.fonts?.ready) {
       // The swap face is only referenced from a class the cursor applies, so
-      // the browser would not fetch it until the first overlap — showing a
+      // the browser would not fetch it until the first overlap, showing a
       // frame of fallback type. Pull it down up front instead.
       const size = getComputedStyle(el).fontSize;
       document.fonts.load(`${size} "${SWAP_FONT}"`).catch(() => {});
@@ -75,7 +75,7 @@ export function LetterSwapHeading({
       frame = 0;
       // Which shape the cursor is in right now. Hit-tested rather than read off
       // the disc element, because the disc only grows after React commits the
-      // hover state — a frame behind the pointer — whereas the hit test is the
+      // hover state (a frame behind the pointer), whereas the hit test is the
       // very thing that decides it. Over a view surface the cursor is the wide
       // disc, whose declared size is used so the first frame is not measured
       // small; anywhere else it is a dot, and a dot is treated as a point. No

@@ -395,7 +395,7 @@ function FarmCloud() {
         title="The starting point"
         /* Beside the facts rather than above them: the photograph is upright,
            and run the width of the page it would stand two screens tall. It
-           replaces a generated picture of sticky notes — this one is from the
+           replaces a generated picture of sticky notes; this one is from the
            field, which is the only kind worth having here. */
         media={
           <SectionImage

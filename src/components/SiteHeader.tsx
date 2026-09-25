@@ -5,7 +5,7 @@ import { Gutter, TextLink } from "@/components/primitives";
  * page rather than belonging to the homepage.
  *
  * Work and Contact are sections of the homepage, so they are addressed as
- * /#work and /#contact — a bare hash would do nothing on a case study page.
+ * /#work and /#contact: a bare hash would do nothing on a case study page.
  * About is a page. The last two are the asks: a way to get in touch and the CV,
  * reachable from the top of every page rather than only from the foot of it.
  *
@@ -14,7 +14,7 @@ import { Gutter, TextLink } from "@/components/primitives";
  * behind it.
  *
  * All five show on a phone. They do not fit on one line beside the name, so
- * below the small breakpoint the header is two rows — the name, then the
+ * below the small breakpoint the header is two rows: the name, then the
  * navigation under it, wrapping if the screen is narrow enough to need it.
  * The alternative, which this replaces, was to show Contact alone and leave
  * the other four reachable only from the foot of the page.

@@ -48,7 +48,7 @@ export function SiteFooter() {
               already say which conversations are open. */}
           <h2 className="type-headline">Let&apos;s talk.</h2>
           {/* The address is one unbreakable string, and at the headline step
-              it is wider than a phone's measure — given no break to take, it
+              it is wider than a phone's measure, and given no break to take, it
               pushed every page on the site sideways. The <wbr> offers it the
               one break worth taking, at the @, rather than letting the line
               break wherever it runs out and leaving a letter stranded.

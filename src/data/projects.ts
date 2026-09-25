@@ -24,7 +24,7 @@ export type Project = {
    *  over a sequence of stills. */
   hover?: "assemble";
   /** A case study that is not finished. Its route still answers, for anyone
-   *  holding the link, but it is listed nowhere — not the homepage grid, not
+   *  holding the link, but it is listed nowhere: not the homepage grid, not
    *  the footer, not the way on at the foot of another study. */
   unlisted?: boolean;
 };

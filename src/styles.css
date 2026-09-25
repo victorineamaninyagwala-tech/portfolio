@@ -6,7 +6,7 @@
  * Design system definition.
  *
  * Five colours, one radius, two families. @theme inline is what turns them
- * into utilities — --color-ink becomes text-ink, bg-ink, border-ink.
+ * into utilities: --color-ink becomes text-ink, bg-ink, border-ink.
  *
  * Colours are oklch so that opacity modifiers (border-ink/10) mix predictably.
  *
@@ -96,11 +96,11 @@
  *
  * Google Fonts still serves one thing: Caacupe One, which the Selected Work
  * heading swaps its letters into on hover. It is not dead weight and it is not
- * declared with an @font-face here — it arrives on the link in the head.
+ * declared with an @font-face here; it arrives on the link in the head.
  */
 
 /*
- * Type scale. Seven steps, and nothing outside them — the page had grown
+ * Type scale. Seven steps, and nothing outside them: the page had grown
  * thirteen sizes and six near-identical label styles before this.
  *
  * The three heading steps also carry the family and weight. The four text
@@ -108,11 +108,11 @@
  * explicit font-* class at the call site: 400 for running text, 600 for
  * anything that names something.
  *
- * Three weights, and one of them is used once. 600 names things — section
+ * Three weights, and one of them is used once. 600 names things: section
  * headings, page titles, employers, every uppercase label. 400 is everything
  * else. 500 belongs to the display step alone, for the reason set out on it
  * below. Arial, the fallback, has no medium, so a page painted before Switzer
- * arrives shows the display step at regular — which is why that weight is
+ * arrives shows the display step at regular, which is why that weight is
  * preloaded in the head rather than waited for.
  *
  * The large steps are fluid, so no step needs sm:/lg: variants to follow the
@@ -122,7 +122,7 @@
 /* Page and section titles.
  *
  * 500 rather than the 600 the smaller steps use. This step runs to 72px, and
- * weight reads heavier the larger it is set — the same 600 that gives a 26px
+ * weight reads heavier the larger it is set: the same 600 that gives a 26px
  * title its authority turns a page title into a slab. Tracking eases off with
  * it, to -0.02em, which is where the two steps below already sit. */
 @utility type-display {
@@ -181,7 +181,7 @@
 }
 
 /* The scrollbar's gutter is reserved whether or not there is a scrollbar to
-   put in it, so that locking scroll — the preloader does, for three seconds —
+   put in it, so that locking scroll (the preloader does, for three seconds)
    never changes the width of the page and moves everything a few pixels. */
 html {
   scrollbar-gutter: stable;
@@ -248,7 +248,7 @@ html {
  * single letter under the pointer rather than the whole heading.
  *
  * The swapped face has different metrics, so the span reserves its own width
- * up front — without this the line would reflow under the pointer and the
+ * up front: without this the line would reflow under the pointer and the
  * letter would slip away as you hover it.
  */
 .letter-swap > span {
@@ -263,7 +263,7 @@ html {
 }
 
 /* Applied by LetterSwapHeading to every letter the cursor disc overlaps.
-   The swap face ships one weight, so the heading's 600 is dropped with it —
+   The swap face ships one weight, so the heading's 600 is dropped with it:
    left on, the browser would smear a fake bold over a drawn face. */
 .letter-swap > span.is-swapped {
   font-family: "Caacupe One", var(--font-display), cursive;
@@ -317,9 +317,9 @@ html {
  * Preloader. The sequence itself lives in Preloader.tsx; these are its states.
  *
  * The site's own paper, edge to edge, with the deck and then the initials at
- * its centre; nothing goes dark. Beneath the custom cursor — the system cursor
+ * its centre; nothing goes dark. Beneath the custom cursor (the system cursor
  * is hidden site-wide, so a panel above the disc would leave the visitor with
- * no pointer — and above everything else. Hidden outright once it has played
+ * no pointer) and above everything else. Hidden outright once it has played
  * this session (the root arrives marked from the server), for a reader who
  * has asked for reduced motion, and without JavaScript, where the page
  * underneath must never wait on a script to be seen.
@@ -377,7 +377,7 @@ html {
   opacity: 0;
 }
 
-/* A card cuts in — no fade — with a forty-millisecond pop from just under
+/* A card cuts in (no fade) with a forty-millisecond pop from just under
    full size, which is what makes a flip read as a flip. */
 .preloader-card {
   position: absolute;
@@ -395,7 +395,7 @@ html {
 }
 
 /* The initials: two lines in a 191 × 121 box, drawn in ink. The box is
-   sized here and nowhere else — it is a mark, not a type step. */
+   sized here and nowhere else: it is a mark, not a type step. */
 .preloader-initials {
   position: absolute;
   width: clamp(8rem, 23vw, 12.5rem);
@@ -418,7 +418,7 @@ html {
 
 /* Each line is dashed to exactly its own length and offset by the same, so
    none of it shows; drawing is the offset running to nothing, which reveals
-   the line from its first point onward — the end nearest the middle of the
+   the line from its first point onward, the end nearest the middle of the
    mark, by the order the points are written in. Butt ends and mitred joins:
    a pen line, with a sharp point where it turns. */
 .preloader-initials path {

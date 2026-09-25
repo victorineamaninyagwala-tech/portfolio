@@ -89,7 +89,7 @@ export function CaseStudySection({
  * right, starting on the line the hero's facts start on, and the figure running
  * full width underneath.
  *
- * Two case studies are read this way. The About page is not — it says the same
+ * Two case studies are read this way. The About page is not: it says the same
  * shape more quietly, with its own smaller heading and no rule, which is why
  * this one stayed specific rather than growing a variant.
  */
@@ -116,7 +116,7 @@ export function Movement({
 
 /*
  * The thesis. Her sentence, named once on a page, directly after the decision
- * that proves it — so the reader meets the decision first and the claim second,
+ * that proves it, so the reader meets the decision first and the claim second,
  * rather than being told the claim and asked to take the decision on trust.
  *
  * It sits between sections rather than inside one. Put among a section's own
@@ -210,7 +210,7 @@ export function SectionImage({
    *
    * A picture in the media column is as tall as its own shape makes it, which
    * is right beside three lines of prose and wrong beside a column of facts
-   * that runs twice as long — the picture ends halfway down and the section
+   * that runs twice as long: the picture ends halfway down and the section
    * finishes on white. This squares the two off.
    */
   fill?: boolean;

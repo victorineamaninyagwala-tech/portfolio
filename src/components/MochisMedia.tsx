@@ -15,16 +15,16 @@ import mockup from "@/assets/mochis-card-mockup.webp";
  * page out of it, and then hand that page to the phone it was really made for.
  * On hover:
  *
- *   1. OPEN   — the crop pulls back until the whole photograph sits in the
+ *   1. OPEN:   the crop pulls back until the whole photograph sits in the
  *               16:10 the site is drawn at, and the hero's green scrim comes
  *               over it, exactly as the app paints it.
- *   2. BUILD  — the header drops in and the masthead, the question and the
+ *   2. BUILD:  the header drops in and the masthead, the question and the
  *               order controls arrive under it, each in the position it holds
  *               on the real screen. The page finishes itself.
- *   3. SWAP   — the desktop page leaves through the top and the phone rises
+ *   3. SWAP:   the desktop page leaves through the top and the phone rises
  *               into the emptied card behind it.
- *   4. CLOSE  — it is moved in on, until the screen is all there is.
- *   5. REVEAL — the product shot arrives around it and the pull-back settles
+ *   4. CLOSE:  it is moved in on, until the screen is all there is.
+ *   5. REVEAL: the product shot arrives around it and the pull-back settles
  *               into it. What the phone was showing turns out to have been
  *               inside the photograph all along.
  *
@@ -32,7 +32,7 @@ import mockup from "@/assets/mochis-card-mockup.webp";
  * on the card is not a picture of a phone: it is a window onto the product shot
  * itself, blown up so the shot's own screen fills it exactly, and it rises to
  * the exact place that screen occupies. So there is never a moment where two
- * pictures of the same phone have to agree — there is only ever one picture,
+ * pictures of the same phone have to agree: there is only ever one picture,
  * seen through more or less of a hole, and the world fills in around something
  * already standing where it belongs.
  *
@@ -171,7 +171,7 @@ export function MochisMedia({ alt }: { alt: string }) {
   const restScale = well.width ? Math.max(1, (well.height * STAGE_RATIO) / well.width) : 2;
 
   /* The frame sits a quarter of the way down the card, so a page that travels
-     its own height only reaches the frame's top edge — where it would be eaten
+     its own height only reaches the frame's top edge, where it would be eaten
      by a line across the middle of the card rather than leaving. This is the
      distance from the page's own bottom edge to the top of the card, which is
      what it takes to actually be gone. */
@@ -188,7 +188,7 @@ export function MochisMedia({ alt }: { alt: string }) {
     top: (well.height - MOCKUP_H * fit) / 2,
   };
 
-  /* Where the shot's own phone lands once it has settled — and therefore where
+  /* Where the shot's own phone lands once it has settled, and therefore where
      the phone standing on the card has to end up. */
   const HOME: Rect = {
     left: shot.left + (SCREEN.left / 100) * shot.width,
@@ -256,7 +256,7 @@ export function MochisMedia({ alt }: { alt: string }) {
           fill the card until the sequence pulls it back, then sent up and out
           through the top of the card. Scaling the frame rather than the picture
           inside it means the scrim and every piece laid on it travel together.
-          The frame itself does not clip — the card does — or the page would
+          The frame itself does not clip (the card does) or the page would
           vanish into the frame's own top edge partway down the card instead of
           sliding off the end of it. */}
       <div
@@ -306,7 +306,7 @@ export function MochisMedia({ alt }: { alt: string }) {
         </div>
       </div>
 
-      {/* The phone: no device around it, just the screen in a frame — and the
+      {/* The phone: no device around it, just the screen in a frame, and the
           screen is the shot's own, blown up behind a hole the shape of it, so
           the frame rises to the spot the shot will later prove it was standing
           in and hands over without a pixel moving. */}
@@ -322,8 +322,8 @@ export function MochisMedia({ alt }: { alt: string }) {
           /* Held at full strength while the shot fades in over it, and dropped
              only once the shot is covering the whole card. Fading both at once
              would let the ground show through the pair of them at the halfway
-             point — two half-opaque copies of the same thing do not add back up
-             to one — and the phone would wash out at exactly the moment it is
+             point (two half-opaque copies of the same thing do not add back up
+             to one) and the phone would wash out at exactly the moment it is
              meant to be the one thing holding still. */
           opacity: phase === "settle" ? 0 : 1,
           transition: `left ${phase === "close" ? CLOSE_MS : SWAP_MS}ms ${EASE}, top ${phase === "close" ? CLOSE_MS : SWAP_MS}ms ${EASE}, width ${phase === "close" ? CLOSE_MS : SWAP_MS}ms ${EASE}, height ${phase === "close" ? CLOSE_MS : SWAP_MS}ms ${EASE}, border-radius ${CLOSE_MS}ms ${EASE}`,
@@ -344,7 +344,7 @@ export function MochisMedia({ alt }: { alt: string }) {
 
       {/* The shot, covering the card. It arrives already lined up with the phone
           it is taking over from, so all that appears is everything around it,
-          and then it settles back into itself — far enough to show the phone
+          and then it settles back into itself, far enough to show the phone
           whole with a good margin of the beans, and no further. */}
       <img
         src={mockup}

@@ -10,8 +10,8 @@ import { shareImage } from "@/lib/share";
 /*
  * About.
  *
- * The same two columns a case study is read in — a heading on the left, the
- * writing on the right — set quieter. A case study has to argue, so it draws
+ * The same two columns a case study is read in (a heading on the left, the
+ * writing on the right), set quieter. A case study has to argue, so it draws
  * a rule between one section and the next and puts each heading at the
  * headline step. This page is a person, not an argument: the headings come
  * down to the title step and the sections are separated by air instead.

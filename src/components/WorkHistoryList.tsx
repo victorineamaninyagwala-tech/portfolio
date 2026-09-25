@@ -16,7 +16,7 @@ export type Role = {
   bullets: string[];
 };
 
-/** A plus that becomes a cross — same two strokes, rotated. */
+/** A plus that becomes a cross: same two strokes, rotated. */
 function Toggle({ open }: { open: boolean }) {
   return (
     <svg

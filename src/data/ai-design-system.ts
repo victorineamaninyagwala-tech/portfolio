@@ -2,7 +2,7 @@
  * The design system an agent can operate, as the page states it.
  *
  * Her case study document is the source for the account. Every number below was
- * counted from the project itself rather than copied across — the token files
+ * counted from the project itself rather than copied across: the token files
  * under my-agentic-system/src/tokens, the alias block in src/index.css, and the
  * computed styles of the running build in both colour schemes.
  *
@@ -29,7 +29,7 @@ export const layers = [
   {
     name: "Semantic",
     count: "303",
-    holds: "Intent — background, text, border, foreground",
+    holds: "Intent: background, text, border, foreground",
     note: "Each one restated three times: under :root, under prefers-color-scheme: dark, and under [data-theme=\"dark\"].",
   },
   {
@@ -79,7 +79,7 @@ export const workflows = [
     name: "Figma drift check",
     input: "Cross-reference every token in the code against the Figma export.",
     finding: "The primitives were already in step. Nothing was missing.",
-    outcome: "Confirmed in sync, and the drift running the other way — tokens that exist only in code — flagged.",
+    outcome: "Confirmed in sync, and the drift running the other way flagged: tokens that exist only in code.",
   },
   {
     name: "Full token generation",
@@ -91,7 +91,7 @@ export const workflows = [
     name: "Source-of-truth reconciliation",
     input: "Resolve what two token sources disagreed about after a Material detour.",
     finding: "--radius-md was 12px in one and 8px in the other.",
-    outcome: "One declared rule applied — Untitled UI wins ties — so 8px, with the app aliases remapped onto it.",
+    outcome: "One declared rule applied: Untitled UI wins ties. So 8px, with the app aliases remapped onto it.",
   },
 ];
 

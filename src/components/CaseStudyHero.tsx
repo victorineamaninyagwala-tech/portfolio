@@ -44,7 +44,7 @@ export function CaseStudyHero({
         <header className="grid grid-cols-12 gap-y-12 pt-16 pb-20 sm:pt-24 sm:pb-28">
           {/* Five columns rather than four. FarmCloud and SoulShape are
               single words with nowhere to break, and in the display face they
-              run past a four-column measure at tablet widths — the title stops
+              run past a four-column measure at tablet widths, so the title stops
               landing on the grid the rest of the page is built off. */}
           <div className="col-span-12 md:col-span-5">
             <h1 className="type-display">{title}</h1>

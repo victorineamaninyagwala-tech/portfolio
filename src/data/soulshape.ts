@@ -1,9 +1,9 @@
 /*
  * SoulShape: the facts the case study draws.
  *
- * Everything here is transcribed from her own source documents — the
+ * Everything here is transcribed from her own source documents (the
  * comprehensive case study, the decision log, the data architecture, the
- * signal standards, the visibility matrix — and from the built prototype's own
+ * signal standards, the visibility matrix) and from the built prototype's own
  * data files, which are the most recent word where two sources disagree.
  *
  * The MVP documentation for the Holistic Weight Management Centre is NOT a
@@ -15,7 +15,7 @@
  * to a line in a document.
  *
  * Where the documents revise each other, the later revision wins and the
- * superseded one is noted rather than deleted — the drafts that lost are part
+ * superseded one is noted rather than deleted: the drafts that lost are part
  * of the record.
  */
 
@@ -25,12 +25,12 @@
  *
  * NOTE, AND IT MATTERS: her portfolio summary of this table gave Clinicea 0
  * on both of the last two dimensions. Her own scorecard gives it 1 on each,
- * and the totals prove the scorecard right — 2+2+2+1+1+1+0+1+1 is the 11/18
+ * and the totals prove the scorecard right: 2+2+2+1+1+1+0+1+1 is the 11/18
  * she publishes, where the same column with those last two zeroed is 9.
  *
  * The last dimension is "Recirculation handling" on the scorecard. The table
  * says Re-entry, which is the word she coined for it afterwards and the word
- * the rest of the page uses — the lifecycle's last phase is Follow-Up /
+ * the rest of the page uses: the lifecycle's last phase is Follow-Up /
  * Re-entry and the diagram is labelled Re-entry. One name for one idea.
  *
  * Her own reading of the two rows, verbatim: "No solution scores more than one
@@ -58,7 +58,7 @@ export const scorecard = {
 
 /*
  * The care lifecycle. The five phases are from the Program Model (After),
- * "Core Phases", and are the phases the prototype ships — src/data/model.ts,
+ * "Core Phases", and are the phases the prototype ships: src/data/model.ts,
  * PHASE_LABEL. Her structural claim, verbatim: "A program does not end in the
  * traditional sense."
  */
@@ -88,7 +88,7 @@ export const survives = "Programme instances · phase state · signal history ·
 
 /*
  * The four strands she read, and the one finding from each that changed the
- * project — from the comprehensive case study §3.1–3.2 and from her own
+ * project, from the comprehensive case study §3.1–3.2 and from her own
  * account. The finding, not a summary of the reading.
  *
  * The citations are her own reference list, §References of the comprehensive
@@ -155,7 +155,7 @@ export const evidence: Array<{ strand: string; finding: string; sources: Source[
     sources: [
       {
         /* Understanding and Managing Obesity: A Multidisciplinary Approach, in
-           Weight Loss — A Multidisciplinary Perspective. IntechOpen. */
+           Weight Loss - A Multidisciplinary Perspective. IntechOpen. */
         name: "Alkhatry, 2024",
         href: "https://doi.org/10.5772/intechopen.1004426",
       },
@@ -172,7 +172,7 @@ export const evidence: Array<{ strand: string; finding: string; sources: Source[
  * manually".
  *
  * `by` is who does the work, and by that count three of the seven steps are
- * the patient's — the consent, the photograph, the forwarding. A fourth names
+ * the patient's: the consent, the photograph, the forwarding. A fourth names
  * them without their doing it: the clinic places the call. Three of seven is
  * the figure the drawing shows, because it darkens a box on `by`.
  */
@@ -188,11 +188,11 @@ export const coordinationSteps = [
 
 /*
  * The decision log. Four commitments, each with her reasoning and what it
- * cost — from the decision log §3, §9, §6, §8, and the System Intent.
+ * cost, from the decision log §3, §9, §6, §8, and the System Intent.
  *
  * Each decision states what it is and stops there. The sources often frame
  * one as chosen over something else, and an earlier draft of this page
- * carried that rejected alternative beside the title — her instruction was to
+ * carried that rejected alternative beside the title; her instruction was to
  * take it out. A decision that has to name its loser is arguing; the why and
  * the consequence below it already carry the reasoning.
  */
@@ -216,7 +216,7 @@ export const decisions = [
     decision: "Guardrails",
     why: "Hard enforcement would make the system too rigid and likely unadoptable. No guardrails would make it another exploitative shell.",
     consequence:
-      "Care can start with whatever composition exists, and the system continuously reveals what is missing. Institutions can still decide — the cost of simplified care just becomes visible.",
+      "Care can start with whatever composition exists, and the system continuously reveals what is missing. Institutions can still decide, and the cost of simplified care just becomes visible.",
   },
   {
     decision: "Maintenance is a phase",
@@ -229,7 +229,7 @@ export const decisions = [
 /*
  * The architecture, from the Data Architecture (After revision) §1–3. Her
  * governing principle, which the three layers resolve out of, is "Raw data
- * stays. Meaning moves. Continuity persists." — not "Data stays": ordinary
+ * stays. Meaning moves. Continuity persists." Not "Data stays": ordinary
  * data is precisely what does move. Given top to bottom, as the page reads
  * them, and drawn resting on each other.
  */
@@ -255,7 +255,7 @@ export const architecture = [
 ];
 
 /*
- * The seven signal types, from the Signal Layer standards, in her order — and
+ * The seven signal types, from the Signal Layer standards, in her order, and
  * confirmed against the prototype's SIGNAL_TYPE_LABEL. The rule that governs
  * all of them: "Signals carry meaning, not authority."
  */
@@ -290,7 +290,7 @@ export const mechanisms = [
 
 /*
  * The visibility distinction, from the Data Visibility Matrix, "Legal Access
- * Visibility". Two modes, and the failure she avoided — her words: "Most
+ * Visibility". Two modes, and the failure she avoided, in her words: "Most
  * systems blur: 'you can see this' and 'you can request this'."
  */
 export const visibility = {
@@ -303,7 +303,7 @@ export const visibility = {
 
 /*
  * The five areas the first version carries, as the prototype's own navigation
- * groups them. Tools — settings, account, activity — sit under these and are
+ * groups them. Tools (settings, account, activity) sit under these and are
  * not working areas of the clinic's day.
  */
 export const workingAreas = [
@@ -316,7 +316,7 @@ export const workingAreas = [
 
 /*
  * One calculation, followed through. These are the real figures from the
- * check-in recorded against the running prototype — the previous reading, the
+ * check-in recorded against the running prototype: the previous reading, the
  * one entered, and what the system worked out from the two. Nothing here is
  * typed into a dashboard.
  */
@@ -327,7 +327,7 @@ export const calculation = {
 };
 
 /*
- * Where the complexity ended up — read out of the decision log, which returns
+ * Where the complexity ended up, read out of the decision log, which returns
  * to this question in almost every entry.
  *
  * The system's side is from §2 ("The burden of coordination should move away

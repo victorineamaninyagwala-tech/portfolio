@@ -73,7 +73,7 @@ const SCREEN = { width: 1932, height: 1449 };
 
 /*
  * A decision and the screen that carries it. The decision is stated once on
- * the left and the interface answers on the right — no diagram, because the
+ * the left and the interface answers on the right. No diagram, because the
  * screen is the evidence that the decision was taken rather than described.
  */
 function Decided({
@@ -107,7 +107,7 @@ function Decided({
  *
  * The subject is "Me", not "Patient". This section is her own account, and it
  * is the only drawing on the page where the person in the middle is the
- * author — everywhere after it, the patient is a role the system has.
+ * author. Everywhere after it, the patient is a role the system has.
  */
 function Fragmented() {
   const hands = [
@@ -193,7 +193,7 @@ function Lifecycle() {
 /*
  * The audit, whole. Nine dimensions rather than the two that make the point,
  * because the point is only worth anything if the other seven are there to be
- * checked — and the two that decided the scope are marked, not extracted.
+ * checked, and the two that decided the scope are marked, not extracted.
  */
 function Scorecard() {
   return (
@@ -216,7 +216,7 @@ function Scorecard() {
 /*
  * The coordination workflow as it was described to her. Every step marked by
  * hand is one a person performs, and three of the seven are performed by the
- * patient — which is the finding, not the interface. The patient is named in a
+ * patient, which is the finding, not the interface. The patient is named in a
  * fourth, the call that opens it, but the clinic is the one placing it.
  */
 function Coordination() {
@@ -463,7 +463,7 @@ function Calculation() {
 
 /*
  * The check-in, played rather than pasted. A flow reported as stills is a
- * claim; a flow you can watch is the thing itself — and this one earns the
+ * claim; a flow you can watch is the thing itself, and this one earns the
  * playback, because the fourth screen is not a screen the coordinator asked
  * for. Saving computes the change, tests it against a threshold, and hands
  * back what it found without saying what it means.
@@ -517,7 +517,7 @@ function SoulShape() {
       deck="A care coordination platform for multi-disciplinary programmes treating chronic illness."
       media={
         /* Her own design of the account-creation screen, desktop and mobile,
-           at the shape she drew it at — the site's 4:3 would crop the phone
+           at the shape she drew it at; the site's 4:3 would crop the phone
            off the right-hand edge. It replaces a generated photograph of a
            monitor in a clinic lobby. */
         <Frame ratio="1959 / 1238">
@@ -826,7 +826,7 @@ function SoulShape() {
         </Prose>
       </Movement>
 
-      {/* The ending. Not what happened next — that is not settled — but where
+      {/* The ending. Not what happened next (that is not settled) but where
           every decision in the project put its share of the difficulty, which
           is the thing the case study has been arguing the whole way down. */}
       <Movement title="Where the complexity went" figure={<Allocation />}>

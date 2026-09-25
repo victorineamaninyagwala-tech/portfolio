@@ -10,7 +10,7 @@ import { cn } from "@/lib/utils";
  * search across routes.
  *
  * Type comes from the type-* scale and colour from the ink/paper/olive tokens,
- * both in styles.css. Corners come from --radius via rounded-lg — set that one
+ * both in styles.css. Corners come from --radius via rounded-lg: set that one
  * value and every box on the site rounds together.
  */
 
@@ -70,7 +70,7 @@ export function TextLink({
  *
  * One case study on this site has no interface to photograph: its subject is a
  * token file and a contract written in a comment. A screenshot of that would be
- * a picture of text, so the text is set as text — on the same ground every
+ * a picture of text, so the text is set as text, on the same ground every
  * picture sits on, at caption size, scrolling sideways rather than wrapping,
  * because a wrapped line of code stops being the line that was written.
  */
@@ -95,8 +95,8 @@ export function CodeBlock({
 /**
  * A link inside a sentence.
  *
- * The footer underlines its address the same way — a hairline under the words
- * that colours olive on hover — so a link in running text is that gesture at
+ * The footer underlines its address the same way (a hairline under the words
+ * that colours olive on hover), so a link in running text is that gesture at
  * reading size rather than a new one. Not TextLink: the sliding arrow belongs
  * to a link standing on its own, and mid-sentence it would shove the rest of
  * the line along as the pointer passed over it.
@@ -125,7 +125,7 @@ export function ProseLink({
   );
 }
 
-/** A bordered chip — availability, status, anything short and enumerable. */
+/** A bordered chip: availability, status, anything short and enumerable. */
 export function Pill({ className, children }: { className?: string; children: ReactNode }) {
   return (
     <span
@@ -168,7 +168,7 @@ export function Enclosure({
 
 /**
  * One cell of an Enclosure. Stacked on small screens with a rule above each,
- * side by side above md with a rule to the left — the first cell suppresses
+ * side by side above md with a rule to the left, and the first cell suppresses
  * both, so no index needs to be passed in.
  */
 export function EnclosureCell({ className, children }: { className?: string; children: ReactNode }) {
@@ -193,7 +193,7 @@ export function EnclosureCell({ className, children }: { className?: string; chi
  *
  * Two sizes: `full` spans the content column, `half` sits in a two-up grid and
  * so needs a smaller share of the screen. A frame holding something of another
- * shape entirely — a phone, say — can name its own ratio; everything else about
+ * shape entirely (a phone, say) can name its own ratio; everything else about
  * it stays one edit here.
  */
 export const FRAME_RATIO = "4 / 3";
@@ -248,7 +248,7 @@ export function Frame({
 
 /**
  * How much of a frame a screen takes up. Close to all of it, since a screen
- * set much smaller than this stops being readable — but not all of it, so the
+ * set much smaller than this stops being readable, but not all of it, so the
  * ground shows around the edge and the frame reads as something holding the
  * screen rather than as the screen itself.
  */
@@ -259,7 +259,7 @@ export const SCREEN_INSET = "94%";
  *
  * A photograph is cropped to fill its frame; a screen is not. Cropping a
  * screenshot to the frame's shape cuts off the edge of the interface, which is
- * the part that says what kind of thing is being looked at — so a screen is
+ * the part that says what kind of thing is being looked at, so a screen is
  * shown whole and centred on the ground instead.
  *
  * This is the inset the walkthroughs use, so a still screen and a flow that

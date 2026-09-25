@@ -8,7 +8,7 @@ import { cn } from "@/lib/utils";
  *
  * Guided, it reads as a prototype recording: each step settles, a pointer
  * travels to the button a farmer would press, the press lands, and the next
- * screen arrives. Unguided, it is a carousel — the same screens turning over on
+ * screen arrives. Unguided, it is a carousel: the same screens turning over on
  * their own, with no pointer and nothing joining one to the next, which is what
  * a set of pages with no flow between them looks like.
  *

@@ -15,32 +15,32 @@ import field from "@/assets/deck-6-field.webp";
  *
  * On the site's own paper, at the centre of the screen: a deck of the work's
  * pictures flips through at a clip and shrinks away, and the initials are
- * drawn in its place — then the sheet lifts, and the page is underneath. The
+ * drawn in its place; then the sheet lifts, and the page is underneath. The
  * background is white throughout; nothing goes dark and comes back.
  *
  * The initials are two lines. Both set off from the centre of the mark: the
  * V's from its top, falling to the point and rising again to the far corner;
  * the A's from its bottom, rising to the apex and falling to the far foot.
- * They draw outward together and finish as the letters. The A has no crossbar
- * — it is the V's line, the other way up.
+ * They draw outward together and finish as the letters. The A has no crossbar:
+ * it is the V's line, the other way up.
  *
  * It plays once per visit. When it has, a cookie says so for the next few
- * hours, and the server reads that cookie and renders the root already marked
- * — so on the next load, in this tab or a new one, the panel is never painted
+ * hours, and the server reads that cookie and renders the root already marked,
+ * so on the next load, in this tab or a new one, the panel is never painted
  * at all, with no script in the head to make it so and nothing to flash. The
  * cookie has a fixed life rather than a browser session's, because browsers
  * that reopen where they left off keep session cookies alive for days, and
  * someone coming back tomorrow should see the opening again. It does
  * not play for a reader who has asked for reduced motion, and without
- * JavaScript it is not shown at all — the page is server-rendered underneath
+ * JavaScript it is not shown at all: the page is server-rendered underneath
  * it and must never depend on a script to become visible.
  *
  * It sits beneath the custom cursor. The system cursor is hidden site-wide, so
  * a panel drawn above the disc would leave the visitor with no pointer at all
  * for the duration.
  *
- * And it cannot strand anyone. If the client bundle never arrives — blocked,
- * failed, or simply slow — nothing here ever runs, so the stylesheet carries a
+ * And it cannot strand anyone. If the client bundle never arrives (blocked,
+ * failed, or simply slow) nothing here ever runs, so the stylesheet carries a
  * bail-out of its own: after a fixed number of seconds the panel lifts on a
  * CSS animation with no script involved. Should the script then turn up late,
  * it sees that the deadline has passed and stands down rather than locking a
@@ -55,7 +55,7 @@ const PRELOADED_FOR_SECONDS = 4 * 60 * 60;
 export const PRELOADED_CLASS = "preloaded";
 
 /**
- * Whether the sequence has already played this session — read off the request
+ * Whether the sequence has already played this session, read off the request
  * on the server and off the document in the browser, so the shell renders the
  * same answer in both places and hydration has nothing to reconcile.
  */
@@ -73,7 +73,7 @@ const markPreloaded = () => {
 };
 
 /** Six of the work's own pictures, drawn once at the 3:2 the deck shows them
- *  at — a fraction of the covers' weight, which matters here more than
+ *  at, a fraction of the covers' weight, which matters here more than
  *  anywhere: these load ahead of the page they are standing in front of. */
 const DECK = [watering, runner, cafe, dashboard, mochisHome, field];
 
@@ -84,7 +84,7 @@ const DECK = [watering, runner, cafe, dashboard, mochisHome, field];
  *
  * The two letters are the same shape, but a mitred point overshoots the
  * corner it turns at by 18.2 units, while a butt end overshoots its corner by
- * only 2.7 — so a V and an A whose corners sat at the same heights would not
+ * only 2.7, so a V and an A whose corners sat at the same heights would not
  * share a top or a bottom of ink. These corners are placed so the ink does:
  * both letters run from 2 to 118.9 on the page, exactly.
  */
@@ -105,7 +105,7 @@ const LIFT = 750; // the sheet goes up and off
 
 /* How long to wait for the deck's pictures before flipping regardless. The
    deck is the loading indicator, so it must not itself show blanks while it
-   loads — but nor should one slow picture hold the whole site hostage. */
+   loads, but nor should one slow picture hold the whole site hostage. */
 const DECK_GRACE = 1200;
 /* The stylesheet's own deadline, after which it lifts the panel with no
    script involved. Must match the animation delay on .preloader. */
@@ -180,7 +180,7 @@ export function Preloader() {
       }, at);
     };
 
-    /* Begin once every card is actually there to be seen — a flip onto a
+    /* Begin once every card is actually there to be seen: a flip onto a
        picture that has not arrived is a flip onto a blank. */
     const cards = Array.from(deck.current?.querySelectorAll("img") ?? []);
     Promise.race([

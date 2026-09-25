@@ -79,7 +79,7 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
 
 export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()({
   /* Where the site is being served from, put into context so any route can
-     write an absolute URL — the share image needs one. */
+     write an absolute URL: the share image needs one. */
   beforeLoad: () => ({ origin: getOrigin() }),
   head: () => ({
     meta: [
@@ -97,7 +97,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       /* Switzer sets the whole site now, headings and text alike, and it is
-         not a Google face — so Fontshare is the origin that matters and Google
+         not a Google face, so Fontshare is the origin that matters and Google
          is left serving one thing: the face the Selected Work heading swaps
          its letters into on hover. */
       { rel: "preconnect", href: "https://api.fontshare.com" },
@@ -137,7 +137,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
 
 function RootShell({ children }: { children: ReactNode }) {
   /* Rendered on the server from the session cookie, so a visitor the
-     preloader has already played for gets a page with no panel in it at all —
+     preloader has already played for gets a page with no panel in it at all:
      nothing to hide after the fact, nothing to flash. */
   const preloaded = hasPreloaded();
   return (

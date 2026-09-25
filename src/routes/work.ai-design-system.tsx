@@ -13,7 +13,7 @@ import { shareImage } from "@/lib/share";
  *
  * The one case study on this site with no interface to photograph. Its subject
  * is a token file, a comment block and a build, so it argues in source and in
- * measured values rather than in screens — and the measurements were taken off
+ * measured values rather than in screens, and the measurements were taken off
  * the running project rather than repeated from the write-up.
  */
 
@@ -128,7 +128,7 @@ function Chain() {
   );
 }
 
-/* The same component, the same five declarations, two colour schemes —
+/* The same component, the same five declarations, two colour schemes,
    measured off the running build rather than read off the source. */
 function ThemeProof() {
   return (
@@ -189,9 +189,9 @@ function AiDesignSystem() {
           code in step, reconciling sources that disagree, and holding light and dark together.
         </Prose>
         <Prose wide>
-          Not a demo with two buttons. I used the real token payload of Untitled UI Pro v7.0 —
-          hundreds of primitives, a full light and dark semantic layer, type and elevation scales —
-          driving an actual Vite build.
+          Not a demo with two buttons. I used the real token payload of Untitled UI Pro v7.0:
+          hundreds of primitives, a full light and dark semantic layer, type and elevation
+          scales. All of it driving an actual Vite build.
         </Prose>
         <Prose wide>
           The scope was deliberately narrow: one real component and a demo app. The complexity
@@ -205,7 +205,7 @@ function AiDesignSystem() {
           dataset. Three layers, and only one of them is a lookup.
         </Prose>
         <Prose wide>
-          The primitives are the palette the export ships — 375 colours named by hue and scale, and
+          The primitives are the palette the export ships: 375 colours named by hue and scale, and
           32 numbers. Nothing in the generated CSS names one. The semantic layer sits above them
           and carries intent rather than colour, and every semantic token holds its own value three
           times over, once under each way of asking for a colour scheme.
@@ -274,7 +274,7 @@ function AiDesignSystem() {
         <Prose wide>
           The part that mattered is the last one. Asked only whether code and Figma were in sync,
           it decided by itself to check every token, separate what was missing from what was
-          redundant, and — where two sources disagreed outright — settle it against a single
+          redundant, and where two sources disagreed outright, settle it against a single
           declared rule rather than picking. Every change was verified by a production build.
         </Prose>
       </Movement>
@@ -302,7 +302,7 @@ function AiDesignSystem() {
         <Prose wide>
           Quality becomes measurable. When every token has a semantic name, every component
           declares the tokens it uses and every Figma variable maps to a custom property, the
-          health of a design system stops being a feeling and becomes a number — and the agent can
+          health of a design system stops being a feeling and becomes a number, and the agent can
           point at exactly where the gaps are.
         </Prose>
         <Prose wide>

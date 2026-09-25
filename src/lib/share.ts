@@ -24,7 +24,7 @@ export const CARD_HEIGHT = 630;
 /**
  * The meta tags for a page's share card. The picture itself lives in
  * public/og, one per page, drawn from the site's own type and pictures by
- * scripts/share-cards.cjs — run that again after a cover, a title or the type
+ * scripts/share-cards.cjs: run that again after a cover, a title or the type
  * changes, or the card will go on showing the old one.
  */
 export function shareImage(origin: string, slug: string, alt: string) {

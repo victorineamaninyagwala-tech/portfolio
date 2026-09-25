@@ -13,7 +13,7 @@ import { cn } from "@/lib/utils";
  *
  * These are laid out in HTML rather than drawn in SVG. A diagram built from
  * boxes and rules reflows on a phone, keeps its text selectable and readable
- * by a screen reader, and inherits the type scale — none of which survives
+ * by a screen reader, and inherits the type scale, none of which survives
  * being flattened into a picture. The only SVG is the arrowheads.
  *
  * A diagram is not a frame: Frame holds a picture at the site's 4:3 and crops
@@ -97,7 +97,7 @@ export function Arrow({
   className,
 }: {
   direction?: "down" | "up" | "right";
-  /** A word on the arrow — "consent", "by hand" — set beside the line. */
+  /** A word on the arrow ("consent", "by hand"), set beside the line. */
   label?: string;
   className?: string;
 }) {
@@ -233,7 +233,7 @@ export function Matrix({
 }: {
   columns: string[];
   rows: Array<{ heading: string; cells: string[] }>;
-  /** Row headings to mark — the dimensions that decided something. */
+  /** Row headings to mark: the dimensions that decided something. */
   highlight?: string[];
   className?: string;
 }) {
