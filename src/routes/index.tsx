@@ -75,7 +75,10 @@ function Index() {
             />
           </div>
 
-          <div className="grid grid-cols-1 gap-x-2 gap-y-10 sm:grid-cols-3">
+          {/* Four across on a wide screen, two up on a tablet. Three columns
+              was right for three projects; with four it left one card alone on
+              a second row, which reads as an afterthought rather than a list. */}
+          <div className="grid grid-cols-1 gap-x-2 gap-y-10 sm:grid-cols-2 lg:grid-cols-4">
             {listed.map((p) => (
               <a
                 key={p.slug}

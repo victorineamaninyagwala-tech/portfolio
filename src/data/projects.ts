@@ -76,7 +76,6 @@ const all: Project[] = [
   },
   {
     slug: "ai-design-system",
-    unlisted: true,
     title: "A design system an AI agent can operate",
     discipline: "Design Systems · Tokens · AI",
     images: [{ src: aiDesignSystemCard, alt: "A design token chain, one base colour branching into tonal ramps" }],
