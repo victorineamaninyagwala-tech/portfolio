@@ -66,6 +66,33 @@ export function TextLink({
 }
 
 /**
+ * Source, shown as source.
+ *
+ * One case study on this site has no interface to photograph: its subject is a
+ * token file and a contract written in a comment. A screenshot of that would be
+ * a picture of text, so the text is set as text — on the same ground every
+ * picture sits on, at caption size, scrolling sideways rather than wrapping,
+ * because a wrapped line of code stops being the line that was written.
+ */
+export function CodeBlock({
+  label,
+  children,
+}: {
+  /** What the reader is looking at, in the voice the diagram labels use. */
+  label?: string;
+  children: ReactNode;
+}) {
+  return (
+    <figure className="rounded-lg bg-ground p-6 sm:p-8">
+      {label ? <figcaption className="mb-5"><Label className="text-ink/50">{label}</Label></figcaption> : null}
+      <pre className="overflow-x-auto type-caption leading-relaxed text-ink/80">
+        <code className="font-mono">{children}</code>
+      </pre>
+    </figure>
+  );
+}
+
+/**
  * A link inside a sentence.
  *
  * The footer underlines its address the same way — a hairline under the words

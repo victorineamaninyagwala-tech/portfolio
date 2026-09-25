@@ -85,6 +85,36 @@ export function CaseStudySection({
 }
 
 /*
+ * A movement of an account: the heading in the left column, the writing in the
+ * right, starting on the line the hero's facts start on, and the figure running
+ * full width underneath.
+ *
+ * Two case studies are read this way. The About page is not — it says the same
+ * shape more quietly, with its own smaller heading and no rule, which is why
+ * this one stayed specific rather than growing a variant.
+ */
+export function Movement({
+  title,
+  figure,
+  children,
+}: {
+  title: string;
+  figure?: ReactNode;
+  children: ReactNode;
+}) {
+  return (
+    <CaseStudySection columns={1} figure={figure}>
+      <div className="grid grid-cols-12 gap-y-8">
+        <h2 className="col-span-12 type-headline md:col-span-5">{title}</h2>
+        {/* Columns 5 and 6 are the gutter between them, the same gutter the kit
+            leaves when a section is led by a picture. */}
+        <div className="col-span-12 space-y-6 md:col-span-6 md:col-start-7">{children}</div>
+      </div>
+    </CaseStudySection>
+  );
+}
+
+/*
  * The thesis. Her sentence, named once on a page, directly after the decision
  * that proves it — so the reader meets the decision first and the claim second,
  * rather than being told the claim and asked to take the decision on trust.
