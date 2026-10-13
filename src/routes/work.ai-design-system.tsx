@@ -183,72 +183,75 @@ function AiDesignSystem() {
       <Movement title="The hypothesis">
         <Prose wide>
           A design system stops being documentation for developers and becomes instructions for a
-          machine. If the token architecture is semantically layered, the component declares which
-          tokens it uses, and the Figma export mirrors the code, then an agent should be able to do
-          maintenance that normally needs a designer: catching hardcoded values, keeping Figma and
-          code in step, reconciling sources that disagree, and holding light and dark together.
+          machine. What I wanted to find out was how much of that is true in practice, and what the
+          system has to look like before it is.
+        </Prose>
+        <Prose wide>
+          My guess was that three things had to hold: tokens layered by intent, a component that
+          declares which tokens it uses, and a Figma export that matches the code. If all three
+          held, an agent should be able to do the maintenance a designer usually does by hand.
+          Finding hardcoded values, keeping Figma and the code in step, settling it when two
+          sources disagree, checking that light and dark still match.
         </Prose>
         <Prose wide>
           Not a demo with two buttons. I used the real token payload of Untitled UI Pro v7.0:
-          hundreds of primitives, a full light and dark semantic layer, type and elevation
-          scales. All of it driving an actual Vite build.
-        </Prose>
-        <Prose wide>
-          The scope was deliberately narrow: one real component and a demo app. The complexity
-          under test was the token layer, not the component count.
+          hundreds of primitives, a full light and dark semantic layer, type and elevation scales,
+          all of it running in a Vite build. One component and a demo app was enough, because what
+          I was testing was the token layer and not how many components I could draw.
         </Prose>
       </Movement>
 
       <Movement title="Token architecture" figure={<Layers />}>
         <Prose wide>
-          The system exports from Figma as a single tokens file and generates one stylesheet per
-          dataset. Three layers, and only one of them is a lookup.
+          Figma exports one tokens file, and a script turns it into one stylesheet per dataset.
+          There are three layers in it, and only the top one is a lookup.
         </Prose>
         <Prose wide>
-          The primitives are the palette the export ships: 375 colours named by hue and scale, and
-          32 numbers. Nothing in the generated CSS names one. The semantic layer sits above them
-          and carries intent rather than colour, and every semantic token holds its own value three
-          times over, once under each way of asking for a colour scheme.
+          The primitives are the palette Untitled UI ships: 375 colours named by hue and scale,
+          plus 32 numbers. Nothing in the generated CSS refers to any of them. Above them is the
+          semantic layer, where a token is named for its job, background or text or border or
+          foreground, and each one carries its value three times over, once for each way a browser
+          can be asked for a colour scheme.
         </Prose>
         <Prose wide>
-          On top sit twelve app aliases: the only words a component is allowed to say, and the only
-          place a var() appears anywhere in the system. Everything beneath that line is a literal
-          value.
+          On top are twelve app aliases. These are the names the components use, and they are the
+          only place a var() appears in the whole system. Below them every value is written out.
         </Prose>
         <Prose wide>
-          That is what makes it machine-readable. Meeting a name like --color-bg-surface, the agent
-          does not need colour theory. It needs a name it can follow.
+          That is what makes it readable by a machine. When the agent hits a name like
+          --color-bg-surface it does not have to know anything about colour, only how to follow the
+          name one step down.
         </Prose>
       </Movement>
 
       <Movement title="The chain, and what is under it" figure={<Chain />}>
         <Prose wide>
-          One alias, one semantic token, one value per scheme. The component never learns what
-          colour it is.
+          One alias, one semantic token, one value for each scheme. There is no colour anywhere in
+          the card's own code.
         </Prose>
         <Prose wide>
-          Underneath sit the scales the agent needs before it can reason about a layout at all:
-          radii, spacing, widths, containers, type, shadows and focus rings, the grid sets, and 44
-          text styles emitted as classes rather than left as descriptions.
+          Underneath are the scales the agent needs before it can work on a layout at all: radii,
+          spacing, widths, containers, type, shadows and focus rings, the grid sets, and 44 text
+          styles, which come out as classes so they can be used directly.
         </Prose>
       </Movement>
 
       <Movement title="Dark mode as proof" figure={<ThemeProof />}>
         <Prose wide>
-          Dark mode is the simplest test of whether the architecture holds. The component names
+          Dark mode is the easiest way to check the architecture holds. The component names
           aliases, the aliases point at semantic tokens, and the semantic layer swaps its values
-          under the two ways a browser can be asked for a dark scheme. So dark mode is automatic.
-          No component knows it is in dark mode.
+          under both of the ways a browser can be asked for a dark scheme. So dark mode is
+          automatic. No component knows it is in dark mode.
         </Prose>
         <Prose wide>
-          The values beside this were measured off the running build in both schemes. Three of the
-          five change and two do not, which is the point: the padding and the radius are as much
-          part of the contract as the colours, and neither is a thing a theme should move.
+          The values beside this come off the running build, read in both schemes. Three of the
+          five change and two do not. The padding and the radius belong to the contract as much as
+          the colours do, and a theme has no business moving either one.
         </Prose>
         <Prose wide>
-          The agent had already caught the inverse case. A hardcoded border colour and a hardcoded
-          24px padding sat in the card where tokens should have been, and neither would have
-          answered to a theme at all.
+          The agent had already caught this going the other way. A hardcoded border colour and a
+          hardcoded 24px padding were sitting in the card where tokens should have been, and a
+          theme would not have touched either of them.
         </Prose>
       </Movement>
 
@@ -258,30 +261,29 @@ function AiDesignSystem() {
           component itself. It is written for the agent, not for a person browsing Figma.
         </Prose>
         <Prose wide>
-          It declares which tokens the component is supposed to use, so the agent can hold that
-          declaration against the styles actually applied and say where the two have drifted apart.
-          It is the difference between a card component and a contract something can be audited
-          against.
+          It lists the tokens the component is supposed to use, so the agent can put that list
+          next to the styles actually applied and report where the two have come apart. That is
+          the difference between a card component and a contract the agent can audit against.
         </Prose>
       </Movement>
 
       <Movement title="What the agent did" figure={<Workflows />}>
         <Prose wide>
-          Each of these is a job a designer normally does by hand. Each one worked because the
-          agent could read the architecture, hold the export against the code, and decide from the
-          naming rather than from a script.
+          Each of these is a job a designer normally does by hand. They worked because the agent
+          could read the architecture, put the export next to the code, and make the call from the
+          names it found there.
         </Prose>
         <Prose wide>
-          The part that mattered is the last one. Asked only whether code and Figma were in sync,
-          it decided by itself to check every token, separate what was missing from what was
-          redundant, and where two sources disagreed outright, settle it against a single
-          declared rule rather than picking. Every change was verified by a production build.
+          The last one is the one I care about. I asked only whether the code and Figma were in
+          sync. It went and checked every token, sorted what was missing from what was redundant,
+          and when the two sources gave different answers it applied the one rule I had written
+          down instead of guessing. Every change was checked against a production build.
         </Prose>
       </Movement>
 
       <Movement title="Where it hit a wall">
         <Prose wide>
-          Reading Figma live went through the Figma MCP, and that is where the test ran out of
+          Live reads from Figma go through the Figma MCP, and that is where this ran out of
           room.
         </Prose>
         {limits.map((limit) => (
@@ -290,32 +292,31 @@ function AiDesignSystem() {
           </Prose>
         ))}
         <Prose wide>
-          So instead of reading variables live I fell back on a manual export as the hand-off, and
-          that export is the contract: primitive and semantic collections mirroring the stylesheet
-          structure, with the text, effect and grid styles beside them. The agent knew which part
-          to ask for because the structure is explicit rather than a monolith with everything mixed
-          together.
+          So I fell back on a manual export, and the export became the hand-off: primitive and
+          semantic collections laid out the same way the stylesheets are, with the text, effect and
+          grid styles beside them. The agent could find the part it needed because the file is
+          split along the same lines as the system.
         </Prose>
       </Movement>
 
       <Movement title="What I learned">
         <Prose wide>
           Quality becomes measurable. When every token has a semantic name, every component
-          declares the tokens it uses and every Figma variable maps to a custom property, the
-          health of a design system stops being a feeling and becomes a number, and the agent can
-          point at exactly where the gaps are.
+          declares the tokens it uses and every Figma variable maps to a custom property, the state
+          of a design system stops being something you have an opinion about and becomes something
+          you can count. The agent can show you where the gaps are.
         </Prose>
         <Prose wide>
           The limitation was real and survivable. Live Figma access needed tooling this test did
-          not have. A structured export and a contract written into the component served the same
-          purpose, and the system worked without the enterprise tier.
+          not have, so a structured export and a contract written into the component did the same
+          job. The system worked without the enterprise tier.
         </Prose>
         <Prose wide>
-          And the craft is in the vocabulary, not the assembly. An agent assembling from a poorly
-          made system produces forgettable work. Operating inside one with deliberate colour,
-          considered type and opinionated spacing, the same agent produces something that looks
-          designed. The design system is no longer documentation for developers. It is instructions
-          for a machine, and the quality of those instructions is the design work.
+          And the craft is in the vocabulary, not the assembly. An agent working from a poorly
+          made system produces forgettable work. Put the same agent inside one with deliberate
+          colour, considered type and opinionated spacing, and what comes out looks designed. The
+          design system is no longer documentation for developers. It is instructions for a
+          machine, and the quality of those instructions is the design work.
         </Prose>
       </Movement>
 

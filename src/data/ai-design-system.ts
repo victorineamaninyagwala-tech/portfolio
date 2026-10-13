@@ -24,7 +24,7 @@ export const layers = [
     name: "Primitive",
     count: "407",
     holds: "375 colours named by hue and scale, and 32 numbers",
-    note: "The palette the Figma export ships. No component names one, and nor does the semantic layer above it.",
+    note: "The palette Untitled UI ships. Nothing in the generated CSS refers to them, including the semantic layer above.",
   },
   {
     name: "Semantic",
@@ -35,8 +35,8 @@ export const layers = [
   {
     name: "App alias",
     count: "12",
-    holds: "The words the components are allowed to say",
-    note: "The only var() indirection in the system. Everything below this line is a literal value.",
+    holds: "The names the components use",
+    note: "The only place a var() appears. Below this, every value is written out.",
   },
 ];
 
@@ -72,26 +72,26 @@ export const workflows = [
   {
     name: "Spec audit",
     input: "Read the component's declared tokens, compare them to the styles actually applied.",
-    finding: "A border colour and a padding were hardcoded, so neither would answer to a theme.",
+    finding: "A border colour and a padding were hardcoded, so a theme could not reach either of them.",
     outcome: "Both replaced with tokens, and the missing --color-border-subtle created with its own light and dark values.",
   },
   {
     name: "Figma drift check",
     input: "Cross-reference every token in the code against the Figma export.",
     finding: "The primitives were already in step. Nothing was missing.",
-    outcome: "Confirmed in sync, and the drift running the other way flagged: tokens that exist only in code.",
+    outcome: "Confirmed in sync, and flagged the drift going the other way: tokens that exist in the code and not in Figma.",
   },
   {
     name: "Full token generation",
     input: "Parse tokens.json: seven variable collections and the style sets.",
     finding: "1,554 colour styles carried no value at all.",
-    outcome: "Ten CSS files and 44 text-style classes generated; the valueless styles skipped rather than emitted empty.",
+    outcome: "Generated ten CSS files and 44 text-style classes. The valueless styles were left out.",
   },
   {
     name: "Source-of-truth reconciliation",
     input: "Resolve what two token sources disagreed about after a Material detour.",
     finding: "--radius-md was 12px in one and 8px in the other.",
-    outcome: "One declared rule applied: Untitled UI wins ties. So 8px, with the app aliases remapped onto it.",
+    outcome: "Applied the one rule I had written down, that Untitled UI wins ties, so 8px, and remapped the app aliases onto it.",
   },
 ];
 
