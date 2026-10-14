@@ -21,7 +21,7 @@ export const layers = [
   },
   {
     name: "App aliases",
-    count: "12",
+    count: "13",
     body: "The tokens used by components. Each alias references a semantic token, which resolves to a literal value for the active colour scheme.",
   },
 ];

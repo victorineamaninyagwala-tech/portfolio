@@ -1,4 +1,6 @@
 import aiDesignSystemCard from "@/assets/card-ai-design-system.webp";
+import aiDesignSystemDark from "@/assets/ai-design-system-dark.webp";
+import aiDesignSystemLight from "@/assets/ai-design-system-light.webp";
 import bazaarCard from "@/assets/card-bazaar.webp";
 import mochisCard from "@/assets/card-mochis.webp";
 import soulshapeCard from "@/assets/card-soulshape.webp";
@@ -37,9 +39,9 @@ export type Project = {
     crop: { centreX: number; centreY: number; width: number };
     target: { centreX: number; centreY: number; width: number };
   };
-  /** Set where the card builds its own subject on hover rather than turning
-   *  over a sequence of stills. */
-  hover?: "assemble";
+  /** Set where the card does something other than turn over a sequence of
+   *  stills: building its own subject, or turning over a colour scheme. */
+  hover?: "assemble" | "flip";
   /** A case study that is not finished. Its route still answers, for anyone
    *  holding the link, but it is listed nowhere: not the homepage grid, not
    *  the footer, not the way on at the foot of another study. */
@@ -132,7 +134,15 @@ const all: Project[] = [
     slug: "ai-design-system",
     title: "An AI operable Design system",
     discipline: "Design Systems · Tokens · AI",
-    images: [{ src: aiDesignSystemCard, alt: "A design token chain, one base colour branching into tonal ramps" }],
+    /* No interface to walk and no mark to open from. What this one has is the
+       claim the case study rests on, so the card makes it: the same build,
+       photographed twice, with nothing changed but the scheme asked for. */
+    hover: "flip",
+    images: [
+      { src: aiDesignSystemCard, alt: "A design token chain, one base colour branching into tonal ramps" },
+      { src: aiDesignSystemLight, alt: "The demo in light: the component on its own surface" },
+      { src: aiDesignSystemDark, alt: "The same demo in dark, with no theme code in the component" },
+    ],
     status: "Test project",
   },
   {

@@ -48,7 +48,7 @@ const meta: MetaRow[] = [
 ];
 
 const outcomes: Outcome[] = [
-  { figure: "842", note: "Custom properties, including 830 generated from the export" },
+  { figure: "843", note: "Custom properties, including 830 generated from the export" },
   { figure: "303", note: "Semantic tokens with light and dark values" },
   { figure: "44", note: "Reusable text-style utility classes" },
   { figure: "4", note: "Maintenance tasks completed and verified with a passing production build" },

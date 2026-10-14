@@ -3,6 +3,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { Gutter, Label } from "@/components/primitives";
 import { LetterSwapHeading } from "@/components/LetterSwapHeading";
 import { MochisMedia } from "@/components/MochisMedia";
+import { ThemeFlipMedia } from "@/components/ThemeFlipMedia";
 import { ProjectMedia } from "@/components/ProjectMedia";
 import { listed } from "@/data/projects";
 import { shareImage } from "@/lib/share";
@@ -92,6 +93,12 @@ function Index() {
                     Mochi's puts its own homepage together out of its cover. */}
                 {p.hover === "assemble" ? (
                   <MochisMedia alt={p.images?.[0]?.alt ?? ""} />
+                ) : p.hover === "flip" && p.images?.length === 3 ? (
+                  <ThemeFlipMedia
+                    cover={p.images[0]}
+                    light={p.images[1]}
+                    dark={p.images[2]}
+                  />
                 ) : (
                   <ProjectMedia images={p.images ?? []} maskSrc={p.mask} intro={p.intro} />
                 )}
