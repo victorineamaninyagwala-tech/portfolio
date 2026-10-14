@@ -17,8 +17,15 @@ import { shareImage } from "@/lib/share";
  * schemes.
  */
 
+/* The summary at the top of the page. */
+const DECK =
+  "As part of incorporating AI into my design workflow, I experimented with building a design pipeline around a coherent design system and component library that an AI agent could reference during the design process. I tested how well the structure supported component maintenance, token generation, and resolving inconsistencies between design and code.";
+
+/* What a search result and a shared link carry. The deck above runs to about
+   350 characters, which is more than either will show, so this is its second
+   sentence: her words, at a length that survives the truncation. */
 const DESCRIPTION =
-  "I tested whether an AI agent could maintain parts of a design system using its token structure, component specifications and a Figma export.";
+  "I tested how well the structure supported component maintenance, token generation, and resolving inconsistencies between design and code.";
 
 export const Route = createFileRoute("/work/ai-design-system")({
   head: ({ match }) => ({
@@ -174,7 +181,7 @@ function AiDesignSystem() {
       title="An AI operable Design system"
       meta={meta}
       outcomes={outcomes}
-      deck={DESCRIPTION}
+      deck={DECK}
     >
       <Movement title="Overview">
         <Prose wide>
