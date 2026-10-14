@@ -21,6 +21,19 @@ import { useEffect, useRef, useState } from "react";
  * Suppressed entirely under prefers-reduced-motion: the first image just sits.
  */
 
+/**
+ * The circular opening, for a card whose first image is a photograph of a
+ * person. The circle closes on the face and then shuts, so the screens behind
+ * it are what the reader is left looking at.
+ */
+export type MediaIntro = {
+  /** Where the face sits on the first image, as fractions of its own box. */
+  focusX: number;
+  focusY: number;
+  /** How far in to push before the circle closes. */
+  zoom: number;
+};
+
 export type MediaImage = {
   src: string;
   alt: string;
@@ -50,6 +63,10 @@ const ZOOM_OPEN = 0.58;
 const HOLE_X = 0.494;
 const HOLE_Y = 0.188;
 
+/* The circular opening: in on the face, then the iris shuts. */
+const PUSH_MS = 620;
+const IRIS_MS = 900;
+
 const REVEAL_MS = 1400;
 const REVEAL_HOLD = 450;
 const OPEN_MS = 420;
@@ -68,12 +85,14 @@ const easeInOut = (t: number) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t 
 export function ProjectMedia({
   images,
   maskSrc,
+  intro,
 }: {
   images: MediaImage[];
   maskSrc?: string;
+  intro?: MediaIntro;
 }) {
   const [index, setIndex] = useState(0);
-  const [phase, setPhase] = useState<"idle" | "masking" | "playing">("idle");
+  const [phase, setPhase] = useState<"idle" | "masking" | "intro" | "playing">("idle");
   /** Which slide is currently zoomed out, or null. Held past the scroll so the
    *  slide does not zoom back in on its way out of view. */
   const [fittedIndex, setFittedIndex] = useState<number | null>(null);
@@ -88,6 +107,8 @@ export function ProjectMedia({
   const frame = useRef(0);
   const boxRef = useRef<HTMLDivElement>(null);
   const maskRef = useRef<HTMLDivElement>(null);
+  const irisRef = useRef<HTMLDivElement>(null);
+  const faceRef = useRef<HTMLImageElement>(null);
 
   const clearTimers = () => {
     timers.current.forEach(clearTimeout);
@@ -131,6 +152,67 @@ export function ProjectMedia({
     el.style.webkitMaskPosition = `${offsetX}px ${offsetY}px`;
   };
 
+  /**
+   * Write the circle and the push for one frame.
+   *
+   * `push` runs 0 to 1 as the image moves in on the face; `close` runs 0 to 1
+   * as the circle shuts. They are separate because the two beats overlap badly
+   * if one value drives both.
+   */
+  const applyIntro = (push: number, close: number) => {
+    const wrap = irisRef.current;
+    const img = faceRef.current;
+    const box = boxRef.current;
+    if (!wrap || !img || !box || !intro) return;
+    const { width, height } = box.getBoundingClientRect();
+
+    // Scale about the centre, then carry the face toward the middle so the
+    // push lands on her rather than on the middle of the photograph.
+    const scale = 1 + (intro.zoom - 1) * push;
+    const wantX = (0.5 - intro.focusX) * width * scale;
+    const wantY = (0.5 - intro.focusY) * height * scale;
+
+    // A face this close to the top of its frame cannot be brought to the centre
+    // without dragging the photograph off the card, so the travel is clamped to
+    // whatever the overhang allows. Anything further and the screen underneath
+    // shows along the top edge with the circle still wide open.
+    const roomX = (width * scale - width) / 2;
+    const roomY = (height * scale - height) / 2;
+    const dx = Math.max(-roomX, Math.min(roomX, wantX));
+    const dy = Math.max(-roomY, Math.min(roomY, wantY));
+    img.style.transform = `translate(${dx}px, ${dy}px) scale(${scale})`;
+
+    // Wherever the clamp left her, that is where the circle closes. Centring it
+    // on the card instead would shut on her shoulder.
+    const cx = width / 2 - (wantX - dx);
+    const cy = height / 2 - (wantY - dy);
+
+    // Far enough to reach the furthest corner, so the circle is invisible until
+    // it starts closing.
+    const full = Math.max(
+      Math.hypot(cx, cy),
+      Math.hypot(width - cx, cy),
+      Math.hypot(cx, height - cy),
+      Math.hypot(width - cx, height - cy),
+    );
+    const r = full * (1 - close);
+    const circle = `radial-gradient(circle at ${cx}px ${cy}px, #000 ${r}px, transparent ${r}px)`;
+    wrap.style.maskImage = circle;
+    wrap.style.webkitMaskImage = circle;
+  };
+
+  /** Runs one beat of the opening, writing every frame. */
+  const runIntro = (duration: number, write: (t: number) => void, done: () => void) => {
+    const started = performance.now();
+    const step = (now: number) => {
+      const t = Math.min(1, (now - started) / duration);
+      write(easeInOut(t));
+      if (t < 1) frame.current = requestAnimationFrame(step);
+      else done();
+    };
+    frame.current = requestAnimationFrame(step);
+  };
+
   /** Geometric interpolation, so the zoom reads at a constant rate. */
   const runZoom = (from: number, to: number, duration: number, done: () => void) => {
     const started = performance.now();
@@ -148,8 +230,26 @@ export function ProjectMedia({
   };
 
   const start = () => {
-    if (phase !== "idle" || images.length < 2 || !maskSrc) return;
+    if (phase !== "idle" || images.length < 2) return;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    if (intro) {
+      // The column goes straight to the second image and the photograph is
+      // held above it, so closing the circle uncovers the screen underneath.
+      setIndex(1);
+      setPhase("intro");
+      requestAnimationFrame(() => {
+        applyIntro(0, 0);
+        runIntro(
+          PUSH_MS,
+          (t) => applyIntro(t, 0),
+          () => runIntro(IRIS_MS, (t) => applyIntro(1, t), () => setPhase("playing")),
+        );
+      });
+      return;
+    }
+
+    if (!maskSrc) return;
 
     // Jump the column straight to the second image; the first stays painted
     // behind, so the shrinking mask reads as a window cut into it.
@@ -296,6 +396,23 @@ export function ProjectMedia({
             transform: `translateY(${fills[0]?.shift ?? 0}px) scale(${fills[0]?.scale ?? 1.9})`,
           }}
         />
+      ) : null}
+
+      {/*
+        The closing circle. It is above the column rather than cut into it, so
+        what the circle uncovers as it shuts is the screen already sitting in
+        the well underneath.
+      */}
+      {phase === "intro" && intro && images[0] ? (
+        <div ref={irisRef} className="absolute inset-0 z-10 overflow-hidden">
+          <img
+            ref={faceRef}
+            src={images[0].src}
+            alt=""
+            aria-hidden="true"
+            className="absolute inset-0 size-full object-cover will-change-transform"
+          />
+        </div>
       ) : null}
 
       {/*

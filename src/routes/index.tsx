@@ -93,7 +93,7 @@ function Index() {
                 {p.hover === "assemble" ? (
                   <MochisMedia alt={p.images?.[0]?.alt ?? ""} />
                 ) : (
-                  <ProjectMedia images={p.images ?? []} maskSrc={p.mask} />
+                  <ProjectMedia images={p.images ?? []} maskSrc={p.mask} intro={p.intro} />
                 )}
                 <div className="mt-4">
                   {/* Wraps rather than truncating: one title runs to nine words. */}
