@@ -418,6 +418,12 @@ export function ProjectMedia({
 
     if (guided) {
       const here = images[index];
+      // Every screen on a walked card is shown whole on the ground, so the
+      // fitted slide follows the walk. Without this the reset below sees a
+      // fitted slide that is no longer the current one, decides it has
+      // scrolled clear, and takes the ground out from under the card.
+      setFittedIndex(index);
+
       // No hotspot, nothing left to press: the walk rests on its last screen.
       if (!here?.hotspot || index >= images.length - 1) return;
 
@@ -458,12 +464,13 @@ export function ProjectMedia({
   }, [phase, index, images]);
 
   // The fitted slide keeps its zoom until it has scrolled clear, then resets
-  // off-screen so it is cropped again next time round.
+  // off-screen so it is cropped again next time round. Nothing scrolls clear
+  // on a walked card: the screens replace each other in place.
   useEffect(() => {
-    if (fittedIndex === null || fittedIndex === index) return;
+    if (guided || fittedIndex === null || fittedIndex === index) return;
     const t = setTimeout(() => setFittedIndex(null), SCROLL_MS);
     return () => clearTimeout(t);
-  }, [fittedIndex, index]);
+  }, [guided, fittedIndex, index]);
 
   // One frame with transitions off is enough for the jump to land unseen.
   useEffect(() => {
