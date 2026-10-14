@@ -321,9 +321,9 @@ export const workingAreas = [
  * typed into a dashboard.
  */
 export const calculation = {
-  previous: { value: "88.4 kg", when: "20 Sept 2026" },
+  previous: { value: "88.4 kg", when: "12 Oct 2026" },
   current: { value: "87.5 kg", when: "today" },
-  change: { value: "−0.9 kg", note: "3.0 kg per week, against a threshold of 1.5" },
+  change: { value: "−0.9 kg", note: "2.9 kg per week, against a threshold of 1.5" },
 };
 
 /*

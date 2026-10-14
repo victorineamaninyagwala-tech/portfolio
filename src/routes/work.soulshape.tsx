@@ -497,7 +497,7 @@ const checkIn: WalkthroughStep[] = [
   {
     label: "Saved, and what the system made of it",
     src: flow4,
-    alt: "The reading is saved and the change computed: down 0.9 kg since 20 September. Beneath it the system reports rapid weight loss at 3.0 kg per week against a threshold of 1.5, and says what this means is for the domain to decide.",
+    alt: "The reading is saved and the change computed: down 0.9 kg since 12 October. Beneath it the system reports rapid weight loss at 2.9 kg per week against a threshold of 1.5, and says what this means is for the domain to decide.",
     ...SCREEN,
     hotspot: { x: 65.1, y: 55.2 },
   },
