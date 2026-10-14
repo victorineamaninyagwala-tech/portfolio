@@ -43,6 +43,9 @@ export type MediaImage = {
   alt: string;
   /** Zoom out to show the whole frame rather than cropping it. */
   fit?: boolean;
+  /** What the pointer presses to bring the next screen, as fractions of this
+   *  image. A slide with no hotspot is the end of the walk. */
+  hotspot?: { x: number; y: number };
   /** Fraction of the frame to push below the card, used to lose a watermark
    *  along the bottom edge. Needs extra zoom as well as a shift, since scaling
    *  alone crops the top by as much as the bottom. */
@@ -74,6 +77,12 @@ const PULL_MS = 1800;
 
 /* When the photograph lets go. By here the avatar underneath is close enough
    to its own size to stand on its own. */
+/* The walkthrough's own beats, so a card and a case study move alike. */
+const DWELL = 1500;
+const REACH = 750;
+const PRESS = 420;
+const REST = { x: 44, y: 46 };
+
 /* How far into the pull the photograph has become the avatar's circle. */
 const ROUND_BY = 0.26;
 
@@ -95,6 +104,61 @@ const FIT_TOTAL = FIT_HOLD_IN + FIT_ZOOM_MS + FIT_HOLD_OUT;
 
 const easeInOut = (t: number) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
 
+/*
+ * The pointer, travelling to the control and pressing it.
+ *
+ * The screens are contained in the card rather than filling it, so a hotspot
+ * given against the image has to be found through that letterbox before it
+ * means anything in card pixels.
+ */
+function GuidedPointer({
+  box,
+  screen,
+  hotspot,
+  reaching,
+  pressing,
+}: {
+  box: HTMLDivElement | null;
+  screen: HTMLImageElement | null;
+  hotspot: { x: number; y: number };
+  reaching: boolean;
+  pressing: boolean;
+}) {
+  let left = REST.x;
+  let top = REST.y;
+  if (reaching && box) {
+    const { width, height } = box.getBoundingClientRect();
+    const natural = screen && screen.naturalWidth ? screen.naturalWidth / screen.naturalHeight : 4 / 3;
+    const shownH = width / natural;
+    left = hotspot.x * 100;
+    top = (((height - shownH) / 2 + hotspot.y * shownH) / height) * 100;
+  }
+
+  return (
+    <span
+      aria-hidden="true"
+      className="wt-motion pointer-events-none absolute transition-[left,top] duration-700 ease-out"
+      style={{ left: `${left}%`, top: `${top}%` }}
+    >
+      {pressing ? (
+        <span
+          className="wt-motion absolute size-10 rounded-full border border-ink/70 bg-ink/10"
+          style={{ animation: `wt-press ${PRESS}ms ease-out forwards` }}
+        />
+      ) : null}
+      <svg viewBox="0 0 24 24" className="block size-6 drop-shadow-sm">
+        <path
+          d="M5 2.5 19.5 12 13 13.2 16 20.4 13.4 21.5 10.4 14.4 5.6 18.4Z"
+          fill="white"
+          stroke="black"
+          strokeWidth="1.2"
+          strokeLinejoin="round"
+        />
+      </svg>
+    </span>
+  );
+}
+
 export function ProjectMedia({
   images,
   maskSrc,
@@ -111,6 +175,10 @@ export function ProjectMedia({
   const [fittedIndex, setFittedIndex] = useState<number | null>(null);
   /** Set for a single frame while the column rebases, so the jump is not animated. */
   const [rebasing, setRebasing] = useState(false);
+  /** Where the pointer is in the walk, for a card that is clicked through
+   *  rather than scrolled. */
+  const [reach, setReach] = useState(false);
+  const [pressing, setPressing] = useState(false);
   /** Per-image scale and vertical shift. Measured individually because the
    *  photographs and the dashboard have different aspect ratios, and one shared
    *  factor letterboxes the others. */
@@ -123,6 +191,9 @@ export function ProjectMedia({
   const faceRef = useRef<HTMLImageElement>(null);
   const screenRef = useRef<HTMLImageElement>(null);
   const clipRef = useRef<HTMLDivElement>(null);
+
+  /** A card that opens on a match cut is walked through, not scrolled. */
+  const guided = Boolean(intro);
 
   const clearTimers = () => {
     timers.current.forEach(clearTimeout);
@@ -335,6 +406,8 @@ export function ProjectMedia({
     setPhase("idle");
     setFittedIndex(null);
     setRebasing(false);
+    setReach(false);
+    setPressing(false);
     setIndex(0);
   };
 
@@ -342,6 +415,23 @@ export function ProjectMedia({
   // slide can take longer than a plain one.
   useEffect(() => {
     if (phase !== "playing" || images.length < 2) return;
+
+    if (guided) {
+      const here = images[index];
+      // No hotspot, nothing left to press: the walk rests on its last screen.
+      if (!here?.hotspot || index >= images.length - 1) return;
+
+      setReach(false);
+      setPressing(false);
+      later(() => setReach(true), DWELL);
+      later(() => setPressing(true), DWELL + REACH);
+      later(() => {
+        setPressing(false);
+        setReach(false);
+        setIndex((i) => i + 1);
+      }, DWELL + REACH + PRESS);
+      return clearTimers;
+    }
 
     // The last position is a clone of the first slide. Once the column has
     // scrolled onto it, jump back to the real first slide with the transition
@@ -491,6 +581,31 @@ export function ProjectMedia({
       ) : null}
 
       {/*
+        The walk. One screen at a time, arriving rather than sliding in, with
+        the pointer travelling to whatever brings the next one.
+      */}
+      {guided && phase === "playing" ? (
+        <div className="absolute inset-0">
+          <img
+            key={index}
+            src={(images[index] ?? images[0]).src}
+            alt={images[index]?.alt ?? ""}
+            className="wt-motion absolute inset-0 size-full object-contain"
+            style={{ animation: "wt-screen-in 340ms ease-out" }}
+          />
+          {images[index]?.hotspot ? (
+            <GuidedPointer
+              box={boxRef.current}
+              screen={screenRef.current}
+              hotspot={images[index].hotspot}
+              reaching={reach}
+              pressing={pressing}
+            />
+          ) : null}
+        </div>
+      ) : null}
+
+      {/*
         The mask lives on this wrapper, not on the track: mask-position resolves
         against the element's own box, and the track is translated.
       */}
@@ -511,8 +626,10 @@ export function ProjectMedia({
             : undefined
         }
       >
-        {/* The column. Translating the track is what reads as a vertical scroll. */}
+        {/* The column. Translating the track is what reads as a vertical scroll.
+            A guided card never uses it; its screens are pressed into view. */}
         <div
+          hidden={guided && phase === "playing"}
           className="absolute inset-0"
           style={{
             transform: `translateY(-${index * 100}%)`,

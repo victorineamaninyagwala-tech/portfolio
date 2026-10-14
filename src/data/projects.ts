@@ -20,7 +20,15 @@ export type Project = {
   title: string;
   discipline: string;
   status?: string;
-  images?: Array<{ src: string; alt: string; fit?: boolean; hideBottom?: number }>;
+  images?: Array<{
+    src: string;
+    alt: string;
+    fit?: boolean;
+    hideBottom?: number;
+    /** What the pointer presses to bring the next screen, on a card that
+     *  is walked through rather than scrolled. */
+    hotspot?: { x: number; y: number };
+  }>;
   /** Logo the hover carousel opens through. Only set where a sequence exists. */
   mask?: string;
   /** Opens by matching a square of the first image to where it reappears in
@@ -89,11 +97,15 @@ const all: Project[] = [
         src: soulshapeSummary,
         alt: "The coordinator's summary: active patients across four programmes, critical alerts, and the caseload by phase",
         fit: true,
+        /* Patients, in the sidebar. Measured on the running prototype. */
+        hotspot: { x: 0.1145, y: 0.4172 },
       },
       {
         src: soulshapePatients,
         alt: "The patients list: a phase caseload with each patient's most recent signal and last activity",
         fit: true,
+        /* The first patient in the list. */
+        hotspot: { x: 0.3236, y: 0.479 },
       },
       {
         src: soulshapeRecord,
