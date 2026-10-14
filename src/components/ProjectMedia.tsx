@@ -22,16 +22,20 @@ import { useEffect, useRef, useState } from "react";
  */
 
 /**
- * The circular opening, for a card whose first image is a photograph of a
- * person. The circle closes on the face and then shuts, so the screens behind
- * it are what the reader is left looking at.
+ * A match cut, for a card whose first image turns up inside its second.
+ *
+ * The photograph is pushed into until one square of it fills the card, the
+ * screen takes over at whatever scale puts the same square on the same
+ * rectangle, and then the whole thing pulls back. Because both are the same
+ * photograph at that instant, the swap cannot be seen.
+ *
+ * Every number is a fraction of the image it belongs to.
  */
 export type MediaIntro = {
-  /** Where the face sits on the first image, as fractions of its own box. */
-  focusX: number;
-  focusY: number;
-  /** How far in to push before the circle closes. */
-  zoom: number;
+  /** The square of the first image that reappears in the second. */
+  crop: { centreX: number; centreY: number; width: number };
+  /** Where it reappears, measured on the second image as it is laid out. */
+  target: { centreX: number; centreY: number; width: number };
 };
 
 export type MediaImage = {
@@ -63,9 +67,18 @@ const ZOOM_OPEN = 0.58;
 const HOLE_X = 0.494;
 const HOLE_Y = 0.188;
 
-/* The circular opening: in on the face, then the iris shuts. */
-const PUSH_MS = 620;
-const IRIS_MS = 900;
+/* In on the face, then out from the avatar. The pull is the longer of the two
+   because it travels 40 times as far. */
+const PUSH_MS = 900;
+const PULL_MS = 1800;
+
+/* When the photograph lets go. By here the avatar underneath is close enough
+   to its own size to stand on its own. */
+/* How far into the pull the photograph has become the avatar's circle. */
+const ROUND_BY = 0.26;
+
+const HAND_OVER_FROM = 0.72;
+const HAND_OVER_TO = 0.9;
 
 const REVEAL_MS = 1400;
 const REVEAL_HOLD = 450;
@@ -107,8 +120,9 @@ export function ProjectMedia({
   const frame = useRef(0);
   const boxRef = useRef<HTMLDivElement>(null);
   const maskRef = useRef<HTMLDivElement>(null);
-  const irisRef = useRef<HTMLDivElement>(null);
   const faceRef = useRef<HTMLImageElement>(null);
+  const screenRef = useRef<HTMLImageElement>(null);
+  const clipRef = useRef<HTMLDivElement>(null);
 
   const clearTimers = () => {
     timers.current.forEach(clearTimeout);
@@ -153,52 +167,92 @@ export function ProjectMedia({
   };
 
   /**
-   * Write the circle and the push for one frame.
+   * Everything the match cut is measured from, in card pixels.
    *
-   * `push` runs 0 to 1 as the image moves in on the face; `close` runs 0 to 1
-   * as the circle shuts. They are separate because the two beats overlap badly
-   * if one value drives both.
+   * The screen is laid out with object-contain, so it sits letterboxed inside
+   * the card and a point on it has to be found through that box rather than
+   * against the card itself.
    */
-  const applyIntro = (push: number, close: number) => {
-    const wrap = irisRef.current;
-    const img = faceRef.current;
+  const geometry = () => {
     const box = boxRef.current;
-    if (!wrap || !img || !box || !intro) return;
+    const screen = screenRef.current;
+    if (!box || !intro) return null;
     const { width, height } = box.getBoundingClientRect();
 
-    // Scale about the centre, then carry the face toward the middle so the
-    // push lands on her rather than on the middle of the photograph.
-    const scale = 1 + (intro.zoom - 1) * push;
-    const wantX = (0.5 - intro.focusX) * width * scale;
-    const wantY = (0.5 - intro.focusY) * height * scale;
+    const natural =
+      screen && screen.naturalWidth ? screen.naturalWidth / screen.naturalHeight : 4 / 3;
+    // Contained: the screen is wider than the well, so width decides.
+    const shownW = width;
+    const shownH = width / natural;
+    const top = (height - shownH) / 2;
 
-    // A face this close to the top of its frame cannot be brought to the centre
-    // without dragging the photograph off the card, so the travel is clamped to
-    // whatever the overhang allows. Anything further and the screen underneath
-    // shows along the top edge with the circle still wide open.
-    const roomX = (width * scale - width) / 2;
-    const roomY = (height * scale - height) / 2;
-    const dx = Math.max(-roomX, Math.min(roomX, wantX));
-    const dy = Math.max(-roomY, Math.min(roomY, wantY));
-    img.style.transform = `translate(${dx}px, ${dy}px) scale(${scale})`;
+    // Where the avatar sits on the card with the screen at rest.
+    const target = {
+      x: intro.target.centreX * shownW,
+      y: top + intro.target.centreY * shownH,
+      w: intro.target.width * shownW,
+    };
+    // Where the same square sits on the photograph, which fills the card.
+    const crop = {
+      x: intro.crop.centreX * width,
+      y: intro.crop.centreY * height,
+      w: intro.crop.width * width,
+    };
+    // How far the screen has to come in before its avatar is as wide as the card.
+    const zoom = width / target.w;
+    return { width, height, target, crop, zoom };
+  };
 
-    // Wherever the clamp left her, that is where the circle closes. Centring it
-    // on the card instead would shut on her shoulder.
-    const cx = width / 2 - (wantX - dx);
-    const cy = height / 2 - (wantY - dy);
+  /** The photograph, pushing in until the matched square fills the card. */
+  const applyPush = (t: number) => {
+    const img = faceRef.current;
+    const g = geometry();
+    if (!img || !g) return;
 
-    // Far enough to reach the furthest corner, so the circle is invisible until
-    // it starts closing.
-    const full = Math.max(
-      Math.hypot(cx, cy),
-      Math.hypot(width - cx, cy),
-      Math.hypot(cx, height - cy),
-      Math.hypot(width - cx, height - cy),
-    );
-    const r = full * (1 - close);
-    const circle = `radial-gradient(circle at ${cx}px ${cy}px, #000 ${r}px, transparent ${r}px)`;
-    wrap.style.maskImage = circle;
-    wrap.style.webkitMaskImage = circle;
+    const end = g.width / g.crop.w;
+    const scale = Math.pow(end, t);
+    // The square travels to the middle as the push goes in.
+    const dx = g.width / 2 - g.crop.x;
+    const dy = g.height / 2 - g.crop.y;
+    const x = g.crop.x + dx * t;
+    const y = g.crop.y + dy * t;
+    img.style.transform = `translate(${x - scale * g.crop.x}px, ${y - scale * g.crop.y}px) scale(${scale})`;
+    if (clipRef.current) clipRef.current.style.clipPath = "none";
+  };
+
+  /**
+   * The pull-back. The screen opens from the avatar and the photograph rides
+   * on top of it, pinned to the same square, until it is no longer needed.
+   */
+  const applyPull = (t: number) => {
+    const img = faceRef.current;
+    const screen = screenRef.current;
+    const g = geometry();
+    if (!img || !screen || !g) return;
+
+    const z = Math.pow(g.zoom, 1 - t);
+    // The avatar starts in the middle of the card and ends where it belongs.
+    const x = g.width / 2 + (g.target.x - g.width / 2) * t;
+    const y = g.height / 2 + (g.target.y - g.height / 2) * t;
+    screen.style.transform = `translate(${x - z * g.target.x}px, ${y - z * g.target.y}px) scale(${z})`;
+
+    // Same square, same place, so the photograph and the avatar stay one thing.
+    const s = (g.target.w * z) / g.crop.w;
+    img.style.transform = `translate(${x - s * g.crop.x}px, ${y - s * g.crop.y}px) scale(${s})`;
+
+    // The photograph narrows to the avatar's own circle over the first part of
+    // the pull. Until it has, it is wider than the card and nothing is cut.
+    const clip = clipRef.current;
+    if (clip) {
+      const open = Math.hypot(g.width, g.height);
+      const closed = (g.target.w * z) / 2;
+      const k = Math.min(1, t / ROUND_BY);
+      const r = open + (closed - open) * k;
+      clip.style.clipPath = `circle(${r}px at ${x}px ${y}px)`;
+    }
+
+    const fade = (t - HAND_OVER_FROM) / (HAND_OVER_TO - HAND_OVER_FROM);
+    img.style.opacity = String(1 - Math.max(0, Math.min(1, fade)));
   };
 
   /** Runs one beat of the opening, writing every frame. */
@@ -234,17 +288,25 @@ export function ProjectMedia({
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
     if (intro) {
-      // The column goes straight to the second image and the photograph is
-      // held above it, so closing the circle uncovers the screen underneath.
-      setIndex(1);
       setPhase("intro");
       requestAnimationFrame(() => {
-        applyIntro(0, 0);
-        runIntro(
-          PUSH_MS,
-          (t) => applyIntro(t, 0),
-          () => runIntro(IRIS_MS, (t) => applyIntro(1, t), () => setPhase("playing")),
-        );
+        applyPush(0);
+        runIntro(PUSH_MS, applyPush, () => {
+          // The swap. Both show the same square at the same size, so there is
+          // nothing to see.
+          applyPull(0);
+          runIntro(PULL_MS, applyPull, () => {
+            // The pull ends on the screen exactly contained, which is what the
+            // column renders for a fitted slide, so the hand-back is a straight
+            // swap rather than a move. Rebasing holds the transition off for a
+            // frame: without it the column scrolls down into the screen the
+            // reader is already looking at.
+            setRebasing(true);
+            setIndex(1);
+            setFittedIndex(1);
+            setPhase("playing");
+          });
+        });
       });
       return;
     }
@@ -399,19 +461,32 @@ export function ProjectMedia({
       ) : null}
 
       {/*
-        The closing circle. It is above the column rather than cut into it, so
-        what the circle uncovers as it shuts is the screen already sitting in
-        the well underneath.
+        The match cut runs on its own two layers rather than through the column,
+        because both of them have to be moved against each other and the column
+        can only scroll. It hands back at the end on the frame the column would
+        have drawn anyway.
       */}
-      {phase === "intro" && intro && images[0] ? (
-        <div ref={irisRef} className="absolute inset-0 z-10 overflow-hidden">
+      {phase === "intro" && intro && images[0] && images[1] ? (
+        <div className="absolute inset-0 z-10 overflow-hidden bg-ground">
           <img
-            ref={faceRef}
-            src={images[0].src}
+            ref={screenRef}
+            src={images[1].src}
             alt=""
             aria-hidden="true"
-            className="absolute inset-0 size-full object-cover will-change-transform"
+            className="absolute inset-0 size-full origin-top-left object-contain will-change-transform"
           />
+          {/* The clip is written on this wrapper, in card pixels. Put on the
+              photograph itself it would be carried along by its transform and
+              stop following the avatar. */}
+          <div ref={clipRef} className="absolute inset-0">
+            <img
+              ref={faceRef}
+              src={images[0].src}
+              alt=""
+              aria-hidden="true"
+              className="absolute inset-0 size-full origin-top-left object-cover will-change-transform"
+            />
+          </div>
         </div>
       ) : null}
 

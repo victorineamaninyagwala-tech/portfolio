@@ -23,9 +23,12 @@ export type Project = {
   images?: Array<{ src: string; alt: string; fit?: boolean; hideBottom?: number }>;
   /** Logo the hover carousel opens through. Only set where a sequence exists. */
   mask?: string;
-  /** Opens through a closing circle instead of a mark, for a card whose first
-   *  image is a photograph of a person. */
-  intro?: { focusX: number; focusY: number; zoom: number };
+  /** Opens by matching a square of the first image to where it reappears in
+   *  the second, instead of through a mark. */
+  intro?: {
+    crop: { centreX: number; centreY: number; width: number };
+    target: { centreX: number; centreY: number; width: number };
+  };
   /** Set where the card builds its own subject on hover rather than turning
    *  over a sequence of stills. */
   hover?: "assemble";
@@ -64,10 +67,19 @@ const all: Project[] = [
     slug: "soulshape",
     title: "SoulShape",
     discipline: "UX · Healthcare · Systems Design",
-    /* The runner has no logo to open through, so this card closes a circle on
-       her face instead. Measured off the photograph: her head sits a little
-       over halfway across and near the top. */
-    intro: { focusX: 0.6, focusY: 0.1, zoom: 2.9 },
+    /* The coordinator's account photograph in the prototype is this same
+       runner, cropped to her head and shoulder, so the card can cut from one
+       to the other without anything in between.
+
+       `crop` is where that square sits in the photograph, found by matching
+       avatar-grace.jpg against it. `target` is where it turns up on the
+       summary, measured off the running prototype at the size the screen was
+       shot at. The avatar is a fortieth of the width, which is how far the
+       screen has to come in before the two line up. */
+    intro: {
+      crop: { centreX: 0.5508, centreY: 0.1281, width: 0.3203 },
+      target: { centreX: 0.972, centreY: 0.0367, width: 0.0248 },
+    },
     images: [
       { src: soulshapeCard, alt: "A runner mid-stride, caught in motion blur against a warm ground" },
       /* All three screens are landscape and the card well is a 4:5 portrait, so
