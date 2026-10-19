@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 
+import type { Outcome } from "@/components/CaseStudyHero";
 import { Gutter, ImageCard, Label } from "@/components/primitives";
 import { cn } from "@/lib/utils";
 
@@ -18,6 +19,7 @@ export function CaseStudySection({
   figure,
   children,
   columns = 2,
+  result,
 }: {
   /** Optional: a section can open straight into its writing. */
   title?: string;
@@ -34,6 +36,10 @@ export function CaseStudySection({
   /** Blocks run in two columns by default. One stacks them down the page,
    *  for a section whose blocks are meant to be read in order. */
   columns?: 1 | 2;
+  /** The figure the section came to, stated at its foot. Read from the same
+   *  list the band at the top of the page reads, so a number is written once
+   *  and lands twice: once framing the account, once where it was earned. */
+  result?: Outcome;
 }) {
   return (
     <section>
@@ -77,6 +83,19 @@ export function CaseStudySection({
           ) : null}
           {figure ? (
             <div className={children ? "mt-12 sm:mt-16" : "mt-10 sm:mt-14"}>{figure}</div>
+          ) : null}
+          {result ? (
+            /* Under the figure, because the figure is the work and this is what
+               the work came to. In the reading column, where the section's
+               argument has been running, so it hangs off the same line as
+               everything else down the page. */
+            <div className="mt-12 grid grid-cols-12 sm:mt-16">
+              <div className="col-span-12 border-t border-ink/15 pt-6 md:col-span-6 md:col-start-7">
+                <Label className="text-olive">Result</Label>
+                <p className="mt-4 type-title">{result.figure}</p>
+                <p className="mt-2 max-w-[48ch] type-body text-ink/75">{result.note}</p>
+              </div>
+            </div>
           ) : null}
         </div>
       </Gutter>

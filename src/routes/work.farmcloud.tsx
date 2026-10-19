@@ -59,7 +59,10 @@ const meta: MetaRow[] = [
   { label: "Reach", value: "5,000+ farmers registered · 14 countries" },
 ];
 
-/* What the work came to, carried at the top of the page. */
+/* What the work came to. The band at the top of the page carries all four. Two
+   of them are also stated at the foot of the section that earned them, reading
+   from this same list; the other two are already written into the closing
+   section, which is what the closing section is for. */
 const outcomes: Outcome[] = [
   { figure: "4,000", note: "Active users digitising records, of 5,000+ registered" },
   { figure: "70%", note: "Self-onboarding success, up from 10% on the legacy system" },
@@ -421,6 +424,7 @@ function FarmCloud() {
       <CaseStudySection
         title="What I did with the findings"
         figure={<Walkthrough steps={onboarding} />}
+        result={outcomes[1]}
       >
         {responses.map((block) => (
           <FactList key={block.label} label={block.label} items={block.items} />
@@ -435,6 +439,7 @@ function FarmCloud() {
             <Walkthrough steps={lifecycleAfter} size="half" />
           </div>
         }
+        result={outcomes[0]}
       >
         {lifecycle.map((block) => (
           <FactList key={block.label} label={block.label} items={block.items} />
