@@ -232,7 +232,7 @@ export function Matrix({
   className,
 }: {
   columns: string[];
-  rows: Array<{ heading: string; cells: string[] }>;
+  rows: Array<{ heading: string; cells: string[]; note?: string }>;
   /** Row headings to mark: the dimensions that decided something. */
   highlight?: string[];
   className?: string;
@@ -274,6 +274,14 @@ export function Matrix({
                   )}
                 >
                   {row.heading}
+                  {row.note ? (
+                    /* Where the dimension came from. Set light and small, and
+                       never in the marked row's weight, so the column still
+                       reads as a list of dimensions and not of citations. */
+                    <span className="mt-1 block type-caption font-normal text-ink/60">
+                      {row.note}
+                    </span>
+                  ) : null}
                 </th>
                 {row.cells.map((cell, i) => (
                   <td

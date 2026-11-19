@@ -83,9 +83,6 @@ export const lifecycle = ["Enrol", "Care", "Programme ends", "Leave", "Return"];
    `lifecycle` above. */
 export const lifecycleStops = 2;
 
-/* What has to survive the return, from the continuity layer. */
-export const survives = "Programme instances · phase state · signal history · trend indicators";
-
 /*
  * The four strands she read, and the one finding from each that changed the
  * project, from the comprehensive case study §3.1–3.2 and from her own
@@ -176,14 +173,23 @@ export const evidence: Array<{ strand: string; finding: string; sources: Source[
  * them without their doing it: the clinic places the call. Three of seven is
  * the figure the drawing shows, because it darkens a box on `by`.
  */
+/**
+ * Whoever is holding the route together on a given day. Written once because
+ * two diagrams turn on it, and kept as a role rather than a person: at Antara
+ * it was the patient carrying their own results, at the clinic it is a nurse
+ * or the doctor. Naming either one would make it that organisation's
+ * shortcoming instead of the pattern it is.
+ */
+export const carrier = "Whoever coordinates";
+
 export const coordinationSteps = [
-  { step: "Clinic calls the patient", by: "Clinic", hand: true },
-  { step: "Patient gives consent", by: "Patient", hand: true },
-  { step: "Call transcribed and logged", by: "Clinic", hand: true },
-  { step: "Second domain granted access", by: "Clinic", hand: true },
-  { step: "Specialist consultation", by: "Specialist", hand: false, note: "outside the platform" },
-  { step: "Patient photographs the results", by: "Patient", hand: true },
-  { step: "Patient sends them to the doctor", by: "Patient", hand: true },
+  { step: "Consent is asked for", by: carrier, hand: true },
+  { step: "The patient gives it", by: "Patient", hand: true },
+  { step: "The consent is recorded", by: carrier, hand: true },
+  { step: "The second domain is given access", by: carrier, hand: true },
+  { step: "The consultation happens", by: "Second domain", hand: false, note: "outside any shared system" },
+  { step: "The result is carried back", by: carrier, hand: true },
+  { step: "It reaches the first domain", by: carrier, hand: true },
 ];
 
 /*

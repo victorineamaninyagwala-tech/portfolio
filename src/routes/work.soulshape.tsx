@@ -24,6 +24,7 @@ import {
   allocation,
   architecture,
   calculation,
+  carrier,
   coordinationSteps,
   decisions,
   evidence,
@@ -32,7 +33,6 @@ import {
   mechanisms,
   scorecard,
   signalTypes,
-  survives,
   visibility,
   workingAreas,
 } from "@/data/soulshape";
@@ -169,8 +169,13 @@ function Evidence() {
 
 /*
  * The cycle a chronic condition actually runs, and the point the existing
- * products stop at. What has to survive the return is named underneath,
- * because that is the whole of the finding.
+ * products stop at.
+ *
+ * It used to name what has to survive the return underneath, in the vocabulary
+ * the system was eventually built in: programme instances, phase state, signal
+ * history. None of those three means anything this early in the page, where the
+ * research has not yet produced a system to name them, so the diagram stops at
+ * the finding it is here to make.
  */
 function Lifecycle() {
   return (
@@ -182,10 +187,6 @@ function Lifecycle() {
           tone: i === lifecycle.length - 1 ? "subject" : "plain",
         }))}
       />
-      <div className="mx-auto mt-12 max-w-[62ch] text-center">
-        <Label className="text-olive">What has to survive it</Label>
-        <p className="mt-3 type-body text-ink/70">{survives}</p>
-      </div>
     </Diagram>
   );
 }
@@ -194,16 +195,24 @@ function Lifecycle() {
  * The audit, whole. Nine dimensions rather than the two that make the point,
  * because the point is only worth anything if the other seven are there to be
  * checked, and the two that decided the scope are marked, not extracted.
+ *
+ * Each row names the framework it is drawn from. Seven of the nine are
+ * Leeftink's, which is the coordination framework the research section
+ * introduced, so a reader can see that coordination was among the things
+ * compared. Without it the prose claims a dimension the table never shows.
  */
 function Scorecard() {
   return (
-    <Diagram label={`Nine dimensions, two points each · ${scorecard.scale}`}>
+    <Diagram
+      label={`Nine dimensions, seven from Leeftink's coordination framework · ${scorecard.scale}`}
+    >
       <Matrix
         columns={scorecard.products}
         highlight={scorecard.decisive}
         rows={[
           ...scorecard.dimensions.map((d) => ({
             heading: d.name,
+            note: d.from,
             cells: d.scores.map(String),
           })),
           { heading: "Total", cells: scorecard.totals.map((t) => `${t}/18`) },
@@ -214,57 +223,64 @@ function Scorecard() {
 }
 
 /*
- * The coordination workflow as it was described to her. Every step marked by
- * hand is one a person performs, and three of the seven are performed by the
- * patient, which is the finding, not the interface. The patient is named in a
- * fourth, the call that opens it, but the clinic is the one placing it.
+ * The coordination workflow as it was described to her, in both conversations.
+ *
+ * The marked steps are the ones carried by whoever is coordinating, which is
+ * five of the seven: only the patient's own consent and the consultation
+ * itself fall outside that role. Earlier this diagram named the patient in
+ * those five, because the first account was Antara's, where the patient did
+ * carry their own results. The clinic does the same work with a nurse or the
+ * doctor, so the finding is the role and not the body filling it.
  */
 function Coordination() {
   return (
     <Diagram label="Moving one patient's information between two domains">
       <div className="mx-auto max-w-[62ch]">
-        {coordinationSteps.map((step, i) => (
-          <div key={step.step}>
-            <div
-              className={
-                step.by === "Patient"
-                  ? "rounded-lg border border-ink bg-ink px-5 py-4"
-                  : "rounded-lg border border-ink/25 bg-paper px-5 py-4"
-              }
-            >
-              <div className="flex items-baseline justify-between gap-4">
-                <p
-                  className={
-                    step.by === "Patient"
-                      ? "type-body font-semibold text-paper"
-                      : "type-body font-semibold text-ink"
-                  }
-                >
-                  {step.step}
-                </p>
-                <span
-                  className={
-                    step.by === "Patient"
-                      ? "type-label font-semibold whitespace-nowrap text-paper/70"
-                      : "type-label font-semibold whitespace-nowrap text-ink/45"
-                  }
-                >
-                  {step.by}
-                </span>
+        {coordinationSteps.map((step, i) => {
+          const carried = step.by === carrier;
+          return (
+            <div key={step.step}>
+              <div
+                className={
+                  carried
+                    ? "rounded-lg border border-ink bg-ink px-5 py-4"
+                    : "rounded-lg border border-ink/25 bg-paper px-5 py-4"
+                }
+              >
+                <div className="flex items-baseline justify-between gap-4">
+                  <p
+                    className={
+                      carried
+                        ? "type-body font-semibold text-paper"
+                        : "type-body font-semibold text-ink"
+                    }
+                  >
+                    {step.step}
+                  </p>
+                  <span
+                    className={
+                      carried
+                        ? "type-label font-semibold whitespace-nowrap text-paper/70"
+                        : "type-label font-semibold whitespace-nowrap text-ink/45"
+                    }
+                  >
+                    {step.by}
+                  </span>
+                </div>
+                {step.note ? (
+                  <p
+                    className={
+                      carried ? "mt-1 type-caption text-paper/60" : "mt-1 type-caption text-ink/50"
+                    }
+                  >
+                    {step.note}
+                  </p>
+                ) : null}
               </div>
-              {step.note ? (
-                <p
-                  className={
-                    step.by === "Patient" ? "mt-1 type-caption text-paper/60" : "mt-1 type-caption text-ink/50"
-                  }
-                >
-                  {step.note}
-                </p>
-              ) : null}
+              {i < coordinationSteps.length - 1 ? <Arrow label={step.hand ? "by hand" : undefined} /> : null}
             </div>
-            {i < coordinationSteps.length - 1 ? <Arrow label={step.hand ? "by hand" : undefined} /> : null}
-          </div>
-        ))}
+          );
+        })}
       </div>
     </Diagram>
   );
@@ -273,6 +289,12 @@ function Coordination() {
 /*
  * The same finding in one line: the route between two domains runs through a
  * person, and there is no other route.
+ *
+ * The middle box is a role, not a particular body. At Antara it was the patient
+ * carrying their own results; at the clinic it is a nurse or the doctor. Naming
+ * it as the patient would have made it one company's shortcoming rather than
+ * the pattern it is, and would have missed that the coordinator the system
+ * eventually carries is a job somebody is already doing.
  */
 function Carrier() {
   return (
@@ -280,7 +302,11 @@ function Carrier() {
       <Sequence
         steps={[
           { title: "Nutrition", note: "Holds the record" },
-          { title: "Patient", note: "Consents, photographs, forwards", tone: "subject" },
+          {
+            title: carrier,
+            note: "The patient, a nurse or the doctor, carrying it with the patient's consent",
+            tone: "subject",
+          },
           { title: "Medical", note: "Receives it, eventually" },
         ]}
       />
@@ -599,8 +625,9 @@ function SoulShape() {
           coordination, longitudinal records and re-entry.
         </Prose>
         <Prose wide>
-          The platforms approached different parts of care, but none carried the patient's
-          context through a complete cycle of leaving and returning.
+          The platforms approached different parts of care, but none of them coordinated
+          between those parts. Each held what happened inside its own domain, and nothing
+          held what happened between them.
         </Prose>
         <Prose wide>This helped narrow the problem.</Prose>
         <Prose wide>
@@ -635,6 +662,19 @@ function SoulShape() {
         <Prose wide>
           The patient was currently doing part of the work that the system would need to
           support.
+        </Prose>
+        <Prose wide>
+          I then spoke with a weight management clinic already running this kind of
+          programme, asking how it works rather than what it needed. Coordination sits
+          with the doctor. Information moves between domains by word of mouth and on
+          paper, with the patient&apos;s consent, and the records behind it are Excel
+          sheets and Word documents. Drop-offs are low, because
+          the clinic carries that coordination instead of handing it to the patient, and
+          it does not scale, because what runs out first is one person&apos;s attention.
+        </Prose>
+        <Prose wide>
+          Coordination was not missing. It had been taken off the patient and absorbed by
+          the clinic, and the clinic was doing it with nothing to do it in.
         </Prose>
       </Movement>
 
