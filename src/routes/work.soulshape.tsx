@@ -767,21 +767,18 @@ function SoulShape() {
       >
         <Prose wide>The initial work was based entirely on desk research.</Prose>
         <Prose wide>
-          The Holistic Weight Management Centre showed me what actually happens inside an
-          institution that has already brought the relevant disciplines together.
+          The clinic showed me what actually happens inside an institution that has
+          already brought the relevant disciplines together.
         </Prose>
         <Prose wide>
           It also let me keep the work on weight loss: an avenue I had already explored
           and had proximity to, and one that tied back to the problem I started with.
         </Prose>
         <Prose wide>
-          I contacted the Centre and went through their rate card. Their programmes run as
-          the 3-Month Holistic Transformation and the 6-Month Sustainable Wellness
-          Journey, with group sessions such as Mindful Eating alongside them.
-        </Prose>
-        <Prose wide>
-          Their weekly check-ins were handled through phone and email. Records sat across
-          separate files, and coordination depended on individual members of staff.
+          Their care runs as three programmes, weight loss, weight gain and weight
+          management. Those are entry points rather than fixed courses: what happens
+          inside one is tailored as the doctor learns more, and the nurses carry the
+          follow-ups that produce the learning.
         </Prose>
         <Prose wide>
           Their structure gave me an understanding of what an implementation plan would
