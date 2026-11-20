@@ -1,4 +1,4 @@
-import { Enclosure, EnclosureCell, Gutter, Label, Pill, TextLink } from "@/components/primitives";
+import { CatMark, Enclosure, EnclosureCell, Gutter, Label, Pill, TextLink } from "@/components/primitives";
 import { listed } from "@/data/projects";
 
 /*
@@ -111,7 +111,8 @@ export function SiteFooter() {
           ))}
         </Enclosure>
 
-        <div className="py-6">
+        <div className="flex items-center gap-2.5 py-6">
+          <CatMark className="h-5 shrink-0" />
           <Label className="text-ink/70">© {new Date().getFullYear()} Victorine Amani</Label>
         </div>
       </Gutter>

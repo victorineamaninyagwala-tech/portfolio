@@ -1,4 +1,4 @@
-import { Gutter, TextLink } from "@/components/primitives";
+import { CatMark, Gutter, TextLink } from "@/components/primitives";
 
 /*
  * The site header. Rendered once from the root route, so it persists on every
@@ -38,8 +38,9 @@ export function SiteHeader() {
             way back to the homepage. */}
         <a
           href="/"
-          className="type-body font-semibold transition-colors hover:text-ink/60"
+          className="flex items-center gap-2.5 type-body font-semibold transition-colors hover:text-ink/60"
         >
+          <CatMark className="h-6 shrink-0" />
           Victorine Amani
         </a>
 

@@ -17,15 +17,39 @@ import { SiteFooter } from "../components/SiteFooter";
 import { SiteHeader } from "../components/SiteHeader";
 import { PRELOADED_CLASS, Preloader, hasPreloaded } from "../components/Preloader";
 
+/*
+ * The 404.
+ *
+ * The number sits on a shelf and the nought has been knocked off it: it holds
+ * for a beat, drops, bounces once and settles on its side a little to the
+ * right of where it fell, because nothing lands where it was pushed from.
+ *
+ * Nothing is drawn. Whatever did it is off the page, which is the only version
+ * of this joke that does not need a character, a licence or a second asset,
+ * and the only one that still works if the rest of the site never mentions a
+ * cat. Under prefers-reduced-motion the nought is simply already down.
+ */
 function NotFoundComponent() {
   return (
     <div className="flex min-h-[70vh] items-center justify-center bg-paper px-4 text-ink">
       <div className="max-w-md text-center">
-        <h1 className="type-display">404</h1>
-        <h2 className="mt-4 type-title">Page not found</h2>
-        <p className="mt-4 type-body text-ink/70">
-          The page you're looking for doesn't exist or has been moved.
-        </p>
+        <h1 className="sr-only">404: page not found</h1>
+
+        {/* The shelf. Room is kept for the nought so the two fours do not
+            close the gap it left. */}
+        <div className="relative mx-auto w-fit pb-[1.6em]">
+          <p aria-hidden="true" className="flex gap-[0.08em] type-display leading-none">
+            <span>4</span>
+            <span className="invisible">0</span>
+            <span>4</span>
+          </p>
+          <div className="mt-2 border-t border-ink/15" />
+          <span aria-hidden="true" className="nf-nought absolute top-0 left-1/2 type-display leading-none">
+            0
+          </span>
+        </div>
+
+        <p className="mt-2 type-body text-ink/70">Nothing at this address.</p>
         <div className="mt-6">
           <Link
             to="/"
@@ -124,7 +148,27 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         rel: "stylesheet",
         href: "https://api.fontshare.com/v2/css?f%5B%5D=switzer@400,500,600&display=swap",
       },
+      { rel: "icon", href: "/favicon.svg", type: "image/svg+xml" },
       { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
+    ],
+    /*
+     * The native cursor goes before the first paint, not after hydration.
+     *
+     * Every internal link is a document navigation, so each page arrives as a
+     * fresh document. Adding the class from the cursor component's effect
+     * leaves a window between paint and hydration where the real cursor is
+     * showing, and over the link that was just clicked the real cursor is a
+     * hand. Running the same two media checks here closes that window.
+     *
+     * It stays in JavaScript rather than moving into the stylesheet so that a
+     * reader without JavaScript, who would get no custom cursor, is not left
+     * with no cursor at all.
+     */
+    scripts: [
+      {
+        children:
+          "try{var m=window.matchMedia;if(m('(hover: hover) and (pointer: fine)').matches&&!m('(prefers-reduced-motion: reduce)').matches){document.documentElement.classList.add('has-custom-cursor')}}catch(e){}",
+      },
     ],
   }),
 

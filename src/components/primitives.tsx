@@ -346,3 +346,48 @@ export function ImageCard({
     </Frame>
   );
 }
+
+/*
+ * The cat.
+ *
+ * Her own, drawn to the proportions of the illustration she gave: ears that
+ * lean in rather than splaying out, eyes two thirds of the head apart, and a
+ * neck that pinches to half the head's width before the shoulders, which is
+ * the measurement that makes it read as a cat instead of a wedge.
+ *
+ * Ink and paper, the two values the rest of the site is made of. It carries
+ * no size of its own: every placement sets a height and the width follows.
+ *
+ * Decorative everywhere it appears, so it is hidden from screen readers. The
+ * header and footer already say her name beside it.
+ */
+export function CatMark({ className }: { className?: string }) {
+  return (
+    <svg
+      viewBox="0 0 68 100"
+      width="68"
+      height="100"
+      aria-hidden="true"
+      focusable="false"
+      className={cn("block w-auto", className)}
+    >
+      {/* Neck and shoulders, then the head and both ears. */}
+      <path
+        className="fill-ink"
+        d="M21 56C19.5 63 19 69 19 72C16 80 11 90 7 100L50 100C46 90 44.5 80 43.6 72C43.6 69 44 63 43 56Z"
+      />
+      <path
+        className="fill-ink"
+        d="M8 30L17 0 31 28.6C32.5 28 35.5 28 37 28.6L50 0 57 30C59.2 38 59.2 48 56 55.5C53 62.5 44.5 66.5 32.5 66.5C20.5 66.5 12 62.5 9 55.5C5.8 48 5.8 38 8 30Z"
+      />
+      <ellipse className="fill-paper" cx="23" cy="42" rx="7.3" ry="7.8" />
+      <ellipse className="fill-paper" cx="46" cy="42" rx="6.2" ry="7.8" />
+      <ellipse className="fill-ink" cx="24.6" cy="42" rx="2.1" ry="5" />
+      <ellipse className="fill-ink" cx="44.6" cy="42" rx="2.1" ry="5" />
+      <path className="fill-paper" d="M32.4 50 36.4 50 34.4 53.4Z" />
+      <g className="fill-none stroke-ink" strokeWidth="1.2" strokeLinecap="round">
+        <path d="M9 44 0 40M8 50 0 51M9.5 56 1 61M56 43 66 39M57 49 68 50M55.5 55 65 60" />
+      </g>
+    </svg>
+  );
+}

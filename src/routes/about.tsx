@@ -2,7 +2,7 @@ import type { ReactNode } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 
 import { Prose } from "@/components/CaseStudySection";
-import { Gutter, Label, ProseLink } from "@/components/primitives";
+import { CatMark, Gutter, Label, ProseLink } from "@/components/primitives";
 import { WorkHistoryList } from "@/components/WorkHistoryList";
 import { workHistory } from "@/data/work-history";
 import { shareImage } from "@/lib/share";
@@ -58,15 +58,30 @@ export const Route = createFileRoute("/about")({
  * A six-column slot is already a reading measure; capping it again inside
  * itself only makes a gap.
  */
-function Passage({ title, children }: { title: string; children: ReactNode }) {
+function Passage({
+  title,
+  mark,
+  children,
+}: {
+  title: string;
+  /** A drawing under the heading, in the column the heading leaves empty. */
+  mark?: ReactNode;
+  children: ReactNode;
+}) {
   return (
     <section className="grid grid-cols-12 gap-y-5">
-      <h2 className="col-span-12 type-title md:col-span-5">{title}</h2>
+      {/* A grid item stretches to the row, so the heading sits at the top and
+          anything under it can be pushed to the foot. Hung off the heading
+          instead, a small drawing floats in a column of air with the whole
+          passage running past it. */}
+      <div className="col-span-12 flex flex-col md:col-span-5">
+        <h2 className="type-title">{title}</h2>
+        {mark ? <div className="mt-8 sm:mt-10 md:mt-auto md:mb-1">{mark}</div> : null}
+      </div>
       <div className="col-span-12 space-y-6 md:col-span-6 md:col-start-7">{children}</div>
     </section>
   );
 }
-
 function About() {
   return (
     <main className="bg-paper text-ink">
@@ -109,10 +124,6 @@ function About() {
               questioning assumptions and figuring out where a product can make a process easier to
               navigate.
             </Prose>
-            <Prose wide>
-              These days, I&apos;m particularly interested in product work that sits somewhere
-              between design, technology and the way a business actually operates.
-            </Prose>
           </Passage>
 
           <Passage title="My vision">
@@ -135,22 +146,14 @@ function About() {
             </Prose>
           </Passage>
 
-          <Passage title="The other Amani">
+          <Passage title="The other Amani" mark={<CatMark className="h-16 sm:h-20" />}>
             <Prose wide>
               Outside of work, I have a few ways of making sense of the world that have nothing to
               do with product design.
             </Prose>
             <Prose wide>
               I write <ProseLink href="https://thehole27.wordpress.com/">poetry</ProseLink>. I watch
-              films and get attached to stories and characters. I take care of my cat, which is
-              mostly a very elaborate arrangement in which he allows me to live in his house.
-            </Prose>
-            <Prose wide>
-              There are also days when I just want to read, make something, watch something good,
-              or sit with an idea for a while without needing to turn it into anything.
-            </Prose>
-            <Prose wide>
-              Work is a big part of my life, but it isn&apos;t the whole thing.
+              films and take care of my cat, Sir Gandalf Mochi Amani I.
             </Prose>
           </Passage>
 
